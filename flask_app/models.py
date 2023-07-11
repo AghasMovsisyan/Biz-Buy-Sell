@@ -10,7 +10,8 @@ from sqlalchemy.orm import sessionmaker
 
 # Load environment variables from .env file
 load_dotenv()
-
+def gra():
+    return adada
 # Retrieve environment variables
 database_username = os.getenv("DATABASE_USERNAME")
 database_password = os.getenv("DATABASE_PASSWORD")
