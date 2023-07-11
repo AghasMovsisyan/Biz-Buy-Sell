@@ -6,7 +6,7 @@ from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, relationship
 from sqlalchemy import Column, Integer, String, Date
 from sqlalchemy.orm import sessionmaker
-sdasd
+
 
 # Load environment variables from .env file
 load_dotenv()
