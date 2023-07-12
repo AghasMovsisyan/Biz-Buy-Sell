@@ -29,7 +29,7 @@ def metrics():
 
 
 @app.route('/api/business', methods=['GET'])
-def get_paginated_items():
+def get_business():
     """Retrieves paginated items from the 'Business' collection ased on 'page' and 'limit' """
     page = int(request.args.get('page', 1))
     limit = int(request.args.get('limit', 10))
