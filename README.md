@@ -6,21 +6,6 @@ To install the required dependencies
         
     pip install -r requirements.txt
 
-## Environment Variables
-
-#### The following environment variables need to be set up for the application to run properly:
-
-**DATABASE_URI**: The URI for connecting to the PostgreSQL database. It should be in the format:
-
-    export DATABASE_URI = 'postgresql+psycopg2://postgres:password@localhost:5432/flask_db' 
-**DB_USERNAME**: The username for accessing the database.
-    
-    export DB_USERNAME='postgres'
-**DB_PASSWORD**: The password for the database user.
-    
-    export DB_PASSWORD='password'
-
-
 ## Dependencies
 
 This project relies on a PostgreSQL database for data storage and retrieval. Make sure you have a PostgreSQL database instance set up and the necessary credentials to access it.
