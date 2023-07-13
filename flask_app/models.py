@@ -86,7 +86,7 @@ with engine.connect() as conn:
     Businesses = Business(
         id = 14,
         user_id = 14,
-        image_dir = 'https://housing.com/news/wp-content/uploads/2022/11/cafe-design-compressed-1.jpg',
+        image_dir = '',
         location = 'Komitas 1/8',
         property_type = 'Cafe',
         price = 150000,
