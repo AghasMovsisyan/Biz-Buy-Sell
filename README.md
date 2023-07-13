@@ -1,5 +1,10 @@
 # Run App
 
+## Installation
+
+To install the required dependencies
+        
+    pip install -r requirements.txt
 
 ## Environment Variables
 
