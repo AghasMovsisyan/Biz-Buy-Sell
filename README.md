@@ -15,63 +15,32 @@
     
     export DB_PASSWORD='password'
 
-## Importing Predefined Data to the Database
 
-predefined data that you want to import into the database using the SQLAlchemy models, follow these steps:
+## Dependencies
 
-1. Set up the database connection:
-   - Update the `DATABASE_URI` variable in your code with the correct connection URL for your PostgreSQL database. The format of the `DATABASE_URI` should be:
-     ```
-     'postgresql+psycopg2://<username>:<password>@<host>:<port>/<database_name>'
-     ```
-     Replace `<username>`, `<password>`, `<host>`, `<port>`, and `<database_name>` with the appropriate values for your PostgreSQL setup.
+This project relies on a PostgreSQL database for data storage and retrieval. Make sure you have a PostgreSQL database instance set up and the necessary credentials to access it.
 
-2. Define the predefined data:
- 
-   - Set up the database connection:
-     ```python
-     DATABASE_URI = 'postgresql+psycopg2://postgres:password@localhost:5432/flask_db'
-     engine = create_engine(DATABASE_URI)
-     Session = sessionmaker(bind=engine)
-     session = Session()
-     ```
+To connect to the database, you'll need to provide the following environment variables:
 
-   - Define instances of the models and populate their attributes with the predefined data:
-     ```python
-     user = User(
-         id=6,
-         email='Vahag@mail.ru',
-         password_hash='d2as86daadd1d',
-         salt=2,
-         first_name='Vahag',
-         last_name='Babken',
-         tel_number='+1dasd2651631',
-         dalte_of_birth=datetime(516, 11, 18)
-     )
+- `DATABASE_USERNAME`: The username for accessing the database.
+- `DATABASE_PASSWORD`: The password associated with the username.
+- `DATABASE_HOST`: The hostname or IP address of the database server.
+- `DATABASE_PORT`: The port number on which the database is running.
+- `DATABASE_NAME`: The name of the database to connect to.
 
-     business = Busines(
-         id=6,
-         user_id=6,
-         image_dir='',
-         location='Ererbuni 5/1',
-         property_type='Hotel',
-         price=250000,
-         year_built='2021',
-         size=4500,
-         name='Orlan Hotel'
-     )
-     ```
+Make sure to update the `.env` file with the correct values for these variables before running the project.
 
-   - Add the instances to the session and commit the changes:
-     ```python
-     session.add(user)
-     session.add(business)
-     session.commit()
-     ```
 
-4. Run the script or execute the code: Execute the Python script or the code in the interactive Python shell to import the predefined data into the database.
+## Data Import
 
-5. Verify the data: After executing the script or code, verify that the predefined data has been successfully imported into the database. You can use database tools, SQL queries, or your application's endpoints to inspect the data.
+To import the predefined data into the database, follow these steps:
+
+1. Open a command-line interface or a database management tool.
+2. Connect to your PostgreSQL database using the appropriate credentials.
+3. Run the following command to import the data from the SQL script:
+
+   ```bash
+   psql -U <username> -d <database_name> -f path/to/predefined_data.sql
 
 
 ## Flask 
