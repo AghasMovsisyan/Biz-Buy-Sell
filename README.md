@@ -55,7 +55,9 @@ To import the predefined data into the database, follow these steps:
 
 
 
-# Pylint
+## Pylint
+
+Pylint is a static code analysis tool for the Python programming language.
 
 ### Install
 
