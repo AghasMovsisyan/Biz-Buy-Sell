@@ -129,6 +129,7 @@ def update_business(id):
     finally:
         session.close()
 
+
 # Delete a specific business by ID
 @app.route("/api/business/<int:id>", methods=["DELETE"])
 def delete_business(id):

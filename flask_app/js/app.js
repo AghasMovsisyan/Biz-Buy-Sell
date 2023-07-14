@@ -2,7 +2,7 @@ let limitPerPage = 3; // Initialize limitPerPage as a global variable
 let currentPage = 1;
 
 function fetchData(page, limitPerPage) {
-  fetch(`http://127.0.0.1:5000/api/business?page=${page}&limit=${limitPerPage}`)
+  fetch(`http://127.0.0.1:9000/api/business?page=${page}&limit=${limitPerPage}`)
     .then(response => {
       if (!response.ok) {
         throw Error("Error");
