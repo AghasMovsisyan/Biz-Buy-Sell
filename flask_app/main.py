@@ -1,10 +1,10 @@
 """aplication run"""
 import os
-from flask import Flask, Response, request, render_template
+from flask import Flask, Response, request
 from flask import jsonify
-from models import User, Business, s, Base, database_uri
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from models import User, Business, s, Base, database_uri
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -13,9 +13,11 @@ engine = create_engine(database_uri)
 Base.metadata.bind = engine
 Session = sessionmaker(bind=engine)
 
+
 def root_dir():
     """gives the directory name of the current script file."""
     return os.path.abspath(os.path.dirname(__file__))
+
 
 def get_file(filename):
     """Get file"""
@@ -26,7 +28,6 @@ def get_file(filename):
         return content
     except IOError as exc:
         return str(exc)
-
 
 
 @app.route("/", methods=["GET"])
@@ -64,14 +65,13 @@ def calculate_total_pages(limit):
     return total_pages
 
 
-#
 @app.route("/api/business", methods=["POST"])
 def create_business():
+    """Create business"""
     data = request.json
     session = Session()
 
     try:
-        
         user_id = data.get("user_id")
         user = session.query(User).get(user_id)
 
@@ -92,30 +92,28 @@ def create_business():
             session.commit()
 
             return jsonify(message="Business created successfully")
-        else:
-            return jsonify(message="User not found"), 404
+        return jsonify(message="User not found"), 404
     finally:
         session.close()
 
 
-# Retrieve a specific business by ID
 @app.route("/api/business/<int:id>", methods=["GET"])
-def get_business_by_id(id):
+def get_business_by_id(id):  # pylint: disable=C0103 disable=W0622
+    """Retrieve a specific business by ID"""
     session = Session()
 
     try:
         business = session.query(Business).get(id)
         if business:
             return jsonify(business.json())
-        else:
-            return jsonify(message="Business not found"), 404
+        return jsonify(message="Business not found"), 404
     finally:
         session.close()
 
 
-# Update a specific business by ID
 @app.route("/api/business/<int:id>", methods=["PUT"])
-def update_business(id):
+def update_business(id):  # pylint: disable=C0103 disable=W0622
+    """Update a specific business by ID"""
     data = request.json
     session = Session()
 
@@ -126,15 +124,14 @@ def update_business(id):
                 setattr(business, key, value)
             session.commit()
             return jsonify(message="Business updated successfully")
-        else:
-            return jsonify(message="Business not found"), 404
+        return jsonify(message="Business not found"), 404
     finally:
         session.close()
 
 
-# Delete a specific business by ID
 @app.route("/api/business/<int:id>", methods=["DELETE"])
-def delete_business(id):
+def delete_business(id):  # pylint: disable=C0103 disable=W0622
+    """Delete a specific business by ID"""
     session = Session()
 
     try:
@@ -143,13 +140,11 @@ def delete_business(id):
             session.delete(business)
             session.commit()
             return jsonify(message="Business deleted successfully")
-        else:
-            return jsonify(message="Business not found"), 404
+        return jsonify(message="Business not found"), 404
     finally:
         session.close()
 
 
-    
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def get_resource(path):
