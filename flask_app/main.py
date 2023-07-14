@@ -146,7 +146,6 @@ def delete_business(id):
     finally:
         session.close()
 
-
     
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
