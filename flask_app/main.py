@@ -17,14 +17,16 @@ def root_dir():
     """gives the directory name of the current script file."""
     return os.path.abspath(os.path.dirname(__file__))
 
-
 def get_file(filename):
-    """get file"""
+    """Get file"""
     try:
         src = os.path.join(root_dir(), filename)
-        return open(src, encoding="utf-8").read()
+        with open(src, "rb") as file:
+            content = file.read()
+        return content
     except IOError as exc:
         return str(exc)
+
 
 
 @app.route("/", methods=["GET"])
@@ -145,6 +147,7 @@ def delete_business(id):
             return jsonify(message="Business not found"), 404
     finally:
         session.close()
+
 
     
 @app.route("/", defaults={"path": ""})
