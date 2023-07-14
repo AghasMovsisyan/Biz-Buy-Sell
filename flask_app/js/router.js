@@ -18,10 +18,10 @@ var router = (function () {
             case '#/sign-up':
                 $container.load('../templates/auth/sign-up.html');
                 break;
-            case '#/view':
-                $container.load('../templates/view.html');
+            case '#/view/:id': // Update the route for viewing a specific card
+                var cardId = route.split('/')[2];
+                $container.load(`../templates/view.html?id=${cardId}`);
                 break;
-                
         }
     }
     
@@ -44,5 +44,5 @@ var router = (function () {
 
     return {
         init: init
-    }
+    };
 })();
