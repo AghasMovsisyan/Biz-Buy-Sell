@@ -1,12 +1,17 @@
 """aplication run"""
 import os
-from flask import Flask, Response, request
+from flask import Flask, Response, request, render_template
 from flask import jsonify
-from models import Business, s
+from models import User, Business, s, Base, database_uri
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
 app.config.from_object(__name__)
 
+engine = create_engine(database_uri)
+Base.metadata.bind = engine
+Session = sessionmaker(bind=engine)
 
 def root_dir():
     """gives the directory name of the current script file."""
@@ -57,6 +62,90 @@ def calculate_total_pages(limit):
     return total_pages
 
 
+
+@app.route("/api/business", methods=["POST"])
+def create_business():
+    data = request.json
+    session = Session()
+
+    try:
+        
+        user_id = data.get("user_id")
+        user = session.query(User).get(user_id)
+
+        if user:
+            business = Business(
+                user_id=user_id,
+                id=data.get("id"),
+                image_dir=data.get("image_dir"),
+                location=data.get("location"),
+                property_type=data.get("property_type"),
+                price=data.get("price"),
+                year_built=data.get("year_built"),
+                size=data.get("size"),
+                name=data.get("name"),
+            )
+
+            session.add(business)
+            session.commit()
+
+            return jsonify(message="Business created successfully")
+        else:
+            return jsonify(message="User not found"), 404
+    finally:
+        session.close()
+
+
+# Retrieve a specific business by ID
+@app.route("/api/business/<int:id>", methods=["GET"])
+def get_business_by_id(id):
+    session = Session()
+
+    try:
+        business = session.query(Business).get(id)
+        if business:
+            return jsonify(business.json())
+        else:
+            return jsonify(message="Business not found"), 404
+    finally:
+        session.close()
+
+# Update a specific business by ID
+@app.route("/api/business/<int:id>", methods=["PUT"])
+def update_business(id):
+    data = request.json
+    session = Session()
+
+    try:
+        business = session.query(Business).get(id)
+        if business:
+            for key, value in data.items():
+                setattr(business, key, value)
+            session.commit()
+            return jsonify(message="Business updated successfully")
+        else:
+            return jsonify(message="Business not found"), 404
+    finally:
+        session.close()
+
+# Delete a specific business by ID
+@app.route("/api/business/<int:id>", methods=["DELETE"])
+def delete_business(id):
+    session = Session()
+
+    try:
+        business = session.query(Business).get(id)
+        if business:
+            session.delete(business)
+            session.commit()
+            return jsonify(message="Business deleted successfully")
+        else:
+            return jsonify(message="Business not found"), 404
+    finally:
+        session.close()
+
+
+    
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def get_resource(path):

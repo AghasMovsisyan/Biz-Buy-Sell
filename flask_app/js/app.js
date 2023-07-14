@@ -15,13 +15,13 @@ function fetchData(page, limitPerPage) {
       const html = items
         .map(user => {
           return `
-            <div class="card">
+              <div class="card">
               <div class="card-image"><img class="img" src=${user.image_dir}></div>
               <div class="card-info">
                 <h3>${user.name}</h3>  
                 <p>${user.location}</p>
                 <p>${user.price}$<p>
-                <a href="#/view">
+                <a href="#/view/${user.id}"> <!-- Update the href to include the business ID -->
                   <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
                 </a> 
               </div>
@@ -94,5 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
     showPage(currentPage);
   });
 });
+
 
 showPage(currentPage);
