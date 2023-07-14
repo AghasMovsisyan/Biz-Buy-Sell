@@ -62,7 +62,7 @@ def calculate_total_pages(limit):
     return total_pages
 
 
-
+#
 @app.route("/api/business", methods=["POST"])
 def create_business():
     data = request.json
@@ -109,6 +109,7 @@ def get_business_by_id(id):
             return jsonify(message="Business not found"), 404
     finally:
         session.close()
+
 
 # Update a specific business by ID
 @app.route("/api/business/<int:id>", methods=["PUT"])
