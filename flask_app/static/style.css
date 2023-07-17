@@ -382,4 +382,15 @@ input {
   font-size: 16px;
 }
 
+.ico1 {
+  height: 30px;
+  width: 30px;
+}
+
+.dollar {
+  height: 23px;
+  width: 23px;
+  padding-bottom: 3px;
+}
+
 /* -------------------------------------------------------------------------------------- */

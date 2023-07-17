@@ -23,9 +23,9 @@ var cardDisplayModule = (function () {
                     <ul>
                         <li><strong>Business Name:</strong> <span>${data.name}</span></li>
                         <li><strong>Location:</strong> <span>${data.location}</span></li>
-                        <li><strong>Price:</strong> <span>${data.price}$</span></li>
+                        <li><strong>Price:</strong> <span>${data.price} <img class="dollar" src=../logo/free-icon-dollar-symbol-2150150.png </span></li>
                         <li><strong>Size:</strong> <span>${data.size}</span></li>
-                        <li><strong>Telephone Number:</strong> <span>${data.tel_number}</span></li> <!-- Updated line -->
+                        <li><strong>Telephone Number:</strong> <span>${data.tel_number} <img class="ico1" src="../logo/telephone-call.png"></span></li> 
                     </ul>
                 </div>
                 `;
