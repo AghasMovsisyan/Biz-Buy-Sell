@@ -23,7 +23,7 @@ function fetchData(page, limitPerPage) {
                 <p>${user.price}$<p>
                 <a href="#/view/${user.id}"> <!-- Update the href to include the business ID -->
                   <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                </a> 
+                </a>
               </div>
             </div>
           `;

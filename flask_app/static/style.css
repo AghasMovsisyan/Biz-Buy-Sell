@@ -323,5 +323,63 @@ input {
   font-size: zem;
 }
 
-/*--------------------------------------------*/
 
+/* view page */
+/*-----------------------------------------------------------------------------------------------------------------*/
+
+.cardv{
+    background: #fff;
+    max-width: 650px;
+    width: 650px;
+    height: 500px;
+    margin: 25px auto;
+    box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
+    border-radius: 10px;
+    overflow: hidden;
+    justify-content: center;
+}
+
+.imgv {
+  height: 500px;
+  width: 650px;
+}
+
+.par {
+  text-align: center;
+  padding: 5px;
+  margin-top: 30px;
+}
+
+.cardv-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.cardv-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.cardv-info ul li {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #000;
+}
+
+.cardv-info ul li:last-child {
+  margin-bottom: 2px;
+  padding-bottom: 2px;
+  border-bottom: none;
+}
+
+.cardv-info ul li strong {
+  font-size: 19px;
+}
+
+.cardv-info ul li span {
+  font-size: 16px;
+}
+
+/* -------------------------------------------------------------------------------------- */

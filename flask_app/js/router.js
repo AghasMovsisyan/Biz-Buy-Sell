@@ -7,24 +7,46 @@ var router = (function () {
     function loadPage(route) {
         switch (route) {
             case '/':
-                $container.load('../templates/index.html');
+                loadTemplate('../templates/index.html');
                 break;
             case '#/buy':
-                $container.load('../templates/buy.html');
+                loadTemplate('../templates/buy.html');
                 break;
             case '#/login':
-                $container.load('../templates/auth/login.html');
+                loadTemplate('../templates/auth/login.html');
                 break;
             case '#/sign-up':
-                $container.load('../templates/auth/sign-up.html');
+                loadTemplate('../templates/auth/sign-up.html');
                 break;
-            case '#/view/:id': // Update the route for viewing a specific card
-                var cardId = route.split('/')[2];
-                $container.load(`../templates/view.html?id=${cardId}`);
+            default:
+                if (route.includes('#/view/')) {
+                    var cardId = route.split('/')[2];
+                    loadCardTemplate(cardId);
+                }
                 break;
         }
     }
-    
+
+    /**
+     * @param  {string} templatePath
+     */
+    function loadTemplate(templatePath) {
+        $.get(templatePath, function (data) {
+            $container.html(data);
+        });
+    }
+
+    /**
+     * @param  {string} cardId
+     */
+    function loadCardTemplate(cardId) {
+        $.get('../templates/view.html', function (data) {
+            $container.html(data);
+            // After the view page is loaded, call a function to display the card information
+            cardDisplayModule.fetchCardDetails(cardId);
+        });
+    }
+
     /**
      * @param  {string} container
      */
