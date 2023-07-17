@@ -8,11 +8,11 @@ var cardDisplayModule = (function () {
             method: 'GET',
             success: function (data) {
                 const cardDetails = document.getElementById("card-details");
-
+    
                 // Create HTML content for card details
                 const html = `
                 <div class="par">
-                <h1>${data.property_type} For Sale</h1>
+                    <h1>${data.property_type} For Sale</h1>
                 </div>
                 <div class="cardv">
                     <div class="card-image">
@@ -25,11 +25,11 @@ var cardDisplayModule = (function () {
                         <li><strong>Location:</strong> <span>${data.location}</span></li>
                         <li><strong>Price:</strong> <span>${data.price}$</span></li>
                         <li><strong>Size:</strong> <span>${data.size}</span></li>
+                        <li><strong>Telephone Number:</strong> <span>${data.tel_number}</span></li> <!-- Updated line -->
                     </ul>
                 </div>
-              
                 `;
-
+    
                 // Set the HTML content in the card-details element
                 cardDetails.innerHTML = html;
             },
@@ -38,6 +38,7 @@ var cardDisplayModule = (function () {
             }
         });
     }
+    
 
     return {
         fetchCardDetails: fetchCardDetails

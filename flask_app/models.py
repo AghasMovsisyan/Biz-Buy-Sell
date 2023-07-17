@@ -40,10 +40,16 @@ class User(Base):
     tel_number = Column(String)
     dalte_of_birth = Column(Date)
     business = relationship("Business", back_populates="user")
-
+    
     def json(self):
         """return self.{name}"""
-        return {"id": self.id, "email": self.email, "salt": self.salt}
+        return {"id": self.id, 
+                "email": self.email,
+                "salt": self.salt,
+                "first_name": self.first_name,
+                "last_name": self.last_name,
+                "tel_number": self.tel_number,
+                "dalte_of_birth": self.dalte_of_birth}
 
 
 class Business(Base):
@@ -63,6 +69,9 @@ class Business(Base):
 
     def json(self):
         """return self.{name}"""
+       
+    def json(self):
+        user_tel_number = s.query(User).get(self.user_id).tel_number
         return {
             "id": self.id,
             "user_id": self.user_id,
@@ -73,6 +82,7 @@ class Business(Base):
             "year_built": self.year_built,
             "size": self.size,
             "name": self.name,
+            "tel_number": user_tel_number,
         }
 
 
@@ -84,26 +94,26 @@ Base.metadata.create_all(engine)
 
 with engine.connect() as conn:
     Users = User(
-        id=14,
+        id=21,
         email="armansd@mail.ru",
         password_hash="dada5f",
         salt=1,
         first_name="dadf",
         last_name="adaadhlfds",
-        tel_number="+37496624514",
+        tel_number="+37494777777",
         dalte_of_birth=datetime(516, 11, 18),
     )
 
     Businesses = Business(
-        id=14,
-        user_id=14,
-        image_dir="",
-        location="Komitas 1/8",
-        property_type="Cafe",
-        price=150000,
-        year_built="2012",
-        size=2100,
-        name="Sava Super",
+        id=21,
+        user_id=21,
+        image_dir="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJntL8OFAm0jsE8VqBkqmDdfaKq-0LkWu2NA&usqp=CAU",
+        location="Jermuk 1/8",
+        property_type="Supermarket",
+        price=350000,
+        year_built="2017",
+        size=3500,
+        name="Zear Super",
     )
 
 s = Session()

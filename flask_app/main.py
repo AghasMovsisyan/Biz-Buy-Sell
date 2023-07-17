@@ -4,6 +4,7 @@ from flask import Flask, Response, request
 from flask import jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, joinedload
 from models import User, Business, s, Base, database_uri
 
 app = Flask(__name__)
@@ -98,17 +99,16 @@ def create_business():
 
 
 @app.route("/api/business/<int:id>", methods=["GET"])
-def get_business_by_id(id):  # pylint: disable=C0103 disable=W0622
+def get_business_by_id(id):
     """Retrieve a specific business by ID"""
-    session = Session()
-
-    try:
-        business = session.query(Business).get(id)
-        if business:
-            return jsonify(business.json())
-        return jsonify(message="Business not found"), 404
-    finally:
-        session.close()
+    with Session() as session:
+        try:
+            business = session.query(Business).options(joinedload(Business.user)).get(id)
+            if business:
+                return jsonify(business.json())
+            return jsonify(message="Business not found"), 404
+        except Exception as e:
+            return jsonify(error=str(e)), 500
 
 
 @app.route("/api/business/<int:id>", methods=["PUT"])
