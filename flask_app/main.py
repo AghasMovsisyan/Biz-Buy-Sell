@@ -39,12 +39,11 @@ def metrics():
     content = get_file("templates/index.html")
     return Response(content, mimetype="text/html")
 
-
 @app.route("/api/business", methods=["GET"])
 def get_business():
-    """Retrieves paginated items from the 'Business' collection ased on 'page' and 'limit'"""
-    page = int(request.args.get("page", 1))
-    limit = int(request.args.get("limit", 10))
+    """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'"""
+    page = int(request.args.get("page", 2))  # Default value for 'page' is set to 1 if not provided
+    limit = int(request.args.get("limit", 3))  # Default value for 'limit' is set to 6 if not provided
     offset = (page - 1) * limit if page > 0 else 0
     paginated_items = s.query(Business).offset(offset).limit(limit).all()
 
@@ -52,9 +51,15 @@ def get_business():
     total_pages = calculate_total_pages(limit)
     s.close()
 
+    total_items = total_item()
+
     # Returns paginated items and total pages in a JSON response
     result = jsonify(
-        items=[item.json() for item in paginated_items], totalPages=total_pages
+        items=[item.json() for item in paginated_items],
+        totalPages=total_pages,
+        total=total_items,
+        page=page,  # Use page instead of currentPage to set the default value
+        limit=limit,
     )
     return result
 
@@ -64,6 +69,10 @@ def calculate_total_pages(limit):
     total_items = s.query(Business).count()
     total_pages = (total_items // limit) + (1 if total_items % limit != 0 else 0)
     return total_pages
+
+def total_item():
+    total_items = s.query(Business).count()
+    return total_items
 
 
 @app.route("/api/business", methods=["POST"])
