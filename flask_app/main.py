@@ -3,7 +3,6 @@ import os
 from flask import Flask, Response, request
 from flask import jsonify
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import sessionmaker, joinedload
 from models import User, Business, s, Base, database_uri
 
@@ -39,11 +38,16 @@ def metrics():
     content = get_file("templates/index.html")
     return Response(content, mimetype="text/html")
 
+
 @app.route("/api/business", methods=["GET"])
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'"""
-    page = int(request.args.get("page", 2))  # Default value for 'page' is set to 1 if not provided
-    limit = int(request.args.get("limit", 3))  # Default value for 'limit' is set to 6 if not provided
+    page = int(
+        request.args.get("page", 2)
+    )  # Default value for 'page' is set to 1 if not provided
+    limit = int(
+        request.args.get("limit", 3)
+    )  # Default value for 'limit' is set to 6 if not provided
     offset = (page - 1) * limit if page > 0 else 0
     paginated_items = s.query(Business).offset(offset).limit(limit).all()
 
@@ -70,7 +74,9 @@ def calculate_total_pages(limit):
     total_pages = (total_items // limit) + (1 if total_items % limit != 0 else 0)
     return total_pages
 
+
 def total_item():
+    """query and count total items"""
     total_items = s.query(Business).count()
     return total_items
 
@@ -108,15 +114,17 @@ def create_business():
 
 
 @app.route("/api/business/<int:id>", methods=["GET"])
-def get_business_by_id(id):
+def get_business_by_id(id):  # pylint: disable=C0103 disable=W0622
     """Retrieve a specific business by ID"""
     with Session() as session:
         try:
-            business = session.query(Business).options(joinedload(Business.user)).get(id)
+            business = (
+                session.query(Business).options(joinedload(Business.user)).get(id)
+            )
             if business:
                 return jsonify(business.json())
             return jsonify(message="Business not found"), 404
-        except Exception as e:
+        except ImportError as e:  # pylint: disable=C0103 disable=W0622
             return jsonify(error=str(e)), 500
 
 

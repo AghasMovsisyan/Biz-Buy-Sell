@@ -40,16 +40,18 @@ class User(Base):
     tel_number = Column(String)
     dalte_of_birth = Column(Date)
     business = relationship("Business", back_populates="user")
-    
+
     def json(self):
         """return self.{name}"""
-        return {"id": self.id, 
-                "email": self.email,
-                "salt": self.salt,
-                "first_name": self.first_name,
-                "last_name": self.last_name,
-                "tel_number": self.tel_number,
-                "dalte_of_birth": self.dalte_of_birth}
+        return {
+            "id": self.id,
+            "email": self.email,
+            "salt": self.salt,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "tel_number": self.tel_number,
+            "dalte_of_birth": self.dalte_of_birth,
+        }
 
 
 class Business(Base):
@@ -67,9 +69,6 @@ class Business(Base):
     name = Column(String)
     user = relationship("User", back_populates="business")
 
-    def json(self):
-        """return self.{name}"""
-       
     def json(self):
         user_tel_number = s.query(User).get(self.user_id).tel_number
         return {
@@ -94,20 +93,20 @@ Base.metadata.create_all(engine)
 
 with engine.connect() as conn:
     Users = User(
-        id=21,
+        id=16,
         email="armansd@mail.ru",
         password_hash="dada5f",
         salt=1,
         first_name="dadf",
         last_name="adaadhlfds",
-        tel_number="+37494777777",
+        tel_number="+37498888888",
         dalte_of_birth=datetime(516, 11, 18),
     )
 
     Businesses = Business(
-        id=21,
-        user_id=21,
-        image_dir="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJntL8OFAm0jsE8VqBkqmDdfaKq-0LkWu2NA&usqp=CAU",
+        id=16,
+        user_id=16,
+        image_dir="",
         location="Jermuk 1/8",
         property_type="Supermarket",
         price=350000,
