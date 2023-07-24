@@ -29,15 +29,15 @@ To import the predefined data into the database, follow these steps:
 2. Connect to your PostgreSQL database using the appropriate credentials.
 3. Run the following command to import the data from the SQL script:
 
-           psql -U your_username -d your_database_name -f path/to/predefined_data.sql
+       psql -U your_username -d your_database_name -f path/to/predefined_data.sql
 
 
 ## Flask 
     
 #### Run Flask App
   
-        export FLASK_APP=your_flask_app.py
-        flask run
+    export FLASK_APP=your_flask_app.py
+    flask run
 
 
 
