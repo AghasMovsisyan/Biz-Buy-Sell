@@ -1,8 +1,8 @@
-# Run App
+# Project Setup and Run Instructions
 
 ## Installation
 
-To install the required dependencies
+To install the required dependencies, run the following command:
         
     pip install -r requirements.txt
 
@@ -39,7 +39,7 @@ To import the predefined data into the database, follow these steps:
     export FLASK_APP=your_flask_app.py
     flask run
 
-
+## Code Formatting        
 
 ## Pylint
 
