@@ -43,14 +43,12 @@ To import the predefined data into the database, follow these steps:
 
 ## Pylint
 
-Pylint is a static code analysis tool for the Python programming language.
-
-### Install
-
-For command line use, pylint is installed with:
-
-    pip install pylint
-
-How to use pylint
+#### How to use pylint
     
-    pylint name.py
+    pylint your_file.py
+
+## Black
+
+#### How to use pylint
+
+    black your_file.py
