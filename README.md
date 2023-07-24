@@ -12,11 +12,11 @@ This project relies on a PostgreSQL database for data storage and retrieval. Mak
 
 To connect to the database, you'll need to provide the following environment variables:
 
-- `DATABASE_USERNAME`: The username for accessing the database.
-- `DATABASE_PASSWORD`: The password associated with the username.
-- `DATABASE_HOST`: The hostname or IP address of the database server.
-- `DATABASE_PORT`: The port number on which the database is running.
-- `DATABASE_NAME`: The name of the database to connect to.
+DATABASE_USERNAME=your_database_username
+DATABASE_PASSWORD=your_database_password
+DATABASE_HOST=your_database_host
+DATABASE_PORT=your_database_port
+DATABASE_NAME=your_database_name
 
 Make sure to update the `.env` file with the correct values for these variables before running the project.
 
@@ -29,15 +29,15 @@ To import the predefined data into the database, follow these steps:
 2. Connect to your PostgreSQL database using the appropriate credentials.
 3. Run the following command to import the data from the SQL script:
 
-   ```bash
-   psql -U <username> -d <database_name> -f path/to/predefined_data.sql
+           psql -U your_username -d your_database_name -f path/to/predefined_data.sql
 
 
 ## Flask 
     
-#### Flask run
+#### Run Flask App
   
-    flask run
+        export FLASK_APP=your_flask_app.py
+        flask run
 
 
 
