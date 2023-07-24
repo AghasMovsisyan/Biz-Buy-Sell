@@ -43,7 +43,7 @@ def metrics():
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'"""
     page = int(
-        request.args.get("page", 2)
+        request.args.get("page", 1)
     )  # Default value for 'page' is set to 1 if not provided
     limit = int(
         request.args.get("limit", 3)
@@ -54,7 +54,7 @@ def get_business():
     # Calculates the total number of pages for pagination
     total_pages = calculate_total_pages(limit)
     s.close()
-
+    
     total_items = total_item()
 
     # Returns paginated items and total pages in a JSON response
@@ -71,7 +71,8 @@ def get_business():
 def calculate_total_pages(limit):
     """Calculates the total number of pages based on the given limit"""
     total_items = s.query(Business).count()
-    total_pages = (total_items // limit) + (1 if total_items % limit != 0 else 0)
+
+    total_pages = (total_items // limit) + (1 if total_items % limit != 0 else 0)  # It is not clear how you calculate here. Break it down
     return total_pages
 
 
