@@ -34,20 +34,6 @@ To import the predefined data into the database, follow these steps:
 
 
 ## Flask 
-
-### Install Flask 
-
-    pip install Flask
-
-### Starting the Development Server
-
-#### For Linux
-  
-    export FLASK_APP=main.py
-
-#### For Windows
-  
-    setx FLASK_APP "main.py"
     
 #### Flask run
   
