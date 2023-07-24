@@ -12,11 +12,11 @@ This project relies on a PostgreSQL database for data storage and retrieval. Mak
 
 To connect to the database, you'll need to provide the following environment variables:
 
-DATABASE_USERNAME=your_database_username
-DATABASE_PASSWORD=your_database_password
-DATABASE_HOST=your_database_host
-DATABASE_PORT=your_database_port
-DATABASE_NAME=your_database_name
+- DATABASE_USERNAME=your_database_username
+- DATABASE_PASSWORD=your_database_password
+- DATABASE_HOST=your_database_host
+- DATABASE_PORT=your_database_port
+- DATABASE_NAME=your_database_name
 
 Make sure to update the `.env` file with the correct values for these variables before running the project.
 
