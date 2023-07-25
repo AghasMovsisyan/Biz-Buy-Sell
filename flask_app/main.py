@@ -84,15 +84,15 @@ def get_business():
                 404,
             )
 
-        total_items = calculate_total_items(session)
+        total = calculate_total_items(session)  # Renamed total_items to total
 
         # Calculate total pages for pagination
-        total_pages = (total_items // limit) + (1 if total_items % limit != 0 else 0)
+        total_pages = (total // limit) + (1 if total % limit != 0 else 0)
 
         result = jsonify(
             items=[item.json() for item in paginated_items],
             totalPages=total_pages,
-            total=total_items,
+            total=total,  # Renamed total_items to total
             page=page,
             limit=limit,
         )
@@ -104,8 +104,8 @@ def get_business():
 
 def calculate_total_items(session):
     """Calculates the total number of items in the 'Business' collection"""
-    total_items = session.query(Business).count()
-    return total_items
+    total = session.query(Business).count()  # Renamed total_items to total
+    return total
 
 
 @app.route("/api/business", methods=["POST"])
