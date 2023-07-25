@@ -43,17 +43,33 @@ def metrics():
 
 @app.route("/api/business", methods=["GET"])
 def get_business():
+    """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'."""
     try:
         page = int(request.args.get("page", 1))
         limit = int(request.args.get("limit", 3))
     except ValueError:
-        return jsonify(error="Invalid page or limit value. Please provide valid integers."), 400
+        return (
+            jsonify(
+                error="Invalid page or limit value. Please provide valid integers."
+            ),
+            400,
+        )
 
     if page < 1:
-        return jsonify(error="Invalid page number. Page number must be greater than or equal to 1."), 400
+        return (
+            jsonify(
+                error="Invalid page number. Page number must be greater than or equal to 1."
+            ),
+            400,
+        )
 
     if limit < 1:
-        return jsonify(error="Invalid limit value. Limit must be greater than or equal to 1."), 400
+        return (
+            jsonify(
+                error="Invalid limit value. Limit must be greater than or equal to 1."
+            ),
+            400,
+        )
 
     offset = (page - 1) * limit
 
@@ -63,7 +79,10 @@ def get_business():
         paginated_items = session.query(Business).offset(offset).limit(limit).all()
 
         if not paginated_items:
-            return jsonify(error="Page not found. The requested page does not exist."), 404
+            return (
+                jsonify(error="Page not found. The requested page does not exist."),
+                404,
+            )
 
         total_items = calculate_total_items(session)
 
@@ -88,6 +107,7 @@ def calculate_total_items(session):
     total_items = session.query(Business).count()
     return total_items
 
+
 @app.route("/api/business", methods=["POST"])
 def create_business():
     """Create business"""
@@ -101,7 +121,7 @@ def create_business():
         if user:
             business = Business(
                 user_id=user_id,
-                business_id=data.get("business_id"),  # Rename the variable from "id" to "business_id"
+                business_id=data.get("business_id"),
                 image_dir=data.get("image_dir"),
                 location=data.get("location"),
                 property_type=data.get("property_type"),
@@ -120,19 +140,22 @@ def create_business():
         session.close()
 
 
-@app.route("/api/business/<int:business_id>", methods=["GET"])  # Rename the variable from "id" to "business_id"
-def get_business_by_id(business_id):  # Rename the variable from "id" to "business_id"
+@app.route("/api/business/<int:business_id>", methods=["GET"])
+def get_business_by_id(business_id):
     """Retrieve a specific business by ID"""
     with Session() as session:
         try:
             business = (
-                session.query(Business).options(joinedload(Business.user)).get(business_id)
+                session.query(Business)
+                .options(joinedload(Business.user))
+                .get(business_id)
             )
             if business:
                 return jsonify(business.json())
             return jsonify(message="Business not found"), 404
-        except ImportError as error:  # Rename the variable from "e" to "error" or similar
+        except ImportError as error:
             return jsonify(error=str(error)), 500
+
 
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
 def update_business(business_id):
@@ -151,13 +174,14 @@ def update_business(business_id):
     finally:
         session.close()
 
-@app.route("/api/business/<int:business_id>", methods=["DELETE"])  # Rename the variable from "id" to "business_id"
-def delete_business(business_id):  # Rename the variable from "id" to "business_id"
+
+@app.route("/api/business/<int:business_id>", methods=["DELETE"])
+def delete_business(business_id):
     """Delete a specific business by ID"""
     session = Session()
 
     try:
-        business = session.query(Business).get(business_id)  # Rename the variable from "id" to "business_id"
+        business = session.query(Business).get(business_id)
         if business:
             session.delete(business)
             session.commit()
