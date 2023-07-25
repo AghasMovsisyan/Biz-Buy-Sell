@@ -1,4 +1,3 @@
-"""Models"""
 import os
 from datetime import datetime
 from dotenv import load_dotenv
@@ -6,7 +5,6 @@ from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, relationship
 from sqlalchemy import Column, Integer, String, Date
 from sqlalchemy.orm import sessionmaker
-
 
 # Load environment variables from .env file
 load_dotenv()
@@ -18,9 +16,9 @@ database_host = os.getenv("DATABASE_HOST")
 database_port = os.getenv("DATABASE_PORT")
 database_name = os.getenv("DATABASE_NAME")
 
-database_uri = f"postgresql+psycopg2://{database_username}:{database_password}@{database_host}:{database_port}/{database_name}"  # pylint: disable=line-too-long
-# Connecting to Postgres
+database_uri = f"postgresql+psycopg2://{database_username}:{database_password}@{database_host}:{database_port}/{database_name}"
 
+# Connecting to Postgres
 
 # pylint: disable=too-few-public-methods
 class Base(DeclarativeBase):
@@ -55,7 +53,7 @@ class User(Base):
 
 
 class Business(Base):
-    """class representing Busines"""
+    """class representing Business"""
 
     __tablename__ = "Business"
     id = Column(Integer, primary_key=True)
@@ -70,6 +68,7 @@ class Business(Base):
     user = relationship("User", back_populates="business")
 
     def json(self):
+        """"""
         user_tel_number = s.query(User).get(self.user_id).tel_number
         return {
             "id": self.id,
@@ -84,38 +83,5 @@ class Business(Base):
             "tel_number": user_tel_number,
         }
 
-
 engine = create_engine(database_uri)  # Creating a table
 Session = sessionmaker(bind=engine)
-
-Base.metadata.create_all(engine)
-
-
-with engine.connect() as conn:
-    Users = User(
-        id=16,
-        email="armansd@mail.ru",
-        password_hash="dada5f",
-        salt=1,
-        first_name="dadf",
-        last_name="adaadhlfds",
-        tel_number="+37498888888",
-        dalte_of_birth=datetime(516, 11, 18),
-    )
-
-    Businesses = Business(
-        id=16,
-        user_id=16,
-        image_dir="",
-        location="Jermuk 1/8",
-        property_type="Supermarket",
-        price=350000,
-        year_built="2017",
-        size=3500,
-        name="Zear Super",
-    )
-
-s = Session()
-# s.add(Users)
-# s.add(Businesses)
-# s.commit()
