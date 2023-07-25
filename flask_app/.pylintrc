@@ -1,0 +1,13 @@
+[MASTER]
+# Comma-separated list of directories or file patterns to be ignored
+ignore = .git, .vscode, __pycache__
+
+# Specify the maximum line length
+max-line-length = 100
+
+# Specify other global configurations as needed
+
+
+[MESSAGES CONTROL]
+# Comma-separated list of warning IDs to be ignored globally
+disable = 

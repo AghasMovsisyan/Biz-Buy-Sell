@@ -2,9 +2,9 @@
 import os
 from flask import Flask, Response, request, jsonify
 from flask_cors import CORS
-from sqlalchemy import create_engine, exc
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, joinedload
-from models import User, Business, s, Base, database_uri
+from models import User, Business, Base, database_uri
 
 app = Flask(__name__)
 CORS(app)  # This will enable CORS for all routes in the app
@@ -42,7 +42,6 @@ def metrics():
 
 @app.route("/api/business", methods=["GET"])
 def get_business():
-    """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'"""
     try:
         page = int(request.args.get("page", 1))
         limit = int(request.args.get("limit", 3))
@@ -56,26 +55,31 @@ def get_business():
         return jsonify(error="Invalid limit value. Limit must be greater than or equal to 1."), 400
 
     offset = (page - 1) * limit
+
+    # Open a new session for the API call
     session = Session()
-    paginated_items = session.query(Business).offset(offset).limit(limit).all()
+    try:
+        paginated_items = session.query(Business).offset(offset).limit(limit).all()
 
-    if not paginated_items:
-        return jsonify(error="Page not found. The requested page does not exist."), 404
+        if not paginated_items:
+            return jsonify(error="Page not found. The requested page does not exist."), 404
 
-    total_items = calculate_total_items(session)
+        total_items = calculate_total_items(session)
 
-    # Calculate total pages for pagination
-    total_pages = (total_items // limit) + (1 if total_items % limit != 0 else 0)
-    session.close()
+        # Calculate total pages for pagination
+        total_pages = (total_items // limit) + (1 if total_items % limit != 0 else 0)
 
-    result = jsonify(
-        items=[item.json() for item in paginated_items],
-        totalPages=total_pages,
-        total=total_items,
-        page=page,
-        limit=limit,
-    )
-    return result, 200
+        result = jsonify(
+            items=[item.json() for item in paginated_items],
+            totalPages=total_pages,
+            total=total_items,
+            page=page,
+            limit=limit,
+        )
+        return result, 200
+    finally:
+        # Close the session after the API call is completed
+        session.close()
 
 
 def calculate_total_items(session):
