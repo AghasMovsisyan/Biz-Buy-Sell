@@ -16,7 +16,7 @@ Session = sessionmaker(bind=engine)
 
 
 def root_dir():
-    """gives the directory name of the current script file."""
+    """Gives the directory name of the current script file."""
     return os.path.abspath(os.path.dirname(__file__))
 
 
@@ -33,8 +33,9 @@ def get_file(filename):
 
 @app.route("/", methods=["GET"])
 def metrics():
-    """A route handler for the root URL ("/") that serves the metrics page.
-    Retrieves the content of'index.html' file and returns it as a response with HTML mimetype
+    """
+    A route handler for the root URL ("/") that serves the metrics page.
+    Retrieves the content of 'index.html' file and returns it as a response with HTML mimetype.
     """
     content = get_file("templates/index.html")
     return Response(content, mimetype="text/html")
@@ -100,7 +101,7 @@ def create_business():
         if user:
             business = Business(
                 user_id=user_id,
-                id=data.get("id"),
+                business_id=data.get("business_id"),  # Rename the variable from "id" to "business_id"
                 image_dir=data.get("image_dir"),
                 location=data.get("location"),
                 property_type=data.get("property_type"),
@@ -119,29 +120,28 @@ def create_business():
         session.close()
 
 
-@app.route("/api/business/<int:id>", methods=["GET"])
-def get_business_by_id(id):  # pylint: disable=C0103 disable=W0622
+@app.route("/api/business/<int:business_id>", methods=["GET"])  # Rename the variable from "id" to "business_id"
+def get_business_by_id(business_id):  # Rename the variable from "id" to "business_id"
     """Retrieve a specific business by ID"""
     with Session() as session:
         try:
             business = (
-                session.query(Business).options(joinedload(Business.user)).get(id)
+                session.query(Business).options(joinedload(Business.user)).get(business_id)
             )
             if business:
                 return jsonify(business.json())
             return jsonify(message="Business not found"), 404
-        except ImportError as e:  # pylint: disable=C0103 disable=W0622
-            return jsonify(error=str(e)), 500
+        except ImportError as error:  # Rename the variable from "e" to "error" or similar
+            return jsonify(error=str(error)), 500
 
-
-@app.route("/api/business/<int:id>", methods=["PUT"])
-def update_business(id):  # pylint: disable=C0103 disable=W0622
+@app.route("/api/business/<int:business_id>", methods=["PUT"])
+def update_business(business_id):
     """Update a specific business by ID"""
     data = request.json
     session = Session()
 
     try:
-        business = session.query(Business).get(id)
+        business = session.query(Business).get(business_id)
         if business:
             for key, value in data.items():
                 setattr(business, key, value)
@@ -151,14 +151,13 @@ def update_business(id):  # pylint: disable=C0103 disable=W0622
     finally:
         session.close()
 
-
-@app.route("/api/business/<int:id>", methods=["DELETE"])
-def delete_business(id):  # pylint: disable=C0103 disable=W0622
+@app.route("/api/business/<int:business_id>", methods=["DELETE"])  # Rename the variable from "id" to "business_id"
+def delete_business(business_id):  # Rename the variable from "id" to "business_id"
     """Delete a specific business by ID"""
     session = Session()
 
     try:
-        business = session.query(Business).get(id)
+        business = session.query(Business).get(business_id)  # Rename the variable from "id" to "business_id"
         if business:
             session.delete(business)
             session.commit()
