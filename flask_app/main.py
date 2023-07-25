@@ -1,12 +1,13 @@
 """aplication run"""
 import os
-from flask import Flask, Response, request
-from flask import jsonify
-from sqlalchemy import create_engine
+from flask import Flask, Response, request, jsonify
+from flask_cors import CORS
+from sqlalchemy import create_engine, exc
 from sqlalchemy.orm import sessionmaker, joinedload
 from models import User, Business, s, Base, database_uri
 
 app = Flask(__name__)
+CORS(app)  # This will enable CORS for all routes in the app
 app.config.from_object(__name__)
 
 engine = create_engine(database_uri)
@@ -42,45 +43,45 @@ def metrics():
 @app.route("/api/business", methods=["GET"])
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'"""
-    page = int(
-        request.args.get("page", 1)
-    )  # Default value for 'page' is set to 1 if not provided
-    limit = int(
-        request.args.get("limit", 3)
-    )  # Default value for 'limit' is set to 6 if not provided
-    offset = (page - 1) * limit if page > 0 else 0
-    paginated_items = s.query(Business).offset(offset).limit(limit).all()
+    try:
+        page = int(request.args.get("page", 1))
+        limit = int(request.args.get("limit", 3))
+    except ValueError:
+        return jsonify(error="Invalid page or limit value. Please provide valid integers."), 400
 
-    # Calculates the total number of pages for pagination
-    total_pages = calculate_total_pages(limit)
-    s.close()
-    
-    total_items = total_item()
+    if page < 1:
+        return jsonify(error="Invalid page number. Page number must be greater than or equal to 1."), 400
 
-    # Returns paginated items and total pages in a JSON response
+    if limit < 1:
+        return jsonify(error="Invalid limit value. Limit must be greater than or equal to 1."), 400
+
+    offset = (page - 1) * limit
+    session = Session()
+    paginated_items = session.query(Business).offset(offset).limit(limit).all()
+
+    if not paginated_items:
+        return jsonify(error="Page not found. The requested page does not exist."), 404
+
+    total_items = calculate_total_items(session)
+
+    # Calculate total pages for pagination
+    total_pages = (total_items // limit) + (1 if total_items % limit != 0 else 0)
+    session.close()
+
     result = jsonify(
         items=[item.json() for item in paginated_items],
         totalPages=total_pages,
         total=total_items,
-        page=page,  # Use page instead of currentPage to set the default value
+        page=page,
         limit=limit,
     )
-    return result
+    return result, 200
 
 
-def calculate_total_pages(limit):
-    """Calculates the total number of pages based on the given limit"""
-    total_items = s.query(Business).count()
-
-    total_pages = (total_items // limit) + (1 if total_items % limit != 0 else 0)  # It is not clear how you calculate here. Break it down
-    return total_pages
-
-
-def total_item():
-    """query and count total items"""
-    total_items = s.query(Business).count()
+def calculate_total_items(session):
+    """Calculates the total number of items in the 'Business' collection"""
+    total_items = session.query(Business).count()
     return total_items
-
 
 @app.route("/api/business", methods=["POST"])
 def create_business():
