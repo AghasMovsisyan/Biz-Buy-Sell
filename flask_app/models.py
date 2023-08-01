@@ -90,3 +90,4 @@ engine = create_engine(database_uri)  # Creating a table
 Session = sessionmaker(bind=engine)
 
 Base.metadata.create_all(engine)
+

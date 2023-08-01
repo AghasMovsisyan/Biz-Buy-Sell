@@ -199,6 +199,7 @@ def delete_business(business_id):
         session.close()
 
 
+
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def get_resource(path):
