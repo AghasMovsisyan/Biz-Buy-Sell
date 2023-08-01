@@ -18,7 +18,7 @@ database_host = os.getenv("DATABASE_HOST")
 database_port = os.getenv("DATABASE_PORT")
 database_name = os.getenv("DATABASE_NAME")
 
-database_uri = f"postgresql+psycopg2://{database_username}:{database_password}@{database_host}:{database_port}/{database_name}"  # pylint: disable=line-too-long
+database_uri = f"postgresql+psycopg2://{database_username}:{database_password}@{database_host}:{database_port}/{database_name}"
 # Connecting to Postgres
 
 
@@ -68,27 +68,25 @@ class Business(Base):
     name = Column(String)
     user = relationship("User", back_populates="business")
 
-
     def json(self):
-        """"""
-        user_tel_number = s.query(User).get(self.user_id).tel_number
-        return {
-            "id": self.id,
-            "user_id": self.user_id,
-            "image_dir": self.image_dir,
-            "location": self.location,
-            "property_type": self.property_type,
-            "price": self.price,
-            "year_built": self.year_built,
-            "size": self.size,
-            "name": self.name,
-            "tel_number": user_tel_number,
-        }
+            session = Session()  # Create a new session
+            user_tel_number = session.query(User).get(self.user_id).tel_number
+            session.close()  # Close the session after the query
 
+            return {
+                "id": self.id,
+                "user_id": self.user_id,
+                "image_dir": self.image_dir,
+                "location": self.location,
+                "property_type": self.property_type,
+                "price": self.price,
+                "year_built": self.year_built,
+                "size": self.size,
+                "name": self.name,
+                "tel_number": user_tel_number,
+            }
 
 engine = create_engine(database_uri)  # Creating a table
 Session = sessionmaker(bind=engine)
 
 Base.metadata.create_all(engine)
-
-s = Session()

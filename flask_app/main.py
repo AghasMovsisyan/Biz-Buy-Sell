@@ -41,10 +41,12 @@ def serve_index_page():
     return Response(content, mimetype="text/html")
 
 
-
 @app.route("/api/business", methods=["GET"])
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'."""
+    MAX_LIMIT = 10
+    
+    
     try:
         page = int(request.args.get("page", 1))
         limit = int(request.args.get("limit", 3))
@@ -71,6 +73,10 @@ def get_business():
             ),
             400,
         )
+    
+
+     # Limit the maximum 'limit' value to MAX_LIMIT
+    limit = min(limit, MAX_LIMIT)
 
     offset = (page - 1) * limit
 
@@ -85,15 +91,16 @@ def get_business():
                 404,
             )
 
-        total = calculate_total_items(session)  # Renamed total_items to total
+        total = calculate_total_businesses(session)  
 
         # Calculate total pages for pagination
+        # Devide into multiple variables
         total_pages = (total // limit) + (1 if total % limit != 0 else 0)
 
         result = jsonify(
             items=[item.json() for item in paginated_items],
             totalPages=total_pages,
-            total=total,  # Renamed total_items to total
+            total=total, 
             page=page,
             limit=limit,
         )
@@ -103,7 +110,7 @@ def get_business():
         session.close()
 
 
-def calculate_total_items(session):
+def calculate_total_businesses(session):
     """Calculates the total number of items in the 'Business' collection"""
     total = session.query(Business).count()  # Renamed total_items to total
     return total
