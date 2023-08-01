@@ -32,13 +32,14 @@ def get_file(filename):
 
 
 @app.route("/", methods=["GET"])
-def metrics():
+def serve_index_page():
     """
-    A route handler for the root URL ("/") that serves the metrics page.
+    A route handler for the root URL ("/") that serves the index.html page.
     Retrieves the content of 'index.html' file and returns it as a response with HTML mimetype.
     """
     content = get_file("templates/index.html")
     return Response(content, mimetype="text/html")
+
 
 
 @app.route("/api/business", methods=["GET"])

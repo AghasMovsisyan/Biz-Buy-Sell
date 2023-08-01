@@ -5,31 +5,64 @@
         <div class="card-login bg-dark text-white" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
 
-            <div class="mb-md-5 mt-md-4 pb-5">
+            <!-- The login form -->
+          <form id="loginForm" class="mb-md-5 mt-md-4 pb-5">
+            <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+            <p class="text-white-50 mb-5">Please enter your login and password!</p>
 
-              <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-              <p class="text-white-50 mb-5">Please enter your login and password!</p>
-
-              <div class="form-outline form-white mb-4">
-                <input type="email" id="typeEmailX" class="form-control form-control-lg" placeholder="Email"/>
-              </div>
-
-              <div class="form-outline form-white mb-4">
-                <input type="password" id="typePasswordX" class="form-control form-control-lg" placeholder="Password"/>
-              </div>
-
-              <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
-
-              <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
-
-              
-
+            <div class="form-outline form-white mb-4">
+              <input type="email" id="email" class="form-control form-control-lg" placeholder="Email" />
             </div>
+
+            <div class="form-outline form-white mb-4">
+              <input type="password" id="password" class="form-control form-control-lg" placeholder="Password" />
+            </div>
+
+            <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
+
+            <button class="btn btn-outline-light btn-lg px-5" type="submit" onclick="login()">Login</button>
+          </form>
+
 
             <div>
-              <p class="mb-0">Don't have an account? <a href="#!" class="text-white-50 fw-bold">Sign Up</a>
+              <p class="mb-0">Don't have an account? <a href="#/sign-up" class="text-white-50 fw-bold">Sign Up</a>
               </p>
             </div>
+
+            <script>
+              function login() {
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+            
+                // Create an object with the email and password
+                const data = {
+                  email: email,
+                  password: password,
+                };
+            
+                // Send a POST request to the login route
+                fetch("/api/login", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+                })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    // Handle the response here (e.g., show a message or redirect to a different page)
+                    alert(data.message);
+                    if (data.user) {
+                      // If login is successful, you might redirect the user to a dashboard or profile page
+                      // For example: window.location.href = "/dashboard";
+                    }
+                  })
+                  .catch((error) => {
+                    console.error("Error:", error);
+                  });
+              }
+            </script>
+            
 
           </div>
         </div>

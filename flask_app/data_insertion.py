@@ -5,9 +5,9 @@ from models import User, Business, Session, engine
 def insert_data():
     with engine.connect() as conn:
         Users = User(
-            id=31,
-            email="armansd@mail.ru",
-            password_hash="dada5f",
+            id=32,
+            email="test@mail.ru",
+            password_hash="068154Nan",
             salt=1,
             first_name="dadf",
             last_name="adaadhlfds",
@@ -16,8 +16,8 @@ def insert_data():
         )
 
         Businesses = Business(
-            id=31,
-            user_id=31,
+            id=32,
+            user_id=32,
             image_dir="https://upload.wikimedia.org/wikipedia/commons/e/e7/Hypermartjf.JPG",
             location="Kotayq 1/8",
             property_type="Supermarket",
@@ -31,5 +31,3 @@ def insert_data():
         s.add(Users)
         s.add(Businesses)
         s.commit()
-
-
