@@ -40,14 +40,14 @@ To import the predefined data into the database, follow these steps:
 
 ## Code Formatting        
 
-## Pylint
+### Pylint
 
-#### How to use pylint
+##### How to use pylint
     
     pylint your_file.py
 
-## Black
+### Black
 
-#### How to use black
+##### How to use black
 
     black your_file.py
