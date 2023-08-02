@@ -6,6 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, joinedload
 from models import User, Business, Base, database_uri
 
+
 app = Flask(__name__)
 CORS(app)  # This will enable CORS for all routes in the app
 app.config.from_object(__name__)
@@ -195,6 +196,32 @@ def delete_business(business_id):
             session.commit()
             return jsonify(message="Business deleted successfully")
         return jsonify(message="Business not found"), 404
+    finally:
+        session.close()
+
+
+@app.route("/api/login", methods=["POST"])
+def login():
+    """Handles the login process"""
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+
+    if not email or not password:
+        return jsonify(error="Email and password are required."), 400
+
+    session = Session()
+    try:
+        user = session.query(User).filter_by(email=email).first()
+
+        if not user:
+            return jsonify(error="Invalid email."), 401
+
+        if password == user.password_hash:  # Compare provided password with stored password hash
+            # Password matches, return a success response along with user details
+            return jsonify(message="Login successful", user=user.json()), 200
+        else:
+            return jsonify(error="Invalid email or password."), 401
     finally:
         session.close()
 
