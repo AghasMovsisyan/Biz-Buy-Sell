@@ -32,9 +32,8 @@ To import the predefined data into the database, follow these steps:
        psql -U your_username -d your_database_name -f path/to/predefined_data.sql
 
 
-## Flask 
     
-#### Run Flask App
+## Run Aplication
   
     export FLASK_APP=your_flask_app.py
     flask run
@@ -49,6 +48,6 @@ To import the predefined data into the database, follow these steps:
 
 ## Black
 
-#### How to use pylint
+#### How to use black
 
     black your_file.py
