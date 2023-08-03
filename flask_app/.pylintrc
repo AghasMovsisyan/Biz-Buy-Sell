@@ -10,4 +10,4 @@ max-line-length = 100
 
 [MESSAGES CONTROL]
 # Comma-separated list of warning IDs to be ignored globally
-disable = 
+disable = C0103

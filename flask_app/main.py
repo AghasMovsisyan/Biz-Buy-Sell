@@ -4,6 +4,7 @@ from flask import Flask, Response, request, jsonify
 from flask_cors import CORS
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, joinedload
+from sqlalchemy.exc import SQLAlchemyError
 from models import User, Business, Base, database_uri
 
 
@@ -42,12 +43,10 @@ def serve_index_page():
     return Response(content, mimetype="text/html")
 
 
-
 @app.route("/api/business", methods=["GET"])
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'."""
     MAX_LIMIT = 10
-
     try:
         page = int(request.args.get("page", 1))
         limit = int(request.args.get("limit", 3))
@@ -58,7 +57,6 @@ def get_business():
             ),
             400,
         )
-
     if page < 1:
         return (
             jsonify(
@@ -66,7 +64,6 @@ def get_business():
             ),
             400,
         )
-
     if limit < 1:
         return (
             jsonify(
@@ -74,44 +71,38 @@ def get_business():
             ),
             400,
         )
-
-    # Limit the maximum 'limit' value to MAX_LIMIT
+    # Limit the maximum 'limit' value to MAX_LIMITS
     limit = min(limit, MAX_LIMIT)
-
     offset = (page - 1) * limit
-
+    # Open a new session for the API call
+    session = Session()
     try:
-        with Session() as session:  # Open a new session for the API call
-            paginated_items = session.query(Business).offset(offset).limit(limit).all()
-
-            if not paginated_items:
-                return (
-                    jsonify(error="Page not found. The requested page does not exist."),
-                    404,
-                )
-
-            total = calculate_total_businesses(session)
-
-            # Calculate total pages for pagination
-            # Divide into multiple variables
-            total_pages = (total // limit) + (1 if total % limit != 0 else 0)
-
-            result = jsonify(
-                items=[item.json() for item in paginated_items],
-                totalPages=total_pages,
-                total=total,
-                page=page,
-                limit=limit,
+        paginated_items = session.query(Business).offset(offset).limit(limit).all()
+        if not paginated_items:
+            return (
+                jsonify(error="Page not found. The requested page does not exist."),
+                404,
             )
-            return result, 200
-    except Exception as error:
-        return jsonify(error=str(error)), 500
-
+        total = calculate_total_businesses(session)
+        # Calculate total pages for pagination
+        # Devide into multiple variables
+        total_pages = (total // limit) + (1 if total % limit != 0 else 0)
+        result = jsonify(
+            items=[item.json() for item in paginated_items],
+            totalPages=total_pages,
+            total=total,
+            page=page,
+            limit=limit,
+        )
+        return result, 200
+    finally:
+        # Close the session after the API call is completed
+        session.close()
 
 
 def calculate_total_businesses(session):
     """Calculates the total number of items in the 'Business' collection"""
-    total = session.query(Business).count()  # Renamed total_items to total
+    total = session.query(Business).count()
     return total
 
 
@@ -119,32 +110,28 @@ def calculate_total_businesses(session):
 def create_business():
     """Create business"""
     data = request.json
-
+    session = Session()
     try:
-        with Session() as session:
-            user_id = data.get("user_id")
-            user = session.query(User).get(user_id)
-
-            if user:
-                business = Business(
-                    user_id=user_id,
-                    business_id=data.get("business_id"),
-                    image_dir=data.get("image_dir"),
-                    location=data.get("location"),
-                    property_type=data.get("property_type"),
-                    price=data.get("price"),
-                    year_built=data.get("year_built"),
-                    size=data.get("size"),
-                    name=data.get("name"),
-                )
-
-                session.add(business)
-                session.commit()
-
-                return jsonify(message="Business created successfully")
-            return jsonify(message="User not found"), 404
-    except Exception as error:
-        return jsonify(error=str(error)), 500
+        user_id = data.get("user_id")
+        user = session.query(User).get(user_id)
+        if user:
+            business = Business(
+                user_id=user_id,
+                business_id=data.get("business_id"),
+                image_dir=data.get("image_dir"),
+                location=data.get("location"),
+                property_type=data.get("property_type"),
+                price=data.get("price"),
+                year_built=data.get("year_built"),
+                size=data.get("size"),
+                name=data.get("name"),
+            )
+            session.add(business)
+            session.commit()
+            return jsonify(message="Business created successfully")
+        return jsonify(message="User not found"), 404
+    finally:
+        session.close()
 
 
 @app.route("/api/business/<int:business_id>", methods=["GET"])
@@ -168,32 +155,32 @@ def get_business_by_id(business_id):
 def update_business(business_id):
     """Update a specific business by ID"""
     data = request.json
-
+    session = Session()
     try:
-        with Session() as session:  # Open a new session for the API call
-            business = session.query(Business).get(business_id)
-            if business:
-                for key, value in data.items():
-                    setattr(business, key, value)
-                session.commit()
-                return jsonify(message="Business updated successfully")
-            return jsonify(message="Business not found"), 404
-    except Exception as error:
-        return jsonify(error=str(error)), 500
+        business = session.query(Business).get(business_id)
+        if business:
+            for key, value in data.items():
+                setattr(business, key, value)
+            session.commit()
+            return jsonify(message="Business updated successfully")
+        return jsonify(message="Business not found"), 404
+    finally:
+        session.close()
+
 
 @app.route("/api/business/<int:business_id>", methods=["DELETE"])
 def delete_business(business_id):
     """Delete a specific business by ID"""
+    session = Session()
     try:
-        with Session() as session:  # Open a new session for the API call
-            business = session.query(Business).get(business_id)
-            if business:
-                session.delete(business)
-                session.commit()
-                return jsonify(message="Business deleted successfully")
-            return jsonify(message="Business not found"), 404
-    except Exception as error:
-        return jsonify(error=str(error)), 500
+        business = session.query(Business).get(business_id)
+        if business:
+            session.delete(business)
+            session.commit()
+            return jsonify(message="Business deleted successfully")
+        return jsonify(message="Business not found"), 404
+    finally:
+        session.close()
 
 
 @app.route("/api/login", methods=["POST"])
@@ -206,22 +193,23 @@ def login():
     if not email or not password:
         return jsonify(error="Email and password are required."), 400
 
+    session = Session()  # Open a new session for the API call
     try:
-        with Session() as session:  # Open a new session for the API call
-            user = session.query(User).filter_by(email=email).first()
+        user = session.query(User).filter_by(email=email).first()
 
-            if not user:
-                return jsonify(error="Invalid email."), 401
+        if not user:
+            return jsonify(error="Invalid email."), 401
 
-            if password == user.password_hash:  # Compare provided password with stored password hash
-                # Password matches, return a success response along with user details
-                return jsonify(message="Login successful", user=user.json()), 200
-            else:
-                return jsonify(error="Invalid email or password."), 401
-    except Exception as error:
+        if password == user.password_hash:  # Compare provided password with stored password hash
+            # Password matches, return a success response along with user details
+            return jsonify(message="Login successful", user=user.json()), 200
+        return jsonify(error="Invalid email or password."), 401
+    except SQLAlchemyError as error:
+        # Catch specific SQLAlchemy errors and handle them
+        session.rollback()  # Rollback the transaction in case of an error
         return jsonify(error=str(error)), 500
-
-
+    finally:
+        session.close()  # Close the session after the API call is compl
 
 
 @app.route("/", defaults={"path": ""})

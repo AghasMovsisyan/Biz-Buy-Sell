@@ -1,12 +1,13 @@
-"""Models"""
+"""
+models.py
+
+This module contains the SQLAlchemy models for the database schema.
+"""
 import os
-from datetime import datetime
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, ForeignKey
-from sqlalchemy.orm import DeclarativeBase, relationship
+from sqlalchemy.orm import DeclarativeBase, relationship, sessionmaker
 from sqlalchemy import Column, Integer, String, Date
-from sqlalchemy.orm import sessionmaker
-
 
 # Load environment variables from .env file
 load_dotenv()
@@ -17,18 +18,20 @@ database_password = os.getenv("DATABASE_PASSWORD")
 database_host = os.getenv("DATABASE_HOST")
 database_port = os.getenv("DATABASE_PORT")
 database_name = os.getenv("DATABASE_NAME")
-
-database_uri = f"postgresql+psycopg2://{database_username}:{database_password}@{database_host}:{database_port}/{database_name}"
+database_uri = (
+    f"postgresql+psycopg2://{database_username}:{database_password}"
+    f"@{database_host}:{database_port}/{database_name}"
+)
 # Connecting to Postgres
 
 
 # pylint: disable=too-few-public-methods
 class Base(DeclarativeBase):
-    """Class DeclarativaBase"""
+    """Base class for SQLAlchemy models."""
 
 
 class User(Base):
-    """class representing User"""
+    """Class representing User"""
 
     __tablename__ = "User"
     id = Column(Integer, primary_key=True)
@@ -41,20 +44,20 @@ class User(Base):
     dalte_of_birth = Column(Date)
     business = relationship("Business", back_populates="user")
 
-
     def json(self):
-        """return self.{name}"""
-        return {"id": self.id,
-                "email": self.email,
-                "salt": self.salt,
-                "first_name": self.first_name,
-                "last_name": self.last_name,
-                "tel_number": self.tel_number,
-                "dalte_of_birth": self.dalte_of_birth}
+        """Return a dictionary representation of the User."""
+        return {
+            "id": self.id,
+            "email": self.email,
+            "salt": self.salt,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "tel_number": self.tel_number,
+             "dalte_of_birth": self.dalte_of_birth}
 
 
 class Business(Base):
-    """class representing Busines"""
+    """Class representing Business"""
 
     __tablename__ = "Business"
     id = Column(Integer, primary_key=True)
@@ -69,25 +72,26 @@ class Business(Base):
     user = relationship("User", back_populates="business")
 
     def json(self):
-            session = Session()  # Create a new session
-            user_tel_number = session.query(User).get(self.user_id).tel_number
-            session.close()  # Close the session after the query
+        """Return a dictionary representation of the Business."""
+        session = Session()  # Create a new session
+        user_tel_number = session.query(User).get(self.user_id).tel_number
+        session.close()  # Close the session after the query
 
-            return {
-                "id": self.id,
-                "user_id": self.user_id,
-                "image_dir": self.image_dir,
-                "location": self.location,
-                "property_type": self.property_type,
-                "price": self.price,
-                "year_built": self.year_built,
-                "size": self.size,
-                "name": self.name,
-                "tel_number": user_tel_number,
-            }
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "image_dir": self.image_dir,
+            "location": self.location,
+            "property_type": self.property_type,
+            "price": self.price,
+            "year_built": self.year_built,
+            "size": self.size,
+            "name": self.name,
+            "tel_number": user_tel_number,
+        }
+
 
 engine = create_engine(database_uri)  # Creating a table
 Session = sessionmaker(bind=engine)
 
 Base.metadata.create_all(engine)
-

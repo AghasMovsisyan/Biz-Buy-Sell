@@ -1,4 +1,8 @@
-# data_insertion.py
+"""
+data_insertion.py
+
+This module provides functions to insert data into the database.
+"""
 from datetime import datetime
 from models import User, Business, Session, engine
 
