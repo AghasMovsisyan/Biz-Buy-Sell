@@ -1,15 +1,21 @@
 var cardDisplayModule = (function () {
     /**
      * @param  {string} cardId
+     * @param  {string} authenticatedUserId
      */
-    function fetchCardDetails(cardId) {
+    function fetchCardDetails(cardId, authenticatedUserId) {
         $.ajax({
             url: `http://127.0.0.1:9000/api/business/${cardId}`,
             method: 'GET',
             success: function (data) {
                 const cardDetails = document.getElementById("card-details");
-    
-                // Create HTML content for card details
+
+                // Check if the authenticated user is the owner
+                const isOwner = data.authenticated_user_id === data.user_id;
+
+                console.log(data.authenticated_user_id)
+                console.log(data.user_id)
+                // Create HTML content for card details with Edit button if user is owner
                 const html = `
                 <div class="par">
                     <h1>${data.property_type} For Sale</h1>
@@ -17,7 +23,9 @@ var cardDisplayModule = (function () {
                 <div class="cardv">
                     <div class="card-image">
                         <img class="imgv" src="${data.image_dir}">
+                         ${isOwner ? '<button class="edit-button">Edit</button>' : ''}
                     </div>
+        
                 </div>
                 <div class="cardv-info">  
                     <ul>
@@ -29,8 +37,9 @@ var cardDisplayModule = (function () {
                     </ul>
                 </div>
                 `;
-    
+
                 // Set the HTML content in the card-details element
+                console.log(isOwner)
                 cardDetails.innerHTML = html;
             },
             error: function (error) {
@@ -38,7 +47,6 @@ var cardDisplayModule = (function () {
             }
         });
     }
-    
 
     return {
         fetchCardDetails: fetchCardDetails

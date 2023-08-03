@@ -88,6 +88,7 @@ def get_business():
         # Devide into multiple variables
         additional_page_needed = (1 if total % limit != 0 else 0)
         total_pages = (total // limit) + additional_page_needed
+        
         result = jsonify(
             data=[item.json() for item in paginated_items],
             totalPages=total_pages,
@@ -138,6 +139,10 @@ def create_business():
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
     """Retrieve a specific business by ID"""
+
+    # Hardcoded authenticatedUserId for testing purposes
+    authenticatedUserId = 51
+
     with Session() as session:
         try:
             business = (
@@ -146,7 +151,10 @@ def get_business_by_id(business_id):
                 .get(business_id)
             )
             if business:
-                return jsonify(business.json())
+                authenticated_user_id = authenticatedUserId
+                business_data = business.json()
+                business_data["authenticated_user_id"] = authenticated_user_id
+                return jsonify(business_data)
             return jsonify(message="Business not found"), 404
         except ImportError as error:
             return jsonify(error=str(error)), 500
