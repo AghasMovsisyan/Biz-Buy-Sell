@@ -88,7 +88,6 @@ def get_business():
         # Devide into multiple variables
         additional_page_needed = (1 if total % limit != 0 else 0)
         total_pages = (total // limit) + additional_page_needed
-        
         result = jsonify(
             data=[item.json() for item in paginated_items],
             totalPages=total_pages,
