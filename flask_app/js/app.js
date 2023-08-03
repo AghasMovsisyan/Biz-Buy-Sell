@@ -12,7 +12,7 @@ function fetchData(page, limitPerPage) {
     success: function(data) {
       currentPage = data.page; // Update currentPage with the value from the API response
       updatePagination(data.totalPages); // Update the pagination links
-      updateCardDisplay(data.items); // Update the card display
+      updateCardDisplay(data.data); // Update the card display
     },
     error: function(xhr, textStatus, errorThrown) {
       console.log(errorThrown);
@@ -42,8 +42,8 @@ function updatePagination(totalPages) {
   $('.pagination').html(paginationHTML);
 }
 
-function updateCardDisplay(items) {
-  const html = items
+function updateCardDisplay(data) {
+  const html = data
     .map(user => {
       return `
           <div class="card">
