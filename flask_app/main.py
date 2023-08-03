@@ -46,7 +46,7 @@ def serve_index_page():
 @app.route("/api/business", methods=["GET"])
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'."""
-    MAX_LIMIT = 10
+    max_limit = 10
     try:
         page = int(request.args.get("page", 1))
         limit = int(request.args.get("limit", 3))
@@ -72,7 +72,7 @@ def get_business():
             400,
         )
     # Limit the maximum 'limit' value to MAX_LIMITS
-    limit = min(limit, MAX_LIMIT)
+    limit = min(limit, max_limit)
     offset = (page - 1) * limit
     # Open a new session for the API call
     session = Session()

@@ -25,7 +25,6 @@ database_uri = (
 # Connecting to Postgres
 
 
-# pylint: disable=too-few-public-methods
 class Base(DeclarativeBase):
     """Base class for SQLAlchemy models."""
 
