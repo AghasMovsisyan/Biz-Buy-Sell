@@ -140,17 +140,16 @@ def get_business_by_id(business_id):
     """Retrieve a specific business by ID"""
 
     # Hardcoded authenticatedUserId for testing purposes
-    authenticatedUserId = 51
+    authenticated_user_id = 51
 
     with Session() as session:
         try:
             business = (
                 session.query(Business)
-                .options(joinedload(Business.user))
+                .options(joinedload(Business.user)) 
                 .get(business_id)
             )
             if business:
-                authenticated_user_id = authenticatedUserId
                 business_data = business.json()
                 business_data["authenticated_user_id"] = authenticated_user_id
                 return jsonify(business_data)
