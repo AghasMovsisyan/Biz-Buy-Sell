@@ -146,7 +146,7 @@ def get_business_by_id(business_id):
         try:
             business = (
                 session.query(Business)
-                .options(joinedload(Business.user)) 
+                .options(joinedload(Business.user))
                 .get(business_id)
             )
             if business:
