@@ -1,9 +1,8 @@
 var cardDisplayModule = (function () {
     /**
      * @param  {string} cardId
-     * @param  {string} authenticatedUserId
      */
-    function fetchCardDetails(cardId, authenticatedUserId) {
+    function fetchCardDetails(cardId) {
         $.ajax({
             url: `http://127.0.0.1:9000/api/business/${cardId}`,
             method: 'GET',
