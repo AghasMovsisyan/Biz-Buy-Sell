@@ -1,9 +1,13 @@
 let limitPerPage; // The default value will be provided by the API
 let currentPage; // The default value will be provided by the API
 
+const hostname = window.location.hostname;
+const port = "9000"; // Change this to the appropriate port if needed
+const serverURL = `http://${hostname}:${port}`;
+
 function fetchData(page, limitPerPage) {
   $.ajax({
-    url: `http://127.0.0.1:9000/api/business`,
+    url: `${serverURL}/api/business`,
     type: "GET",
     data: {
       page: page,
