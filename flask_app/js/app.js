@@ -15,7 +15,7 @@ function fetchData(page, limitPerPage) {
     },
     success: function(data) {
       currentPage = data.page; // Update currentPage with the value from the API response
-      updatePagination(data.totalPages); // Update the pagination links
+      updatePagination(data.items_per_page); // Update the pagination links
       updateCardDisplay(data.data); // Update the card display
     },
     error: function(xhr, textStatus, errorThrown) {
@@ -26,19 +26,19 @@ function fetchData(page, limitPerPage) {
   });
 }
 
-function updatePagination(totalPages) {
+function updatePagination(items_per_page) {
   let paginationHTML = '';
   paginationHTML += `
     <li class="page-item previous-page ${currentPage === 1 ? 'disabled' : ''}">
       <a class="page-link" href="#">Prev</a>
     </li>
   `;
-  for (let i = 1; i <= totalPages; i++) {
+  for (let i = 1; i <= items_per_page; i++) {
     const activeClass = i === currentPage ? 'active' : '';
     paginationHTML += `<li class="page-item ${activeClass}"><a class="page-link" href="#">${i}</a></li>`;
   }
   paginationHTML += `
-    <li class="page-item next-page ${currentPage === totalPages ? 'disabled' : ''}">
+    <li class="page-item next-page ${currentPage === items_per_page ? 'disabled' : ''}">
       <a class="page-link" href="#">Next</a>
     </li>
   `;

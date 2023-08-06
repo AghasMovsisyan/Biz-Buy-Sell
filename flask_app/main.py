@@ -87,15 +87,14 @@ def get_business():
         # Calculate total pages for pagination
         # Devide into multiple variables
         additional_page_needed = (1 if total % limit != 0 else 0)
-        total_pages = (total // limit) + additional_page_needed
+        items_per_page = (total // limit) + additional_page_needed
         result = jsonify(
             data=[item.json() for item in paginated_items],
-            totalPages=total_pages,
+            items_per_page=items_per_page,
             total=total,
             page=page,
-            limit=limit,
         )
-        return result, 200
+        return result, 200  
     finally:
         # Close the session after the API call is completed
         session.close()
