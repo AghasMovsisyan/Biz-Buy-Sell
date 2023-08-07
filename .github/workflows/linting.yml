@@ -23,7 +23,7 @@ jobs:
           pip install pylint black
 
       - name: Copy .pylintrc
-        run: cp /biz-buy-sell/flask_app/.pylintrc $HOME
+        run: cp flask_app/.pylintrc $HOME
 
       - name: Run pylint
         run: pylint --rcfile=$HOME/.pylintrc $(git ls-files '*.py')  # Replace '*.py' with your actual file patterns
