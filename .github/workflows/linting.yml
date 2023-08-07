@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pylint black
+          pip install pylint black -r requirements.txt
 
       - name: Copy .pylintrc
         run: cp flask_app/.pylintrc $HOME
