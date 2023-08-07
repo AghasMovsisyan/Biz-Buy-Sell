@@ -86,7 +86,7 @@ def get_business():
         total = calculate_total_businesses(session)
         # Calculate total pages for pagination
         # Devide into multiple variables
-        additional_page_needed = (1 if total % limit != 0 else 0)
+        additional_page_needed = 1 if total % limit != 0 else 0
         items_per_page = (total // limit) + additional_page_needed
         result = jsonify(
             data=[item.json() for item in paginated_items],
@@ -98,6 +98,7 @@ def get_business():
     finally:
         # Close the session after the API call is completed
         session.close()
+
 
 def calculate_total_businesses(session):
     """Calculates the total number of items in the 'Business' collection"""
@@ -205,7 +206,9 @@ def login():
         if not user:
             return jsonify(error="Invalid email."), 401
 
-        if password == user.password_hash:  # Compare provided password with stored password hash
+        if (
+            password == user.password_hash
+        ):  # Compare provided password with stored password hash
             # Password matches, return a success response along with user details
             return jsonify(message="Login successful", user=user.json()), 200
         return jsonify(error="Invalid email or password."), 401

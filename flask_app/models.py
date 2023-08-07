@@ -52,7 +52,8 @@ class User(Base):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "tel_number": self.tel_number,
-             "dalte_of_birth": self.dalte_of_birth}
+            "dalte_of_birth": self.dalte_of_birth,
+        }
 
 
 class Business(Base):

@@ -6,6 +6,7 @@ This module provides functions to insert data into the database.
 from datetime import datetime
 from models import User, Business, Session
 
+
 def insert_data():
     """Insert data in the database"""
     users = User(
