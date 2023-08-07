@@ -82,7 +82,7 @@ footer p {
 }
 
 .text-end {
-  margin-left: 500px;
+  margin-left: 551px;
 }
 input {
   padding: 3px 15px;
@@ -106,7 +106,7 @@ input {
   text-align: center;
 }
 
-/********************************************************/
+/***********************Search Bar*********************************/
 
 
 .height{
@@ -114,24 +114,32 @@ input {
  }
  
 
- .search{
- position: relative;
- box-shadow: 0 0 40px rgba(51, 51, 51, .1);
-   
- }
+ .search {
+  position: relative;
+  /* box-shadow: 0 0 40px rgba(51, 51, 51, .1); Remove or adjust this line */
+  width: 1078px; /* Set a fixed width for the search bar */
+  right: 10px;
+  margin: 0 auto; /* Center the search bar horizontally */
+}
 
- .search input{
-
-  height: 55px;
+.search input {
+  height: 54px;
   text-indent: 25px;
   border: 2px solid #d6d4d4;
+  width: 100%; /* Set the input width to 100% to fill the parent container */
+}
 
+.search .fa-search {
+  position: absolute;
+}
 
- }
-
-.h3 {
-  padding: 22px;
-  text-align: center;
+.search button {
+  position: absolute;
+  top: 2px;
+  right: 1px;
+  height: 50px;
+  width: 100px;
+  background: blue;
 }
 
  #product_container .productBox {
@@ -157,16 +165,13 @@ input {
 
  }
 
- .search button{
 
-  position: absolute;
-  top: 3px;
-  right: 1px;
-  height: 50px;
-  width: 100px;
-  background: blue;
-
- }
+ .searchl {
+  height: 27px;
+  width: 27px;
+  margin-left: -1023px;
+  margin-top: 14px;
+}
 /*-----------------------------------------------------------------*/
  *{
   margin: 0;
@@ -223,6 +228,7 @@ input {
   font-size: 1em;
   margin-bottom: 5px;
 }
+
 
 .pagination{
   justify-content: center;
@@ -429,6 +435,3 @@ input {
 .edit-button:hover {
   background-color: #ff3401; /* Add your desired background color on hover */
 }
-
-
-/* -----------------Search Bar----------------------- */
