@@ -50,17 +50,15 @@ function updateCardDisplay(data) {
   const html = data
     .map(user => {
       return `
-          <div class="card">
-          <div class="card-image"><img class="img" src=${user.image_dir}></div>
-          <div class="card-info">
-            <h3>${user.name}</h3>  
-            <p>${user.location}</p>
-            <p>${user.price}$<p>
-            <a href="#/view/${user.id}">
-              <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-            </a>
-          </div>
+      <div class="card" onclick="window.location='#/view/${user.id}';" style="cursor: pointer;">
+        <div class="card-image"><img class="img" src=${user.image_dir}></div>
+        <div class="card-info">
+          <h3>${user.name}</h3>  
+          <p>${user.location}<img class="location" src="../logo/icons8-location-48.png"></p>
+          <p>${user.price}<img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></p>
         </div>
+    </div>
+    
       `;
     })
     .join("");
