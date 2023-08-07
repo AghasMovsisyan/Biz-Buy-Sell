@@ -5,7 +5,7 @@ on:
       - main  # Replace with your main branch name if different
 
 jobs:
-  lint:
+  lint_and_format:
     name: Linting and Formatting
     runs-on: ubuntu-latest
 
@@ -19,10 +19,14 @@ jobs:
           python-version: 3.11.4  # Replace with the Python version you want to use (e.g., 3.7, 3.8, etc.)
 
       - name: Install dependencies
-        run: pip install pylint black
+        run: |
+          pip install pylint black
+
+      - name: Copy .pylintrc
+        run: cp /home/aghas/biz-buy-sell/flask_app/.pylintrc $HOME
 
       - name: Run pylint
-        run: pylint $(git ls-files '*.py')  # Replace 'your_source_code.py' with your actual Python files or use wildcards to specify multiple files
+        run: pylint --rcfile=$HOME/.pylintrc $(git ls-files '*.py')  # Replace '*.py' with your actual file patterns
 
       - name: Run black
-        run: black  $(git ls-files '*.py')  # Replace 'your_source_code.py' with your actual Python files or use wildcards to specify multiple files
+        run: black --check $(git ls-files '*.py')  # Replace '*.py' with your actual file patterns
