@@ -99,7 +99,6 @@ def get_business():
         # Close the session after the API call is completed
         session.close()
 
-
 def calculate_total_businesses(session):
     """Calculates the total number of items in the 'Business' collection"""
     total = session.query(Business).count()
