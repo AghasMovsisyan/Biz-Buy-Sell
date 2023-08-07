@@ -24,7 +24,7 @@
 }
   
 .jumbotron .container {
-    max-width: 40rem;
+    max-width: 40re m;
 }
   
 footer {
@@ -78,11 +78,11 @@ footer p {
 }
 
 .navigation {
-  margin-left: 80px;
+  margin-left: 90px;
 }
 
 .text-end {
-  margin-left: 551px;
+  margin-left: 545px;
 }
 input {
   padding: 3px 15px;
@@ -90,21 +90,6 @@ input {
   line-height: 25px;
 }
 
-.buy {
-  text-align: center;
-}
-
-.login {
-  text-align: center;
-}
-
-.sign {
-  text-align: center;
-}
-
-.h {
-  text-align: center;
-}
 
 /***********************Search Bar*********************************/
 
@@ -117,8 +102,8 @@ input {
  .search {
   position: relative;
   /* box-shadow: 0 0 40px rgba(51, 51, 51, .1); Remove or adjust this line */
-  width: 1078px; /* Set a fixed width for the search bar */
-  right: 10px;
+  width: 1080px; /* Set a fixed width for the search bar */
+  right: 4px;
   margin: 0 auto; /* Center the search bar horizontally */
 }
 
@@ -167,9 +152,9 @@ input {
 
 
  .searchl {
-  height: 27px;
-  width: 27px;
-  margin-left: -1023px;
+  height: 25px;
+  width: 25px;
+  margin-left: -1030px;
   margin-top: 14px;
 }
 /*-----------------------------------------------------------------*/
@@ -185,6 +170,16 @@ input {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+}
+
+.containert{
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-left: 325px;
 }
 
 .card-content{
@@ -400,6 +395,7 @@ input {
   height: 22px;
   width: 18px;
   padding-bottom: 4px;
+  margin-left: 2px;
 }
 
 /* -----------------------------------Login--------------------------------------------------- */
@@ -440,4 +436,40 @@ input {
 
 .edit-button:hover {
   background-color: #ff3401; /* Add your desired background color on hover */
+}
+
+/* -- */
+
+
+.pagination-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+}
+
+.pagination {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.limit-select-container {
+  align-items: center;
+}
+
+#limitSelect {
+  margin-left: 50px;
+}
+
+.mr-2 {
+  margin-left: 50px;
+  margin-bottom:  3px;
 }

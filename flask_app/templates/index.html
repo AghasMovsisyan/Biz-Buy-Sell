@@ -55,21 +55,25 @@
     </section>
     <div class="album py-5 bg-light">
       <h2 style="text-align: center;">Business For Sale</h2>
-      <div class="container">
+      <div class="containert">
         <div class="row">
           <div class="card-content"></div>
         </div>
-        <div class="row">
-          <div class="pagination"></div>
-        </div>
-        <div class="row">
-            <label for="limitSelect" class="form-label">Markets Per Page:</label>
-            <select id="limitSelect" class="form-select">
-              <option value="3" selected>3</option>
+        <div class="pagination-row">
+          <div class="pagination-container">
+            <ul class="pagination"></ul>
+          </div>
+          <div class="limit-select-container">
+            <label for="limitSelect" class="mr-2">Markets per Page:</label>
+            <select id="limitSelect" class="form-select form-select-sm">
+              <option value="3">3</option>
               <option value="6">6</option>
               <option value="9">9</option>
             </select>
+          </div>
         </div>
+        
+       
       </div>
     </div>
   </main>
