@@ -94,7 +94,7 @@ def get_business():
             total=total,
             page=page,
         )
-        return result, 200  
+        return result, 200
     finally:
         # Close the session after the API call is completed
         session.close()
