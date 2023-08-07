@@ -1,0 +1,28 @@
+name: Code Quality Checks
+on:
+  push:
+    branches:
+      - main  # Replace with your main branch name if different
+
+jobs:
+  lint:
+    name: Linting and Formatting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11.4  # Replace with the Python version you want to use (e.g., 3.7, 3.8, etc.)
+
+      - name: Install dependencies
+        run: pip install pylint black
+
+      - name: Run pylint
+        run: pylint main.py  # Replace 'your_source_code.py' with your actual Python files or use wildcards to specify multiple files
+
+      - name: Run black
+        run: black --check main.py  # Replace 'your_source_code.py' with your actual Python files or use wildcards to specify multiple files
