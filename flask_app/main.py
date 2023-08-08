@@ -83,7 +83,7 @@ def get_business():
                 jsonify(error="Page not found. The requested page does not exist."),
                 404,
             )
-        total = calculate_total_businesses(session)
+        total = session.query(Business).count()
         # Calculate total pages for pagination
         # Devide into multiple variables
         additional_page_needed = 1 if total % limit != 0 else 0
@@ -98,12 +98,6 @@ def get_business():
     finally:
         # Close the session after the API call is completed
         session.close()
-
-
-def calculate_total_businesses(session):
-    """Calculates the total number of items in the 'Business' collection"""
-    total = session.query(Business).count()
-    return total
 
 
 @app.route("/api/business", methods=["POST"])
