@@ -99,7 +99,7 @@ def get_business():
         # Close the session after the API call is completed
         session.close()
 
-    
+
 @app.route("/api/business", methods=["POST"])
 def create_business():
     """Create business"""
@@ -132,7 +132,6 @@ def create_business():
     finally:
         session.close()
 
-    
 
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
@@ -164,7 +163,7 @@ def update_business(business_id):
     session = Session()
     try:
         business = session.query(Business).get(business_id)
-        if business:    
+        if business:
             for key, value in data.items():
                 setattr(business, key, value)
             session.commit()
