@@ -1,3 +1,4 @@
+
 var cardDisplayModule = (function () {
     // Get the current hostname and port to build the server URL
     const hostname = window.location.hostname;
@@ -17,8 +18,6 @@ var cardDisplayModule = (function () {
                 // Check if the authenticated user is the owner
                 const isOwner = data.authenticated_user_id === data.user_id;
 
-                console.log(data.authenticated_user_id);
-                console.log(data.user_id);
                 // Create HTML content for card details with Edit button if user is owner
                 const html = `
                 <div class="par">
@@ -42,13 +41,12 @@ var cardDisplayModule = (function () {
                 <div class="cardv-descript">
                     <h2 class="decsribe-paragraph">Business Description</h2>
                     <div class="cardv-description">
-                        <p>This tool rearranges the order of lines in the given textual data. It uses the Knuth method to do it, aka the Fisher and Yates order permutation algorithm. The behavior of the algorithm changes based on how many lines are shuffled at the same time. By default, it takes every single line in turn (1, 2, 3, …, n), generates a random number from 1 to n for it, which is the new position, and moves the line to this new place. It can also take several lines at once and move them together without splitting them apart. For example, if you enter the number 2 in the group size option, it will glue the 1st and 2nd lines together and move them together to </p>
+                        <p>A hotel is a commercial establishment that provides lodging, meals, and other services to guests, travelers, and tourists. Hotels can range from small family-run businesses to large international chains. Most hotels list a variety of services, such as room service, laundry, and concierge. Some hotels also offer meeting and conference facilities, fitness centers, and spas.</p>
                     </div>
                 </div>  
                 `;
 
                 // Set the HTML content in the card-details element
-                console.log(isOwner);
                 cardDetails.innerHTML = html;
             },
             error: function (error) {

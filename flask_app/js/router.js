@@ -53,13 +53,18 @@ var router = (function () {
     function init(container) {
         $container = $(container);
 
+        console.log('Router initialized with container:', container);
+
         if (window.location.hash) {
+            console.log('Initial hash found:', window.location.hash);
             loadPage(window.location.hash);
         } else {
+            console.log('No initial hash found, loading default route (#/)');
             loadPage('#/');
         }
 
         $(window).on('hashchange', function () {
+            console.log('Hash changed:', window.location.hash);
             loadPage(window.location.hash);
         });
     }
