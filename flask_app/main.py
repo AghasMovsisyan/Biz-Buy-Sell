@@ -102,46 +102,50 @@ def get_business():
 
 @app.route("/api/business", methods=["POST"])
 def create_business():
-    """Create business"""
+    """Create businesses"""
     data = request.json
     session = Session()
     try:
-        user_id = data.get("user_id")
-        user = session.query(User).get(user_id)
-        if user:
-            business_id = data.get("id")
-            existing_business = (
-                session.query(Business).filter(Business.id == business_id).first()
-            )
-            if existing_business:
-                return jsonify(message="Business already exists"), 400
+        for business_data in data:
+            user_id = business_data.get("user_id")
+            user = session.query(User).get(user_id)
+            
+            if user:
+                business_id = business_data.get("id")
+                existing_business = (
+                    session.query(Business).filter(Business.id == business_id).first()
+                )
+                if existing_business:
+                    return jsonify(message=f"Business with id {business_id} already exists"), 400
 
-            business = Business(
-                user_id=user_id,
-                id=business_id,
-                image_dir=data.get("image_dir"),
-                location=data.get("location"),
-                property_type=data.get("property_type"),
-                price=data.get("price"),
-                year_built=data.get("year_built"),
-                size=data.get("size"),
-                name=data.get("name"),
-                business_description=data.get("business_description"),
-            )
-            session.add(business)
-            session.commit()
-            return jsonify(message="Business created successfully")
-        return jsonify(message="User not found"), 404
+                business = Business(
+                    user_id=user_id,
+                    id=business_id,
+                    image_dir=business_data.get("image_dir"),
+                    location=business_data.get("location"),
+                    property_type=business_data.get("property_type"),
+                    price=business_data.get("price"),
+                    year_built=business_data.get("year_built"),
+                    size=business_data.get("size"),
+                    name=business_data.get("name"),
+                    business_description=business_data.get("business_description"),
+                )
+                session.add(business)
+                
+            else:
+                return jsonify(message=f"User with id {user_id} not found"), 404
+
+        session.commit()
+        return jsonify(message="Businesses created successfully")
     finally:
         session.close()
-
 
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
     """Retrieve a specific business by ID"""
 
     # Hardcoded authenticatedUserId for testing purposes
-    authenticated_user_id = 51
+    authenticated_user_id = 2
 
     with Session() as session:
         try:
@@ -222,18 +226,14 @@ def login():
         session.close()  # Close the session after the API call is compl
 
 
-@app.route("/api/me/<int:user_id>", methods=["GET"])
-def get_user_by_id(user_id):
-    """Retrieve user information by user ID"""
-    with Session() as session:
-        try:
-            user = session.query(User).get(user_id)
-            if user:
-                return jsonify(user.json()), 200
-            return jsonify(message="User not found"), 404
-        except SQLAlchemyError as error:
-            return jsonify(error=str(error)), 500
-
+@app.route('/api/me', methods=['GET'])
+def get_current_user():
+    # Replace this with your actual logic to retrieve the user_id
+    # For now, let's assume you have a user_id hardcoded
+    user_id = 2
+    
+    # Return the user_id in JSON format
+    return jsonify({'user_id': user_id})
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")

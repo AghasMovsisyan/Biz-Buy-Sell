@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create New Business</title>
+    <!-- Include your CSS and JavaScript dependencies here -->
+</head>
+<body>
+    <h1>Create New Business</h1>
+    <form id="createBusinessForm">
+        <!-- Remove the "User ID" field, as it will be fetched from /api/me -->
+        
+        <label for="imageDir">Image Directory:</label>
+        <input type="text" id="imageDir" name="image_dir" required><br><br>
+        
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required><br><br>
+        
+        <label for="propertyType">Property Type:</label>
+        <input type="text" id="propertyType" name="property_type" required><br><br>
+        
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required><br><br>
+        
+        <label for="yearBuilt">Year Built:</label>
+        <input type="text" id="yearBuilt" name="year_built" required><br><br>
+        
+        <label for="size">Size:</label>
+        <input type="number" id="size" name="size" required><br><br>
+        
+        <label for="name">Business Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="businessDescription">Business Description:</label>
+        <textarea id="businessDescription" name="business_description" rows="4" required></textarea><br><br>
+        
+        <button type="submit">Create Business</button>
+    </form>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/edit.js"></script>
+</body>
+</html>

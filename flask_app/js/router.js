@@ -22,6 +22,9 @@ var router = (function () {
                 if (route.includes('#/view/')) {
                     var cardId = route.split('/')[2];
                     loadCardTemplate(cardId);
+                } else if (route.includes('#/edit/')) {
+                    var editCardId = route.split('/')[2];
+                    loadEditTemplate(editCardId);
                 }
                 break;
         }
@@ -47,6 +50,17 @@ var router = (function () {
         });
     }
 
+     /**
+     * @param  {string} cardId
+     */
+     function loadEditTemplate(cardId) {
+        // Load the edit.html template
+        $.get('../templates/edit.html', function (data) {
+            $container.html(data);
+
+            // Check if the cardId is provided
+        });
+    }
     /**
      * @param  {string} container
      */
@@ -57,7 +71,7 @@ var router = (function () {
 
         if (window.location.hash) {
             console.log('Initial hash found:', window.location.hash);
-            loadPage(window.location.hash);
+                loadPage(window.location.hash);
         } else {
             console.log('No initial hash found, loading default route (#/)');
             loadPage('#/');

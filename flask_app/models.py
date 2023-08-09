@@ -24,10 +24,8 @@ database_uri = (
 )
 # Connecting to Postgres
 
-
 class Base(DeclarativeBase):
     """Base class for SQLAlchemy models."""
-
 
 class User(Base):
     """Class representing User"""
@@ -41,7 +39,7 @@ class User(Base):
     last_name = Column(String)
     tel_number = Column(String)
     dalte_of_birth = Column(Date)
-    business = relationship("Business", back_populates="user")
+    businesses = relationship("Business", back_populates="user")  # Define the one-to-many relationship
 
     def json(self):
         """Return a dictionary representation of the User."""
@@ -54,7 +52,6 @@ class User(Base):
             "tel_number": self.tel_number,
             "dalte_of_birth": self.dalte_of_birth,
         }
-
 
 class Business(Base):
     """Class representing Business"""
@@ -70,14 +67,12 @@ class Business(Base):
     size = Column(Integer)
     name = Column(String)
     business_description = Column(String)
-    user = relationship("User", back_populates="business")
+
+    # Define the relationship between User and Business
+    user = relationship("User", back_populates="businesses")
 
     def json(self):
         """Return a dictionary representation of the Business."""
-        session = Session()  # Create a new session
-        user_tel_number = session.query(User).get(self.user_id).tel_number
-        session.close()  # Close the session after the query
-
         return {
             "id": self.id,
             "user_id": self.user_id,
@@ -89,9 +84,8 @@ class Business(Base):
             "size": self.size,
             "name": self.name,
             "business_description": self.business_description,
-            "tel_number": user_tel_number,
+            "tel_number": self.user.tel_number,  # Access the tel_number directly from the User relationship
         }
-
 
 engine = create_engine(database_uri)  # Creating a table
 Session = sessionmaker(bind=engine)

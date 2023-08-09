@@ -1,43 +1,55 @@
-"""
-data_insertion.py
-
-This module provides functions to insert data into the database.
-"""
-from datetime import datetime
+from datetime import date
 from models import User, Business, Session
 
-
 def insert_data():
-    """Insert data in the database"""
-    users = User(
-        id=13,
-        email="astestadas",
+    """Insert data into the database."""
+    session = Session()
+
+    user = User(
+        id=14,
+        email="astest@example.com",
         password_hash="dsada51",
         salt=3,
-        first_name="dadf",
-        last_name="adaadhlfds",
+        first_name="John",
+        last_name="Doe",
         tel_number="+37494388825",
-        dalte_of_birth=datetime(516, 11, 18),
+        dalte_of_birth=date(2000, 1, 1),
     )
 
-    businesses = Business(
-        id=13,
-        user_id=13,
-        image_dir="",
-        location="Avan 10/5",
-        property_type="Hotel",
-        price=500000,
-        year_built="2012",
-        size=4000,
-        name="Sofi Hotel",
-        business_description="",
-    )
+    # Create multiple businesses for the user
+    businesses = [
+        Business(
+            id=14,
+            user_id=user.id,
+            image_dir="",
+            location="Avan 10/6",
+            property_type="Office",
+            price=300000,
+            year_built="2010",
+            size=2500,
+            name="Business 1",
+            business_description="Description for Business 1",
+        ),
+        Business(
+            id=15,
+            user_id=user.id,
+            image_dir="",
+            location="Downtown",
+            property_type="Retail",
+            price=400000,
+            year_built="2015",
+            size=1800,
+            name="Business 2",
+            business_description="Description for Business 2",
+        ),
+        # Add more businesses as needed
+    ]
 
-    session = Session()
-    session.add(users)
-    session.add(businesses)
+    user.businesses.extend(businesses)  # Link the businesses to the user
+
+    session.add(user)
     session.commit()
     session.close()
 
-
-insert_data()
+if __name__ == "__main__":
+    insert_data()
