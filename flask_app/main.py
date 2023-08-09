@@ -110,7 +110,9 @@ def create_business():
         user = session.query(User).get(user_id)
         if user:
             business_id = data.get("id")
-            existing_business = session.query(Business).filter(Business.id == business_id).first()
+            existing_business = (
+                session.query(Business).filter(Business.id == business_id).first()
+            )
             if existing_business:
                 return jsonify(message="Business already exists"), 400
 
