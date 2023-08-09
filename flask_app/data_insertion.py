@@ -2,6 +2,7 @@
 from datetime import date
 from models import User, Business, Session
 
+
 def insert_data():
     """Insert data into the database."""
     session = Session()
@@ -51,6 +52,7 @@ def insert_data():
     session.add(user)
     session.commit()
     session.close()
+
 
 if __name__ == "__main__":
     insert_data()

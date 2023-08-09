@@ -24,8 +24,10 @@ database_uri = (
 )
 # Connecting to Postgres
 
+
 class Base(DeclarativeBase):
     """Base class for SQLAlchemy models."""
+
 
 class User(Base):
     """Class representing User"""
@@ -52,6 +54,7 @@ class User(Base):
             "tel_number": self.tel_number,
             "dalte_of_birth": self.dalte_of_birth,
         }
+
 
 class Business(Base):
     """Class representing Business"""
@@ -86,6 +89,7 @@ class Business(Base):
             "business_description": self.business_description,
             "tel_number": self.user.tel_number,
         }
+
 
 engine = create_engine(database_uri)  # Creating a table
 Session = sessionmaker(bind=engine)

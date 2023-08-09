@@ -115,7 +115,12 @@ def create_business():
                     session.query(Business).filter(Business.id == business_id).first()
                 )
                 if existing_business:
-                    return jsonify(message=f"Business with id {business_id} already exists"), 400
+                    return (
+                        jsonify(
+                            message=f"Business with id {business_id} already exists"
+                        ),
+                        400,
+                    )
 
                 business = Business(
                     user_id=user_id,
@@ -138,6 +143,7 @@ def create_business():
         return jsonify(message="Businesses created successfully")
     finally:
         session.close()
+
 
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
@@ -225,7 +231,7 @@ def login():
         session.close()  # Close the session after the API call is compl
 
 
-@app.route('/api/me', methods=['GET'])
+@app.route("/api/me", methods=["GET"])
 def get_current_user():
     """hardcoded user_id"""
     # Replace this with your actual logic to retrieve the user_id
@@ -233,7 +239,8 @@ def get_current_user():
     user_id = 2
 
     # Return the user_id in JSON format
-    return jsonify({'user_id': user_id})
+    return jsonify({"user_id": user_id})
+
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
