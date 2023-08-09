@@ -41,7 +41,7 @@ var cardDisplayModule = (function () {
                 <div class="cardv-descript">
                     <h2 class="decsribe-paragraph">Business Description</h2>
                     <div class="cardv-description">
-                        <p>A hotel is a commercial establishment that provides lodging, meals, and other services to guests, travelers, and tourists. Hotels can range from small family-run businesses to large international chains. Most hotels list a variety of services, such as room service, laundry, and concierge. Some hotels also offer meeting and conference facilities, fitness centers, and spas.</p>
+                        <p>${data.business_description}</p>
                     </div>
                 </div>  
                 `;

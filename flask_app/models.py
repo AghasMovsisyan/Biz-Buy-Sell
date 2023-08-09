@@ -69,6 +69,7 @@ class Business(Base):
     year_built = Column(String)
     size = Column(Integer)
     name = Column(String)
+    business_description = Column(String)
     user = relationship("User", back_populates="business")
 
     def json(self):
@@ -87,11 +88,11 @@ class Business(Base):
             "year_built": self.year_built,
             "size": self.size,
             "name": self.name,
+            "business_description": self.business_description,
             "tel_number": user_tel_number,
         }
 
 
 engine = create_engine(database_uri)  # Creating a table
 Session = sessionmaker(bind=engine)
-
 Base.metadata.create_all(engine)

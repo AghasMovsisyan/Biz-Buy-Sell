@@ -10,26 +10,27 @@ from models import User, Business, Session
 def insert_data():
     """Insert data in the database"""
     users = User(
-        id=51,
-        email="test",
-        password_hash="a123456",
-        salt=1,
+        id=13,
+        email="astestadas",
+        password_hash="dsada51",
+        salt=3,
         first_name="dadf",
         last_name="adaadhlfds",
-        tel_number="+37498888888",
+        tel_number="+37494388825",
         dalte_of_birth=datetime(516, 11, 18),
     )
 
     businesses = Business(
-        id=51,
-        user_id=51,
+        id=13,
+        user_id=13,
         image_dir="",
-        location="Armavir 1/8",
+        location="Avan 10/5",
         property_type="Hotel",
-        price=350000,
-        year_built="2014",
-        size=3500,
-        name="Zear Hotel",
+        price=500000,
+        year_built="2012",
+        size=4000,
+        name="Sofi Hotel",
+        business_description="",
     )
 
     session = Session()
@@ -37,3 +38,6 @@ def insert_data():
     session.add(businesses)
     session.commit()
     session.close()
+
+
+insert_data()

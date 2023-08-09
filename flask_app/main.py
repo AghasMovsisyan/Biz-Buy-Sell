@@ -126,6 +126,7 @@ def create_business():
                 year_built=data.get("year_built"),
                 size=data.get("size"),
                 name=data.get("name"),
+                business_description=data.get("business_description"),
             )
             session.add(business)
             session.commit()
