@@ -99,7 +99,7 @@ def get_business():
         # Close the session after the API call is completed
         session.close()
 
-
+    
 @app.route("/api/business", methods=["POST"])
 def create_business():
     """Create business"""
@@ -109,9 +109,14 @@ def create_business():
         user_id = data.get("user_id")
         user = session.query(User).get(user_id)
         if user:
+            business_id = data.get("id")
+            existing_business = session.query(Business).filter(Business.id == business_id).first()
+            if existing_business:
+                return jsonify(message="Business already exists"), 400
+
             business = Business(
                 user_id=user_id,
-                business_id=data.get("business_id"),
+                id=business_id,
                 image_dir=data.get("image_dir"),
                 location=data.get("location"),
                 property_type=data.get("property_type"),
@@ -127,6 +132,7 @@ def create_business():
     finally:
         session.close()
 
+    
 
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
@@ -158,7 +164,7 @@ def update_business(business_id):
     session = Session()
     try:
         business = session.query(Business).get(business_id)
-        if business:
+        if business:    
             for key, value in data.items():
                 setattr(business, key, value)
             session.commit()
