@@ -221,6 +221,19 @@ def login():
         session.close()  # Close the session after the API call is compl
 
 
+@app.route("/api/me/<int:user_id>", methods=["GET"])
+def get_user_by_id(user_id):
+    """Retrieve user information by user ID"""
+    with Session() as session:
+        try:
+            user = session.query(User).get(user_id)
+            if user:
+                return jsonify(user.json()), 200
+            return jsonify(message="User not found"), 404
+        except SQLAlchemyError as error:
+            return jsonify(error=str(error)), 500
+
+
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def get_resource(path):
