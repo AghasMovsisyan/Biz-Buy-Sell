@@ -1,3 +1,4 @@
+"""Data inserion"""
 from datetime import date
 from models import User, Business, Session
 

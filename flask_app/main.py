@@ -109,7 +109,6 @@ def create_business():
         for business_data in data:
             user_id = business_data.get("user_id")
             user = session.query(User).get(user_id)
-            
             if user:
                 business_id = business_data.get("id")
                 existing_business = (
@@ -131,7 +130,7 @@ def create_business():
                     business_description=business_data.get("business_description"),
                 )
                 session.add(business)
-                
+
             else:
                 return jsonify(message=f"User with id {user_id} not found"), 404
 
@@ -228,10 +227,11 @@ def login():
 
 @app.route('/api/me', methods=['GET'])
 def get_current_user():
+    """hardcoded user_id"""
     # Replace this with your actual logic to retrieve the user_id
     # For now, let's assume you have a user_id hardcoded
     user_id = 2
-    
+
     # Return the user_id in JSON format
     return jsonify({'user_id': user_id})
 

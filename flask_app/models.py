@@ -39,7 +39,7 @@ class User(Base):
     last_name = Column(String)
     tel_number = Column(String)
     dalte_of_birth = Column(Date)
-    businesses = relationship("Business", back_populates="user")  # Define the one-to-many relationship
+    businesses = relationship("Business", back_populates="user")
 
     def json(self):
         """Return a dictionary representation of the User."""
@@ -84,7 +84,7 @@ class Business(Base):
             "size": self.size,
             "name": self.name,
             "business_description": self.business_description,
-            "tel_number": self.user.tel_number,  # Access the tel_number directly from the User relationship
+            "tel_number": self.user.tel_number,
         }
 
 engine = create_engine(database_uri)  # Creating a table
