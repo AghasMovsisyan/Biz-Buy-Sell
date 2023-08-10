@@ -509,4 +509,21 @@ input {
   padding: 10px; /* Add padding for better visual separation */
 }
 
-/* -----------View---------------- */
+/* -----------edit.html---------------- */
+
+.crate {
+  margin-top: 80px;
+}
+
+input#updateLocation {
+  width: 430px;
+}
+
+.edit-letter {
+  font-size: large;
+}
+
+.edit-icon {
+  width: 22px;
+  height: 22px;
+}

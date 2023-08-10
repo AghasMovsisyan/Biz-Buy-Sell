@@ -3,87 +3,90 @@
 <head>
     <title>Create or Update Business</title>
     <!-- Include your CSS and JavaScript dependencies here -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">Create or Update Business</h1>
-        
-        <!-- Create Business Form -->
-        <form id="createBusinessForm">
-            <div class="form-group">
-                <label for="imageDir">Image Directory:</label>
-                <input type="text" class="form-control" id="createImageDir" name="image_dir" required>
-            </div>
-            <div class="form-group">
-                <label for="createLocation">Location:</label>
-                <input type="text" class="form-control" id="createLocation" name="location" required>
-            </div>
-            <div class="form-group">
-                <label for="createPropertyType">Property Type:</label>
-                <input type="text" class="form-control" id="createPropertyType" name="property_type" required>
-            </div>
-            <div class="form-group">
-                <label for="createPrice">Price:</label>
-                <input type="number" class="form-control" id="createPrice" name="price" required>
-            </div>
-            <div class="form-group">
-                <label for="createYearBuilt">Year Built:</label>
-                <input type="text" class="form-control" id="createYearBuilt" name="year_built" required>
-            </div>
-            <div class="form-group">
-                <label for="createSize">Size:</label>
-                <input type="number" class="form-control" id="createSize" name="size" required>
-            </div>
-            <div class="form-group">
-                <label for="createName">Business Name:</label>
-                <input type="text" class="form-control" id="createName" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="createBusinessDescription">Business Description:</label>
-                <textarea class="form-control" id="createBusinessDescription" name="business_description" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Create Business</button>
-        </form>
-        
+        <h1 class="mb-4">Update Business</h1>
         <!-- Update Business Form -->
         <form id="updateBusinessForm">
            <div id="card-details">
-             
             <div class="form-group">
-                <label for="updateImageDir">Image Directory:</label>
+                <label class="edit-letter" or="updateImageDir">Image Directory:</label>
                 <input type="text" class="form-control" id="updateImageDir" name="image_dir" required>
             </div>
             <div class="form-group">
-                <label for="updateLocation">Location:</label>
+                <label class="edit-letter" for="updateLocation">Location:<img class="edit-icon" src="../logo/icons8-location-48.png"></label>
                 <input type="text" class="form-control" id="updateLocation" name="location" required>
             </div>
             <div class="form-group">
-                <label for="updatePropertyType">Property Type:</label>
+                <label class="edit-letter" for="updatePropertyType">Property Type:</label>
                 <input type="text" class="form-control" id="updatePropertyType" name="property_type" required>
             </div>
             <div class="form-group">
-                <label for="updatePrice">Price:</label>
+                <label class="edit-letter" for="updatePrice">Price:<img class="edit-icon" src="../logo/free-icon-dollar-symbol-2150150.png"></label>
                 <input type="number" class="form-control" id="updatePrice" name="price" required>
             </div>
             <div class="form-group">
-                <label for="updateYearBuilt">Year Built:</label>
+                <label class="edit-letter" for="updateYearBuilt">Year Built:</label>
                 <input type="text" class="form-control" id="updateYearBuilt" name="year_built" required>
             </div>
             <div class="form-group">
-                <label for="updateSize">Size:</label>
+                <label class="edit-letter" for="updateSize">Size:<img class="edit-icon" src="../logo/icons8-size-24.png"></label>
                 <input type="number" class="form-control" id="updateSize" name="size" required>
             </div>
             <div class="form-group">
-                <label for="updateName">Business Name:</label>
+                <label class="edit-letter" for="updateName">Business Name:</label>
                 <input type="text" class="form-control" id="updateName" name="name" required>
             </div>
             <div class="form-group">
-                <label for="updateBusinessDescription">Business Description:</label>
+                <label class="edit-letter" for="updateBusinessDescription">Business Description:</label>
                 <textarea class="form-control" id="updateBusinessDescription" name="business_description" rows="4" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Update Business</button>
         </form>
-           </div>
+        
+        <div class="crate">
+            <h1 class="mb-4">Create Business</h1>
+            <!-- Create Business Form -->
+            <form id="createBusinessForm">
+                <div class="form-group">
+                    <label class="edit-letter" for="createImageDir">Image Directory:></label>
+                    <input type="text" class="form-control" id="createImageDir" name="image_dir" required>
+                </div>
+                <div class="form-group">
+                    <label class="edit-letter" for="createLocation">Location:<img class="edit-icon" src="../logo/icons8-location-48.png"></label>
+                    <input type="text" class="form-control" id="createLocation" name="location" required>
+                </div>
+                <div class="form-group">
+                    <label class="edit-letter" for="createPropertyType">Property Type:</label>
+                    <input type="text" class="form-control" id="createPropertyType" name="property_type" required>
+                </div>
+                <div class="form-group">
+                    <label class="edit-letter" for="createPrice">Price:<img class="edit-icon" src="../logo/free-icon-dollar-symbol-2150150.png"></label>
+                    <input type="number" class="form-control" id="createPrice" name="price" required>
+                </div>
+                <div class="form-group">
+                    <label class="edit-letter" for="createYearBuilt">Year Built:</label>
+                    <input type="text" class="form-control" id="createYearBuilt" name="year_built" required>
+                </div>
+                <div class="form-group">
+                    <label class="edit-letter" for="createSize">Size:<img class="edit-icon" src="../logo/icons8-size-24.png"></label>
+                    <input type="number" class="form-control" id="createSize" name="size" required>
+                </div>
+                <div class="form-group">
+                    <label class="edit-letter" for="createName">Business Name:</label>
+                    <input type="text" class="form-control" id="createName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label class="edit-letter" for="createBusinessDescription">Business Description:</label>
+                    <textarea class="form-control" id="createBusinessDescription" name="business_description" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Business</button>
+            </form>
+        
+        </div>
+        </div>
     </div>
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
