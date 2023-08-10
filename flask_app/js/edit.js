@@ -36,6 +36,12 @@ $(document).ready(function() {
                     contentType: 'application/json', // Specify content type
                     success: function(response) {
                         // Handle success (e.g., display a success message)
+                        $('#successMessageCreate').fadeIn();
+
+                        // Hide the success message after a delay (e.g., 3000ms = 3 seconds)
+                        setTimeout(function() {
+                            $('#successMessageCreate').fadeOut();
+                        }, 3000);
                         console.log('Business created successfully:', response);
                     },
                     error: function(error) {
@@ -74,7 +80,12 @@ $(document).ready(function() {
             contentType: 'application/json', // Specify content type
             success: function(response) {
                 // Handle success (e.g., display a success message)
-                console.log('Business updated successfully:', response);
+                $('#successMessage').fadeIn();
+
+                // Hide the success message after a delay (e.g., 3000ms = 3 seconds)
+                setTimeout(function() {
+                    $('#successMessage').fadeOut();
+                }, 3000);
             },
             error: function(error) {
                 // Handle error (e.g., display an error message)
