@@ -523,7 +523,8 @@ input#updateLocation {
   font-size: large;
 }
 
-.edit-icon {
-  width: 22px;
-  height: 22px;
+.scrollable-content-edit  {
+  max-height: 900px; /* Set the maximum height for the scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling when content overflows */
+  padding: 10px;
 }
