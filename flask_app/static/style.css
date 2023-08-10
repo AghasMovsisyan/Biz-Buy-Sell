@@ -453,17 +453,18 @@ input {
   position: absolute;
   top: 357px; /* Adjust the top position as per your preference */
   right: 0px; /* Adjust the right position as per your preference */
-  background-color: #ff0000; /* Add your desired background color */
+  background-color: #0b0fe9; /* Add your desired background color */
   color: white; /* Add your desired text color */
   border: none;
   padding: 10px 18px;
   font-size: 15px;
   border-radius: 5px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .edit-button:hover {
-  background-color: #ff3401; /* Add your desired background color on hover */
+  background-color: #7404f5; /* Add your desired background color on hover */
 }
 
 /* -- */
