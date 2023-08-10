@@ -1,60 +1,94 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create New Business</title>
+    <title>Create or Update Business</title>
     <!-- Include your CSS and JavaScript dependencies here -->
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">Create New Business</h1>
+        <h1 class="mb-4">Create or Update Business</h1>
+        
+        <!-- Create Business Form -->
         <form id="createBusinessForm">
-            <!-- Remove the "User ID" field, as it will be fetched from /api/me -->
-            
             <div class="form-group">
                 <label for="imageDir">Image Directory:</label>
-                <input type="text" class="form-control" id="imageDir" name="image_dir" required>
+                <input type="text" class="form-control" id="createImageDir" name="image_dir" required>
             </div>
-            
             <div class="form-group">
-                <label for="location">Location:</label>
-                <input type="text" class="form-control" id="location" name="location" required>
+                <label for="createLocation">Location:</label>
+                <input type="text" class="form-control" id="createLocation" name="location" required>
             </div>
-            
             <div class="form-group">
-                <label for="propertyType">Property Type:</label>
-                <input type="text" class="form-control" id="propertyType" name="property_type" required>
+                <label for="createPropertyType">Property Type:</label>
+                <input type="text" class="form-control" id="createPropertyType" name="property_type" required>
             </div>
-            
             <div class="form-group">
-                <label for="price">Price:</label>
-                <input type="number" class="form-control" id="price" name="price" required>
+                <label for="createPrice">Price:</label>
+                <input type="number" class="form-control" id="createPrice" name="price" required>
             </div>
-            
             <div class="form-group">
-                <label for="yearBuilt">Year Built:</label>
-                <input type="text" class="form-control" id="yearBuilt" name="year_built" required>
+                <label for="createYearBuilt">Year Built:</label>
+                <input type="text" class="form-control" id="createYearBuilt" name="year_built" required>
             </div>
-            
             <div class="form-group">
-                <label for="size">Size:</label>
-                <input type="number" class="form-control" id="size" name="size" required>
+                <label for="createSize">Size:</label>
+                <input type="number" class="form-control" id="createSize" name="size" required>
             </div>
-            
             <div class="form-group">
-                <label for="name">Business Name:</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <label for="createName">Business Name:</label>
+                <input type="text" class="form-control" id="createName" name="name" required>
             </div>
-            
             <div class="form-group">
-                <label for="businessDescription">Business Description:</label>
-                <textarea class="form-control" id="businessDescription" name="business_description" rows="4" required></textarea>
+                <label for="createBusinessDescription">Business Description:</label>
+                <textarea class="form-control" id="createBusinessDescription" name="business_description" rows="4" required></textarea>
             </div>
-            
             <button type="submit" class="btn btn-primary">Create Business</button>
         </form>
+        
+        <!-- Update Business Form -->
+        <form id="updateBusinessForm">
+           <div id="card-details">
+             
+            <div class="form-group">
+                <label for="updateImageDir">Image Directory:</label>
+                <input type="text" class="form-control" id="updateImageDir" name="image_dir" required>
+            </div>
+            <div class="form-group">
+                <label for="updateLocation">Location:</label>
+                <input type="text" class="form-control" id="updateLocation" name="location" required>
+            </div>
+            <div class="form-group">
+                <label for="updatePropertyType">Property Type:</label>
+                <input type="text" class="form-control" id="updatePropertyType" name="property_type" required>
+            </div>
+            <div class="form-group">
+                <label for="updatePrice">Price:</label>
+                <input type="number" class="form-control" id="updatePrice" name="price" required>
+            </div>
+            <div class="form-group">
+                <label for="updateYearBuilt">Year Built:</label>
+                <input type="text" class="form-control" id="updateYearBuilt" name="year_built" required>
+            </div>
+            <div class="form-group">
+                <label for="updateSize">Size:</label>
+                <input type="number" class="form-control" id="updateSize" name="size" required>
+            </div>
+            <div class="form-group">
+                <label for="updateName">Business Name:</label>
+                <input type="text" class="form-control" id="updateName" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="updateBusinessDescription">Business Description:</label>
+                <textarea class="form-control" id="updateBusinessDescription" name="business_description" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Business</button>
+        </form>
+           </div>
     </div>
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/edit_update.js"></script>
+    <script src="../js/router.js"></script>
     <script src="../js/edit.js"></script>
 </body>
 </html>

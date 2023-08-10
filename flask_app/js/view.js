@@ -1,8 +1,8 @@
 var cardDisplayModule = (function () {
-     // Get the current hostname and port to build the server URL
-     const hostname = window.location.hostname;
-     const port = "9000"; // Change this to the appropriate port if needed
-     const serverURL = `http://${hostname}:${port}`;
+    // Get the current hostname and port to build the server URL
+    const hostname = window.location.hostname;
+    const port = "9000"; // Change this to the appropriate port if needed
+    const serverURL = `http://${hostname}:${port}`;
 
     /**
      * @param  {string} cardId
@@ -13,11 +13,13 @@ var cardDisplayModule = (function () {
             method: 'GET',
             success: function (data) {
                 const cardDetails = document.getElementById("card-details");
-    
+
                 // Check if the authenticated user is the owner
                 const isOwner = data.authenticated_user_id === data.user_id;
-    
+
                 // Create HTML content for card details with Edit button if user is owner
+                const editLink = isOwner ? `<a href="#/edit/${cardId}" class="edit-button">Edit</a>` : '';
+
                 const html = `
                     <div class="par">
                         <h1>${data.property_type} For Sale</h1>
@@ -25,7 +27,7 @@ var cardDisplayModule = (function () {
                     <div class="cardv">
                         <div class="card-image">
                             <img class="imgv" src="${data.image_dir}">
-                             ${isOwner ? '<a href="#/edit/' + cardId + '" class="edit-button">Edit</a>' : ''}
+                            ${editLink}
                         </div>
                     </div>
                     <div class="cardv-info">  
@@ -40,11 +42,11 @@ var cardDisplayModule = (function () {
                     <div class="cardv-descript">
                         <h2 class="decsribe-paragraph">Business Description</h2>
                         <div class="cardv-description">
-                            <p>${data.business_description}</p>
+                            <p>${data.business_description}</p> 
                         </div>
                     </div>  
                 `;
-    
+
                 // Set the HTML content in the card-details element
                 cardDetails.innerHTML = html;
             },
@@ -53,7 +55,6 @@ var cardDisplayModule = (function () {
             }
         });
     }
-    
 
     return {
         fetchCardDetails: fetchCardDetails

@@ -18,7 +18,7 @@ var router = (function () {
             case '#/sign-up':
                 loadTemplate('../templates/auth/sign-up.html');
                 break;
-            default:
+            default:    
                 if (route.includes('#/view/')) {
                     var cardId = route.split('/')[2];
                     loadCardTemplate(cardId);
@@ -50,17 +50,19 @@ var router = (function () {
         });
     }
 
-     /**
+    /**
      * @param  {string} cardId
      */
-     function loadEditTemplate(cardId) {
+    function loadEditTemplate(cardId) {
         // Load the edit.html template
         $.get('../templates/edit.html', function (data) {
             $container.html(data);
-
-            // Check if the cardId is provided
+    
+            // Fetch card details and populate the form
+            updateDisplayModule.fetchUpdateDetails(cardId, true); // Pass an additional parameter to indicate editing
         });
     }
+
     /**
      * @param  {string} container
      */
@@ -71,7 +73,7 @@ var router = (function () {
 
         if (window.location.hash) {
             console.log('Initial hash found:', window.location.hash);
-                loadPage(window.location.hash);
+            loadPage(window.location.hash);
         } else {
             console.log('No initial hash found, loading default route (#/)');
             loadPage('#/');
