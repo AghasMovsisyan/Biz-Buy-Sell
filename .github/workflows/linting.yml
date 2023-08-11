@@ -2,7 +2,7 @@ name: Code Quality Checks
 on:
   push:
     branches:
-      - main  # Replace with your main branch name if different
+      - main
 
 jobs:
   lint_and_format:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: 3.11.4  # Replace with the Python version you want to use (e.g., 3.7, 3.8, etc.)
+          python-version: 3.11.4  
 
       - name: Install dependencies
         run: |
@@ -26,7 +26,7 @@ jobs:
         run: cp flask_app/.pylintrc $HOME
 
       - name: Run pylint
-        run: pylint --rcfile=$HOME/.pylintrc $(git ls-files '*.py')  # Replace '*.py' with your actual file patterns
+        run: pylint --rcfile=$HOME/.pylintrc $(git ls-files '*.py')  
 
       - name: Run black
-        run: black --check $(git ls-files '*.py')  # Replace '*.py' with your actual file patterns
+        run: black --check $(git ls-files '*.py')  
