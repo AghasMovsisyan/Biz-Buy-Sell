@@ -42,7 +42,7 @@ var cardDisplayModule = (function () {
                     <div class="cardv-descript">
                         <h2 class="decsribe-paragraph">Business Description</h2>
                         <div class="cardv-description">
-                            <p>${data.business_description}</p> 
+                            <p>${data.description}</p> 
                         </div>
                     </div>  
                 `;

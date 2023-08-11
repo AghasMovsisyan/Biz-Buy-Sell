@@ -21,7 +21,7 @@ var updateDisplayModule = (function () {
                     $('#updateYearBuilt').val(data.year_built);
                     $('#updateSize').val(data.size);
                     $('#updateName').val(data.name);
-                    $('#updateBusinessDescription').val(data.business_description);
+                    $('#updateBusinessDescription').val(data.description);
                 }
             },
             error: function (error) {

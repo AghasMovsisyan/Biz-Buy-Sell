@@ -132,7 +132,7 @@ def create_business():
                     year_built=business_data.get("year_built"),
                     size=business_data.get("size"),
                     name=business_data.get("name"),
-                    business_description=business_data.get("business_description"),
+                    description=business_data.get("description"),
                 )
                 session.add(business)
 

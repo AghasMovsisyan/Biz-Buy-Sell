@@ -69,7 +69,7 @@ class Business(Base):
     year_built = Column(String)
     size = Column(Integer)
     name = Column(String)
-    business_description = Column(String)
+    description = Column(String)
 
     # Define the relationship between User and Business
     user = relationship("User", back_populates="businesses")
@@ -86,7 +86,7 @@ class Business(Base):
             "year_built": self.year_built,
             "size": self.size,
             "name": self.name,
-            "business_description": self.business_description,
+            "description": self.description,
             "tel_number": self.user.tel_number,
         }
 

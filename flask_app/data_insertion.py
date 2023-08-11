@@ -30,7 +30,7 @@ def insert_data():
             year_built="2010",
             size=2500,
             name="Business 1",
-            business_description="Description for Business 1",
+            description="Description for Business 1",
         ),
         Business(
             id=15,
@@ -42,7 +42,7 @@ def insert_data():
             year_built="2015",
             size=1800,
             name="Business 2",
-            business_description="Description for Business 2",
+            description="Description for Business 2",  
         ),
         # Add more businesses as needed
     ]

@@ -12,7 +12,7 @@ $(document).ready(function() {
             year_built: $('#createYearBuilt').val(),
             size: $('#createSize').val(),
             name: $('#createName').val(),
-            business_description: $('#createBusinessDescription').val()
+            description: $('#createBusinessDescription').val()
         };
         
         // Get user_id from /api/me if available
@@ -66,7 +66,7 @@ $(document).ready(function() {
             year_built: $('#updateYearBuilt').val(),
             size: $('#updateSize').val(),
             name: $('#updateName').val(),
-            business_description: $('#updateBusinessDescription').val()
+            description: $('#updateBusinessDescription').val()
         };
         
         // Get the cardId from the URL hash
