@@ -49,7 +49,7 @@ def get_business():
     max_limit = 10
     try:
         page = int(request.args.get("page", 1))
-        limit = int(request.args.get("limit", 3))
+        limit = int(request.args.get("limit", 6))
     except ValueError:
         return (
             jsonify(
