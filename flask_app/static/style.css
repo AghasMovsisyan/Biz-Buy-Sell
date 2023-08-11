@@ -1,7 +1,13 @@
 :root {
     --jumbotron-padding-y: 3rem;
 }
-  
+
+
+body {
+  background-color: rgb(245, 245, 245) !important;
+
+}
+
 .jumbotron {
     padding-top: var(--jumbotron-padding-y);
     padding-bottom: var(--jumbotron-padding-y);
@@ -10,8 +16,8 @@
 }
 @media (min-width: 768px) {
     .jumbotron {
-      padding-top: calc(var(--jumbotron-padding-y) * 1);
-      padding-bottom: calc(var(--jumbotron-padding-y) * 1);
+      padding-top: calc(var(--jumbotron-padding-y) * 0.3);
+      padding-bottom: calc(var(--jumbotron-padding-y) * 0.3);
     }
 }
   
@@ -108,7 +114,7 @@ input {
 }
 
 .search input {
-  height: 54px;
+  height: 40px;
   text-indent: 25px;
   border: 2px solid #d6d4d4;
   width: 100%; /* Set the input width to 100% to fill the parent container */
@@ -120,10 +126,10 @@ input {
 
 .search button {
   position: absolute;
-  top: 2px;
+  top: 1px;
   right: 1px;
-  height: 50px;
-  width: 100px;
+  height: 38px;
+  width: 75px;
   background: blue;
 }
 
@@ -154,8 +160,8 @@ input {
  .searchl {
   height: 25px;
   width: 25px;
-  margin-left: -1030px;
-  margin-top: 14px;
+  margin-left: -1034px;
+  margin-top: 8px;
 }
 /*-----------------------------------------------------------------*/
  *{
@@ -508,9 +514,8 @@ input {
 
 /*------------------Scroll----------------------*/
 .scrollable-content {
-  max-height: 700px; /* Set the maximum height for the scrollable area */
+  max-height: 750px; /* Set the maximum height for the scrollable area */
   overflow-y: auto; /* Enable vertical scrolling when content overflows */
-  padding: 10px; /* Add padding for better visual separation */
 }
 
 /* -----------edit.html---------------- */

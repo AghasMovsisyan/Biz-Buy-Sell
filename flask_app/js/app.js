@@ -1,8 +1,6 @@
 let limitPerPage; // The default value will be provided by the API
 let currentPage; // The default value will be provided by the API
 
-const hostname = window.location.hostname;
-const port = "9000"; // Change this to the appropriate port if needed
 const serverURL = "";
 
 function fetchData(page, limitPerPage) {

@@ -1,8 +1,6 @@
 var cardDisplayModule = (function () {
     // Get the current hostname and port to build the server URL
-    const hostname = window.location.hostname;
-    const port = "9000"; // Change this to the appropriate port if needed
-    const serverURL = `http://${hostname}:${port}`;
+    const serverURL = "";
 
     /**
      * @param  {string} cardId
