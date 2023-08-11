@@ -178,7 +178,7 @@ input {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-left: 325px;
+  margin-left: -55px;
 }
 
 .card-content{
@@ -191,8 +191,8 @@ input {
 .card{
   position: relative;
   background: #fff;
-  max-width: 325px;
-  width: 325px;
+  max-width: 330px;
+  width: 330px;
   height: auto;
   margin: 25px;
   box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
@@ -273,7 +273,7 @@ input {
 }
 .img {
   height: 210px;
-  width: 325px;
+  width: 330px;
 }
 
 
@@ -324,6 +324,7 @@ input {
 /* view page */
 /*-----------------------------------------------------------------------------------------------------------------*/
 
+
 .cardv{
     background: #fff;
     max-width: 550px;
@@ -335,6 +336,7 @@ input {
     box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
     border-radius: 10px;
     overflow: hidden;
+    display: flex; /* Use Flexbox for better alignment */
     justify-content: center;
 }
 
@@ -356,7 +358,8 @@ input {
   justify-content: center;
   text-align: center;
   margin-top: -400px;
-  margin-right: -700px;  
+  left: 1150px;
+  position: absolute;
 }
 .cardv-info ul {
   list-style: none;
@@ -383,7 +386,7 @@ input {
   font-size: 16px;
 }
 .cardv-descript{
-  width: 1071px;
+  width: 1150px;
 }
 .cardv-description {
     padding: 10px;
@@ -528,4 +531,25 @@ input#updateLocation {
   max-height: 900px; /* Set the maximum height for the scrollable area */
   overflow-y: auto; /* Enable vertical scrolling when content overflows */
   padding: 10px;
+}
+
+/* ------------------- */
+
+.scrollable-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.scrollable-content {
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.card-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center cards horizontally */
+}
+
+.width {
+  width: 100%;
 }
