@@ -5,6 +5,7 @@ var router = (function () {
      * @param  {string} route
      */
     function loadPage(route) {
+        console.log("Load Page",route)
         switch (route) {
             case '/':
                 loadTemplate('../templates/index.html');
