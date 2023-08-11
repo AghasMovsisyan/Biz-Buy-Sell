@@ -1,11 +1,5 @@
 # Project Setup and Run Instructions
 
-## Installation
-
-To install the required dependencies, run the following command:
-        
-    pip install -r requirements.txt
-
 ## Dependencies
 
 This project relies on a PostgreSQL database for data storage and retrieval. Make sure you have a PostgreSQL database instance set up and the necessary credentials to access it.
@@ -19,6 +13,12 @@ To connect to the database, you'll need to provide the following environment var
 - DATABASE_NAME=your_database_name
 
 Make sure to update the `.env` file with the correct values for these variables before running the project.
+
+## Installation
+
+To install the required dependencies, run the following command:
+        
+    pip install -r requirements.txt
 
 
 ## Data Import
