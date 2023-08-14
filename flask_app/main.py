@@ -42,6 +42,7 @@ def serve_index_page():
     content = get_file("templates/index.html")
     return Response(content, mimetype="text/html")
 
+
 @app.route("/api/business", methods=["GET"])
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'."""
@@ -78,8 +79,14 @@ def get_business():
     try:
         paginated_items = (
             session.query(Business)
-            .with_entities(Business.id, Business.user_id, Business.image_dir,
-            Business.location, Business.price, Business.name)
+            .with_entities(
+                Business.id,
+                Business.user_id,
+                Business.image_dir,
+                Business.location,
+                Business.price,
+                Business.name,
+            )
             .offset(offset)
             .limit(limit)
             .all()
@@ -96,7 +103,7 @@ def get_business():
         result = jsonify(
             data=[
                 {
-                    "id" : item.id,   
+                    "id": item.id,
                     "image_dir": item.image_dir,
                     "location": item.location,
                     "price": item.price,
