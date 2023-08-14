@@ -9,7 +9,7 @@ from models import User, Business, Base, database_uri
 
 
 app = Flask(__name__)
-CORS(app)  # This will enable CORS for all routes in the app
+CORS(app)  # This will enable CORS   for all routes in the app
 app.config.from_object(__name__)
 
 engine = create_engine(database_uri)
@@ -78,7 +78,7 @@ def get_business():
     try:
         paginated_items = (
             session.query(Business)
-            .with_entities(Business.image_dir, Business.location, Business.price, Business.name)
+            .with_entities(Business.id, Business.user_id, Business.image_dir, Business.location, Business.price, Business.name)
             .offset(offset)
             .limit(limit)
             .all()
@@ -94,7 +94,8 @@ def get_business():
         items_per_page = (total // limit) + additional_page_needed
         result = jsonify(
             data=[
-                {
+                {   
+                    "id" : item.id,   
                     "image_dir": item.image_dir,
                     "location": item.location,
                     "price": item.price,
@@ -103,7 +104,7 @@ def get_business():
                 for item in paginated_items
             ],
             items_per_page=items_per_page,
-            total=total,
+            total=total,        
             page=page,
         )
         return result, 200
