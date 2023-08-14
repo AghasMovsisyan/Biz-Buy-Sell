@@ -48,7 +48,7 @@ function updateCardDisplay(data) {
   const html = data
     .map(user => {
       return `
-      <div class="card" onclick="window.location='#/view/${user.id}';" style="cursor: pointer;">
+      <div class="card" onclick="window.location='#/business/${user.id}';" style="cursor: pointer;">
         <div class="card-image"><img class="img" src=${user.image_dir}></div>
         <div class="card-info">
           <h3>${user.name}</h3>   
