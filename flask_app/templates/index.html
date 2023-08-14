@@ -42,40 +42,40 @@
   </header>
 
   <main id="container" role="main">
-    <section class="jumbotron text-center">
-      <div class="width row height d-flex justify-content-center align-items-center">
-        <div class="col-md-7">
-          <div class="search">
-            <a href=""><i class="fa fa-search"><img class="searchl" src="../logo/icons8-search-50.png" alt="search-icon"></i></a>
-            <input type="text" class="form-control" placeholder="Search Business">
-            <button class="btn btn-primary">Search</button>
+      <section class="jumbotron text-center bg-light">
+        <div class="width row height d-flex justify-content-center align-items-center">
+          <div class="col-md-7">
+            <div class="search">
+              <a href=""><i class="fa fa-search"><img class="searchl" src="../logo/icons8-search-50.png" alt="search-icon"></i></a>
+              <input type="text" class="form-control" placeholder="Search Business">
+              <button class="btn btn-primary">Search</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="album py-7 bg-light ">
+        <div class="scrollable-content"> 
+          <h2 style="text-align: center;">Business For Sale</h2>
+          <div class="containert">
+            <div class="row">
+              <div class="card-content"></div>
+            </div>
+            <div class="pagination-row">
+              <div class="pagination-container">
+                <ul class="pagination"></ul>
+              </div>
+              <div class="limit-select-container">
+                <label for="limitSelect" class="mr-2">Markets per Page:</label>
+                <select id="limitSelect" class="form-select form-select-sm">
+                  <option value="3">3</option>
+                  <option value="6">6</option>
+                  <option value="9">9</option>
+                </select>
+              </div>
+            </div>    
           </div>
         </div>
       </div>
-    </section>
-    <div class="album py-5">
-      <div class="scrollable-content"> 
-        <h2 style="text-align: center;">Business For Sale</h2>
-        <div class="containert">
-          <div class="row">
-            <div class="card-content"></div>
-          </div>
-          <div class="pagination-row">
-            <div class="pagination-container">
-              <ul class="pagination"></ul>
-            </div>
-            <div class="limit-select-container">
-              <label for="limitSelect" class="mr-2">Markets per Page:</label>
-              <select id="limitSelect" class="form-select form-select-sm">
-                <option value="3">3</option>
-                <option value="6">6</option>
-                <option value="9">9</option>
-              </select>
-            </div>
-          </div>    
-        </div>
-      </div>
-    </div>
   </main>
 
   <script src="../js/app.js"></script>

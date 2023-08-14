@@ -42,7 +42,6 @@ def serve_index_page():
     content = get_file("templates/index.html")
     return Response(content, mimetype="text/html")
 
-
 @app.route("/api/business", methods=["GET"])
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'."""
@@ -77,7 +76,13 @@ def get_business():
     # Open a new session for the API call
     session = Session()
     try:
-        paginated_items = session.query(Business).offset(offset).limit(limit).all()
+        paginated_items = (
+            session.query(Business)
+            .with_entities(Business.image_dir, Business.location, Business.price, Business.name)
+            .offset(offset)
+            .limit(limit)
+            .all()
+        )
         if not paginated_items:
             return (
                 jsonify(error="Page not found. The requested page does not exist."),
@@ -85,11 +90,18 @@ def get_business():
             )
         total = session.query(Business).count()
         # Calculate total pages for pagination
-        # Devide into multiple variables
         additional_page_needed = 1 if total % limit != 0 else 0
         items_per_page = (total // limit) + additional_page_needed
         result = jsonify(
-            data=[item.json() for item in paginated_items],
+            data=[
+                {
+                    "image_dir": item.image_dir,
+                    "location": item.location,
+                    "price": item.price,
+                    "name": item.name,
+                }
+                for item in paginated_items
+            ],
             items_per_page=items_per_page,
             total=total,
             page=page,
@@ -99,6 +111,7 @@ def get_business():
         # Close the session after the API call is completed
         session.close()
 
+    
 
 @app.route("/api/business", methods=["POST"])
 def create_business():
