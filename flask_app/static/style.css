@@ -465,9 +465,6 @@ input {
 }
 
 .edit-button {
-  position: absolute;
-  top: 357px; /* Adjust the top position as per your preference */
-  right: 0px; /* Adjust the right position as per your preference */
   background-color: #0b0fe9; /* Add your desired background color */
   color: white; /* Add your desired text color */
   border: none;
@@ -476,6 +473,7 @@ input {
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
+  margin-left: 250px;
 }
 
 .edit-button:hover {

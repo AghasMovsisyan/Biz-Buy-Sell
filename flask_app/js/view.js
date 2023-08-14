@@ -26,7 +26,6 @@ var cardDisplayModule = (function () {
                 <div class="cardv">
                     <div class="card-image">
                         <img class="imgv" src="${data.image_dir}">
-                        ${editLink}
                     </div>
                 </div>
                 <div class="cardv-info">  
@@ -36,7 +35,8 @@ var cardDisplayModule = (function () {
                         <li><strong>Price:</strong> <span>${data.price} <img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></span></li>
                         <li><strong>Size:</strong> <span>${data.size}<img class="size" src="../logo/icons8-size-24.png "</span></li>
                         <li><strong>Telephone Number:</strong> <span>${data.tel_number} <img class="ico1" src="../logo/telephone-call.png"></span></li> 
-                    </ul>
+                        </ul>
+                        ${editLink}
                 </div>
                 <div class="cardv-descript">
                     <h2 class="decsribe-paragraph">Business Description</h2>
