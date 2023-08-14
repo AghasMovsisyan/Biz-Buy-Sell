@@ -37,7 +37,12 @@ var cardDisplayModule = (function () {
                             <li><strong>Telephone Number:</strong> <span>${data.tel_number} <img class="ico1" src="../logo/telephone-call.png"></span><input type="text" id="edit-tel-${cardId}" value="${data.tel_number}" style="display: none;"></li>
                         </ul>
                         ${editLink}
-                        ${isOwner ? `<button class="save-button" data-card-id="${cardId}" style="display: none;">Save</button>` : ''}
+                        ${isOwner ? `
+                        <div>
+                            <button class="save-button" data-card-id="${cardId}" style="display: none;">Save</button>
+                            <button class="cancel-button" style="display: none;">Cancel</button>
+                        </div>
+                    ` : ''}
                     </div>
                     <div class="cardv-descript">
                         <h2 class="decsribe-paragraph">Business Description</h2>
@@ -55,7 +60,7 @@ var cardDisplayModule = (function () {
                 const editButton = cardDetails.querySelector('.edit-button');
                 if (editButton) {
                     editButton.addEventListener('click', function () {
-                        // Show editable fields and Save button
+                        // Show editable fields, "Save" and "Cancel" buttons
                         const cardInfo = document.getElementById(`card-info-${cardId}`);
                         cardInfo.querySelectorAll('span').forEach(span => {
                             span.style.display = 'none';
@@ -67,10 +72,36 @@ var cardDisplayModule = (function () {
                         if (saveButton) {
                             saveButton.style.display = 'inline';
                         }
+                        const cancelButton = cardInfo.querySelector('.cancel-button');
+                        if (cancelButton) {
+                            cancelButton.style.display = 'inline'; // Display the "Cancel" button
+                        }
                         editButton.style.display = 'none';
                     });
                 }
+                
+                // Add event listener to the "Cancel" button
+                const cancelButton = cardDetails.querySelector('.cancel-button');
+                if (cancelButton) {
+                    cancelButton.addEventListener('click', function () {
+                        // Hide editable fields and "Save" and "Cancel" buttons, and show "Edit" button
+                        const cardInfo = document.getElementById(`card-info-${cardId}`);
+                        cardInfo.querySelectorAll('input').forEach(input => {
+                            input.style.display = 'none';
+                        });
+                        cardInfo.querySelectorAll('span').forEach(span => {
+                            span.style.display = 'inline';
+                        });
+                        const saveButton = cardInfo.querySelector('.save-button');
+                        if (saveButton) {
+                            saveButton.style.display = 'none';
+                        }
+                        cancelButton.style.display = 'none';
+                        editButton.style.display = 'inline'; // Show the "Edit" button again
+                    });
+                }
 
+                
                 // Add event listener to the "Save" button
                 const saveButton = cardDetails.querySelector('.save-button');
                 if (saveButton) {
@@ -88,7 +119,7 @@ var cardDisplayModule = (function () {
                         data.price = editedPrice;
                         data.size = editedSize;
                         data.tel_number = editedTel;
-
+                        
                         // Send updated data to the server
                         $.ajax({
                             type: 'PUT', // Use 'PUT' or 'PATCH' as appropriate for your API
