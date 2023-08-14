@@ -331,83 +331,89 @@ input {
 /*-----------------------------------------------------------------------------------------------------------------*/
 
 
-.cardv{
+.cardv {
     background: #fff;
     max-width: 550px;
     width: 550px;
     height: 400px;
     margin: 25px auto;
     margin-top: 5px;
-    margin-left: 384px ;
+    margin-left: 384px;
     box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
     border-radius: 10px;
     overflow: hidden;
-    display: flex; /* Use Flexbox for better alignment */
+    display: flex;
     justify-content: center;
 }
 
 .imgv {
-  height: 500px;
-  width: 650px;
+    height: 500px;
+    width: 650px;
 }
 
 .par {
-  margin-left: 480px;
-  padding: 5px;
-  margin-top: 80px;
+    margin-left: 480px;
+    padding: 5px;
+    margin-top: 80px;
 }
 
 .cardv-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-top: -400px;
-  left: 1150px;
-  position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: -400px;
+    margin-left: 770px;
 }
+
 .cardv-info ul {
-  list-style: none;
-  padding: 0;
+    list-style: none;
+    padding: 0;
 }
 
 .cardv-info ul li {
-  margin-bottom: 23px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #000;
+    margin-bottom: 23px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #000;
 }
 
 .cardv-info ul li:last-child {
-  margin-bottom: 2px;
-  padding-bottom: 2px;
-  border-bottom: none;
+    margin-bottom: 2px;
+    padding-bottom: 2px;
+    border-bottom: none;
 }
 
 .cardv-info ul li strong {
-  font-size: 19px;
+    font-size: 19px;
 }
 
 .cardv-info ul li span {
-  font-size: 16px;
+    font-size: 16px;
 }
-.cardv-descript{
-  width: 1150px;
+
+.cardv-descript {
+    width: 1150px;
 }
+
 .cardv-description {
     padding: 10px;
-  position: relative;
-  top: 70px;
-  left: 370px;
-  height: 150px;
+    position: relative;
+    top: 70px;
+    left: 370px;
+    height: 150px;
 }
 
-.decsribe-paragraph{
-  position: relative;
-  right: -400px;
-  top: 60px;
-
+.decsribe-paragraph {
+    position: relative;
+    right: -400px;
+    top: 60px;
 }
+
+.scrollable-section {
+  max-height: 900px; /* Set a preferred maximum height */
+  overflow: auto;
+}
+
 
 /*-----------------------icons----------------- */
 .ico1 {

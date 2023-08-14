@@ -19,30 +19,32 @@ var cardDisplayModule = (function () {
                 const editLink = isOwner ? `<a href="#/edit/${cardId}" class="edit-button">Edit</a>` : '';
 
                 const html = `
-                    <div class="par">
-                        <h1>${data.property_type} For Sale</h1>
+                <div class="scrollable-section">
+                <div class="par">
+                    <h1>${data.property_type} For Sale</h1>
+                </div>
+                <div class="cardv">
+                    <div class="card-image">
+                        <img class="imgv" src="${data.image_dir}">
+                        ${editLink}
                     </div>
-                    <div class="cardv">
-                        <div class="card-image">
-                            <img class="imgv" src="${data.image_dir}">
-                            ${editLink}
-                        </div>
+                </div>
+                <div class="cardv-info">  
+                    <ul>
+                        <li><strong>Business Name:</strong> <span>${data.name}</span></li>
+                        <li><strong>Location:</strong> <span>${data.location}<img class="location" src="../logo/icons8-location-48.png"></span></li>
+                        <li><strong>Price:</strong> <span>${data.price} <img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></span></li>
+                        <li><strong>Size:</strong> <span>${data.size}<img class="size" src="../logo/icons8-size-24.png "</span></li>
+                        <li><strong>Telephone Number:</strong> <span>${data.tel_number} <img class="ico1" src="../logo/telephone-call.png"></span></li> 
+                    </ul>
+                </div>
+                <div class="cardv-descript">
+                    <h2 class="decsribe-paragraph">Business Description</h2>
+                    <div class="cardv-description">
+                        <p>${data.description}</p> 
                     </div>
-                    <div class="cardv-info">  
-                        <ul>
-                            <li><strong>Business Name:</strong> <span>${data.name}</span></li>
-                            <li><strong>Location:</strong> <span>${data.location}<img class="location" src="../logo/icons8-location-48.png"></span></li>
-                            <li><strong>Price:</strong> <span>${data.price} <img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></span></li>
-                            <li><strong>Size:</strong> <span>${data.size}<img class="size" src="../logo/icons8-size-24.png "</span></li>
-                            <li><strong>Telephone Number:</strong> <span>${data.tel_number} <img class="ico1" src="../logo/telephone-call.png"></span></li> 
-                        </ul>
-                    </div>
-                    <div class="cardv-descript">
-                        <h2 class="decsribe-paragraph">Business Description</h2>
-                        <div class="cardv-description">
-                            <p>${data.description}</p> 
-                        </div>
-                    </div>  
+                </div>
+            </div>            
                 `;
 
                 // Set the HTML content in the card-details element
