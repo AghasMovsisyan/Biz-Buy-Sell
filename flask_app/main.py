@@ -78,7 +78,8 @@ def get_business():
     try:
         paginated_items = (
             session.query(Business)
-            .with_entities(Business.id, Business.user_id, Business.image_dir, Business.location, Business.price, Business.name)
+            .with_entities(Business.id, Business.user_id, Business.image_dir,
+            Business.location, Business.price, Business.name)
             .offset(offset)
             .limit(limit)
             .all()
@@ -94,7 +95,7 @@ def get_business():
         items_per_page = (total // limit) + additional_page_needed
         result = jsonify(
             data=[
-                {   
+                {
                     "id" : item.id,   
                     "image_dir": item.image_dir,
                     "location": item.location,
@@ -104,7 +105,7 @@ def get_business():
                 for item in paginated_items
             ],
             items_per_page=items_per_page,
-            total=total,        
+            total=total,
             page=page,
         )
         return result, 200
@@ -112,7 +113,6 @@ def get_business():
         # Close the session after the API call is completed
         session.close()
 
-    
 
 @app.route("/api/business", methods=["POST"])
 def create_business():
