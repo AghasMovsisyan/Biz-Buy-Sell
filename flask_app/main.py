@@ -262,6 +262,23 @@ def get_current_user():
     # Return the user_id in JSON format
     return jsonify({"user_id": user_id})
 
+@app.route("/api/me/<int:user_id>", methods=["PUT"])
+def update_user_tel_number(user_id):
+    """Update the telephone number for a specific user."""
+    data = request.json
+    new_tel_number = data.get("tel_number")
+
+    session = Session()
+    try:
+        user = session.query(User).get(user_id)
+        if user:
+            user.tel_number = new_tel_number  # Update the tel_number directly
+            session.commit()
+            return jsonify(message="User telephone number updated successfully")
+        return jsonify(message="User not found"), 404
+    finally:
+        session.close()
+
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")

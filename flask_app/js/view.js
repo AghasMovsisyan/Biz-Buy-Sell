@@ -16,39 +16,107 @@ var cardDisplayModule = (function () {
                 const isOwner = data.authenticated_user_id === data.user_id;
 
                 // Create HTML content for card details with Edit button if user is owner
-                const editLink = isOwner ? `<a href="#/edit/${cardId}" class="edit-button">Edit</a>` : '';
+                const editLink = isOwner ? `<button class="edit-button">Edit</button>` : '';
 
                 const html = `
                 <div class="scrollable-section">
-                <div class="par">
-                    <h1>${data.property_type} For Sale</h1>
-                </div>
-                <div class="cardv">
-                    <div class="card-image">
-                        <img class="imgv" src="${data.image_dir}">
+                    <div class="par">
+                        <h1>${data.property_type} For Sale</h1>
                     </div>
-                </div>
-                <div class="cardv-info">  
-                    <ul>
-                        <li><strong>Business Name:</strong> <span>${data.name}</span></li>
-                        <li><strong>Location:</strong> <span>${data.location}<img class="location" src="../logo/icons8-location-48.png"></span></li>
-                        <li><strong>Price:</strong> <span>${data.price} <img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></span></li>
-                        <li><strong>Size:</strong> <span>${data.size}<img class="size" src="../logo/icons8-size-24.png "</span></li>
-                        <li><strong>Telephone Number:</strong> <span>${data.tel_number} <img class="ico1" src="../logo/telephone-call.png"></span></li> 
+                    <div class="cardv">
+                        <div class="card-image">
+                            <img class="imgv" src="${data.image_dir}">
+                        </div>
+                    </div>
+                    <div class="cardv-info" id="card-info-${cardId}">
+                        <ul>
+                            <li><strong>Business Name:</strong> <span>${data.name}</span><input type="text" id="edit-name-${cardId}" value="${data.name}" style="display: none;"></li>
+                            <li><strong>Location:</strong> <span>${data.location}<img class="location" src="../logo/icons8-location-48.png"></span><input type="text" id="edit-location-${cardId}" value="${data.location}" style="display: none;"></li>
+                            <li><strong>Price:</strong> <span>${data.price} <img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></span><input type="text" id="edit-price-${cardId}" value="${data.price}" style="display: none;"></li>
+                            <li><strong>Size:</strong> <span>${data.size}<img class="size" src="../logo/icons8-size-24.png"></span><input type="text" id="edit-size-${cardId}" value="${data.size}" style="display: none;"></li>
+                            <li><strong>Telephone Number:</strong> <span>${data.tel_number} <img class="ico1" src="../logo/telephone-call.png"></span><input type="text" id="edit-tel-${cardId}" value="${data.tel_number}" style="display: none;"></li>
                         </ul>
                         ${editLink}
-                </div>
-                <div class="cardv-descript">
-                    <h2 class="decsribe-paragraph">Business Description</h2>
-                    <div class="cardv-description">
-                        <p>${data.description}</p> 
+                        ${isOwner ? `<button class="save-button" data-card-id="${cardId}" style="display: none;">Save</button>` : ''}
+                    </div>
+                    <div class="cardv-descript">
+                        <h2 class="decsribe-paragraph">Business Description</h2>
+                        <div class="cardv-description">
+                            <p>${data.description}</p>  
+                        </div>
                     </div>
                 </div>
-            </div>            
                 `;
 
                 // Set the HTML content in the card-details element
                 cardDetails.innerHTML = html;
+
+                // Add event listener to the "Edit" button
+                const editButton = cardDetails.querySelector('.edit-button');
+                if (editButton) {
+                    editButton.addEventListener('click', function () {
+                        // Show editable fields and Save button
+                        const cardInfo = document.getElementById(`card-info-${cardId}`);
+                        cardInfo.querySelectorAll('span').forEach(span => {
+                            span.style.display = 'none';
+                        });
+                        cardInfo.querySelectorAll('input').forEach(input => {
+                            input.style.display = 'inline';
+                        });
+                        const saveButton = cardInfo.querySelector('.save-button');
+                        if (saveButton) {
+                            saveButton.style.display = 'inline';
+                        }
+                        editButton.style.display = 'none';
+                    });
+                }
+
+                // Add event listener to the "Save" button
+                const saveButton = cardDetails.querySelector('.save-button');
+                if (saveButton) {
+                    saveButton.addEventListener('click', function () {
+                        // Get edited values from input fields
+                        const editedName = document.getElementById(`edit-name-${cardId}`).value;
+                        const editedLocation = document.getElementById(`edit-location-${cardId}`).value;
+                        const editedPrice = document.getElementById(`edit-price-${cardId}`).value;
+                        const editedSize = document.getElementById(`edit-size-${cardId}`).value;
+                        const editedTel = document.getElementById(`edit-tel-${cardId}`).value;
+
+                        // Update card details with edited values
+                        data.name = editedName;
+                        data.location = editedLocation;
+                        data.price = editedPrice;
+                        data.size = editedSize;
+                        data.tel_number = editedTel;
+
+                        // Send updated data to the server
+                        $.ajax({
+                            type: 'PUT', // Use 'PUT' or 'PATCH' as appropriate for your API
+                            url: `${serverURL}/api/business/${cardId}`, // Use the cardId from the URL
+                            data: JSON.stringify(data), // Convert data to JSON format
+                            contentType: 'application/json', // Specify content type
+                            success: function(response) {
+                                // Handle success (e.g., display a success message)
+                                $('#successMessage').fadeIn();
+
+                                // Hide the success message after a delay (e.g., 3000ms = 3 seconds)
+                                setTimeout(function() {
+                                    $('#successMessage').fadeOut();
+                                }, 3000);
+
+                                // Update the displayed details
+                                fetchCardDetails(cardId);
+
+                                // Update user's tel_number
+                                updateUserTelNumber(data.user_id, editedTel, cardId);
+                            },
+                            error: function(error) {
+                                // Handle error (e.g., display an error message)
+                                console.error('Error updating business:', error);
+                            }
+                        });
+                    });
+                }
             },
             error: function (error) {
                 console.log(error);
@@ -56,7 +124,31 @@ var cardDisplayModule = (function () {
         });
     }
 
-    return {
-        fetchCardDetails: fetchCardDetails
-    };
+    // Function to update user's tel_number
+    function updateUserTelNumber(userId, newTelNumber, cardId) {
+        $.ajax({
+            type: 'PUT',
+            url: `${serverURL}/api/me/${userId}`,
+            data: JSON.stringify({ tel_number: newTelNumber }),
+            contentType: 'application/json',
+            success: function(response) {
+                console.log('User tel_number updated successfully:', response);
+
+                // Update the displayed telephone number in the card details
+                const telSpan = document.getElementById(`edit-tel-${cardId}`);
+                const telInput = document.getElementById(`edit-tel-${cardId}`);
+                const telValue = document.getElementById(`edit-tel-${cardId}`).value;
+
+                telSpan.style.display = 'inline';
+                telInput.style.display = 'none';
+                telSpan.innerText = telValue;
+            },
+            error: function(error) {
+                console.error('Error updating user tel_number:', error);
+            }
+        });
+    }
+return {
+    fetchCardDetails: fetchCardDetails
+};
 })();

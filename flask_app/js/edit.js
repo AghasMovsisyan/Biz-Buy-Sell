@@ -15,42 +15,6 @@ $(document).ready(function() {
             description: $('#createBusinessDescription').val()
         };
         
-        // Get user_id from /api/me if available
-        $.ajax({
-            type: 'GET',
-            url: `${serverURL}/api/me`,
-            success: function(response) {
-                // Use the user_id from the response
-                formData.user_id = response.user_id;
-            },
-            error: function(error) {
-                // Handle error getting user_id
-                console.error('Error getting user_id:', error);
-            },
-            complete: function() {
-                // Send data to the server to create business
-                $.ajax({
-                    type: 'POST',
-                    url: `${serverURL}/api/business`, // Replace with your API endpoint for creating businesses
-                    data: JSON.stringify([formData]), // Convert data to JSON format (in a list)
-                    contentType: 'application/json', // Specify content type
-                    success: function(response) {
-                        // Handle success (e.g., display a success message)
-                        $('#successMessageCreate').fadeIn();
-
-                        // Hide the success message after a delay (e.g., 3000ms = 3 seconds)
-                        setTimeout(function() {
-                            $('#successMessageCreate').fadeOut();
-                        }, 3000);
-                        console.log('Business created successfully:', response);
-                    },
-                    error: function(error) {
-                        // Handle error (e.g., display an error message)
-                        console.error('Error creating business:', error);
-                    }
-                });
-            }
-        });
     });
     
     // Handle Update Business Form Submission
