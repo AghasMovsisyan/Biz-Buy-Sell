@@ -20,7 +20,7 @@ var router = (function () {
                 loadTemplate('../templates/auth/sign-up.html');
                 break;
             default:    
-                if (route.includes('#/view/')) {
+                if (route.includes('#/business/')) {
                     var cardId = route.split('/')[2];
                     loadCardTemplate(cardId);
                 } else if (route.includes('#/edit/')) {
