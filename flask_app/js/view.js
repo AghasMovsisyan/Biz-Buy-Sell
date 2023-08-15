@@ -104,6 +104,7 @@ var cardDisplayModule = (function () {
 
                 
                 // Add event listener to the "Save" button
+               // Add event listener to the "Save" button
                 const saveButton = cardDetails.querySelector('.save-button');
                 if (saveButton) {
                     saveButton.addEventListener('click', function () {
@@ -120,35 +121,30 @@ var cardDisplayModule = (function () {
                         data.price = editedPrice;
                         data.size = editedSize;
                         data.tel_number = editedTel;
-                        
-                        // Send updated data to the server
+
+                        // Update card details on the server
                         $.ajax({
-                            type: 'PUT', // Use 'PUT' or 'PATCH' as appropriate for your API
-                            url: `${serverURL}/api/business/${cardId}`, // Use the cardId from the URL
-                            data: JSON.stringify(data), // Convert data to JSON format
-                            contentType: 'application/json', // Specify content type
+                            type: 'PUT',
+                            url: `${serverURL}/api/business/${cardId}`,
+                            data: JSON.stringify(data),
+                            contentType: 'application/json',
                             success: function(response) {
                                 // Handle success (e.g., display a success message)
                                 $('#successMessage').fadeIn();
-
-                                // Hide the success message after a delay (e.g., 3000ms = 3 seconds)
                                 setTimeout(function() {
                                     $('#successMessage').fadeOut();
                                 }, 3000);
-
-                                // Update the displayed details
-                                fetchCardDetails(cardId);
 
                                 // Update user's tel_number
                                 updateUserTelNumber(data.user_id, editedTel, cardId);
                             },
                             error: function(error) {
-                                // Handle error (e.g., display an error message)
                                 console.error('Error updating business:', error);
                             }
                         });
                     });
                 }
+
             },
             error: function (error) {
                 console.log(error);
@@ -165,15 +161,20 @@ var cardDisplayModule = (function () {
             contentType: 'application/json',
             success: function(response) {
                 console.log('User tel_number updated successfully:', response);
-
+    
                 // Update the displayed telephone number in the card details
                 const telSpan = document.getElementById(`edit-tel-${cardId}`);
                 const telInput = document.getElementById(`edit-tel-${cardId}`);
-                const telValue = document.getElementById(`edit-tel-${cardId}`).value;
-
-                telSpan.style.display = 'inline';
+                const telValue = telInput.value; // Get the updated value from the input field
+    
+                telSpan.innerText = telValue; // Update the span element with the new value
+    
+                // Hide input and show span
                 telInput.style.display = 'none';
-                telSpan.innerText = telValue;
+                telSpan.style.display = 'inline';
+    
+                // Fetch updated card details to refresh the content
+                fetchCardDetails(cardId);
             },
             error: function(error) {
                 console.error('Error updating user tel_number:', error);
