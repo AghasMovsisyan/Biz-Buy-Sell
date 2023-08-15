@@ -417,9 +417,11 @@ input {
 
 /*-----------------------icons----------------- */
 .ico1 {
-  height: 25px;
-  width: 25px;
+  height: 22px;
+  width: 22px;
   margin-bottom: 2px;
+  margin: 4px;
+  margin-top: 2px;
 }
 
 .dollar {
@@ -436,8 +438,8 @@ input {
 }
 
 .size {
-  height: 24px;
-  width: 24px;
+  height: 22px;
+  width: 22px;
   margin-left: 4px;
 }
 

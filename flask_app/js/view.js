@@ -32,10 +32,10 @@ var cardDisplayModule = (function () {
                         <ul>
                         
                             <li><strong>Business Name:</strong> <span>${data.name}</span><input type="text"  class="form-controlt" id="edit-name-${cardId}" value="${data.name}" style="display: none;"></li>
-                            <li><strong>Location:</strong> <span>${data.location}<img class="location" src="../logo/icons8-location-48.png"></span><input class="form-controlt" type="text" id="edit-location-${cardId}" value="${data.location}" style="display: none;"></li>
-                            <li><strong>Price:</strong> <span>${data.price} <img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></span><input class="form-controlt" type="text" id="edit-price-${cardId}" value="${data.price}" style="display: none;"></li>
-                            <li><strong>Size:</strong> <span>${data.size}<img class="size" src="../logo/icons8-size-24.png"></span><input class="form-controlt"  type="text" id="edit-size-${cardId}" value="${data.size}" style="display: none;"></li>
-                            <li><strong>Telephone Number:</strong> <span>${data.tel_number} <img class="ico1" src="../logo/telephone-call.png"></span><input class="form-controlt"  type="text" id="edit-tel-${cardId}" value="${data.tel_number}" style="display: none;"></li>
+                            <li><strong>Location:</strong> <span>${data.location}</span><input class="form-controlt" type="text" id="edit-location-${cardId}" value="${data.location}" style="display: none;"><img class="location" src="../logo/icons8-location-48.png"></li>
+                            <li><strong>Price:</strong> <span>${data.price}</span><input class="form-controlt" type="text" id="edit-price-${cardId}" value="${data.price}" style="display: none;"><img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></li>
+                            <li><strong>Size:</strong> <span>${data.size}</span><input class="form-controlt"  type="text" id="edit-size-${cardId}" value="${data.size}" style="display: none;"><img class="size" src="../logo/icons8-size-24.png"></li>
+                            <li><strong>Telephone Number:</strong> <span>${data.tel_number}</span><input class="form-controlt" type="text" id="edit-tel-${cardId}" value="${data.tel_number}" style="display: none;"><img class="ico1" src="../logo/telephone-call.png"></li>
                         </ul>
                         ${editLink}
                         ${isOwner ? `
