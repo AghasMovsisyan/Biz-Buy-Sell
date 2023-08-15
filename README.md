@@ -74,13 +74,21 @@ Retrieve paginated business items.
 
 Create a new business item.
 
-- **Request Body**:
+- **Request Method**: POST
+- **URL**: `/api/business`
+
+##### Request Body
+
 ```json
 {
- "user_id": "User ID",
- "id": "Business ID",
- "image_dir": "Directory path to image",
- "location": "Business location",
- "price": "Business price",
- "name": "Business name"
+  "user_id": "User ID",
+  "id": "Business ID",
+  "image_dir": "Directory path to image",
+  "location": "Business location",
+  "property_type": "Type of property",
+  "price": "Business price",
+  "year_built": "Year the property was built",
+  "size": "Size of the property",
+  "name": "Business name",
+  "description": "Business description"
 }
