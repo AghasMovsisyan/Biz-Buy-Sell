@@ -136,9 +136,7 @@ def create_business():
         )
         if existing_business:
             return (
-                jsonify(
-                    message=f"Business with id {business_id} already exists"
-                ),
+                jsonify(message=f"Business with id {business_id} already exists"),
                 400,
             )
 
