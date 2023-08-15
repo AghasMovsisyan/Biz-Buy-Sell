@@ -469,15 +469,16 @@ input {
 }
 
 .edit-button {
-  background-color: #0b0fe9; /* Add your desired background color */
+  background-color: #2225ca; /* Add your desired background color */
   color: white; /* Add your desired text color */
   border: none;
-  padding: 10px 18px;
+  padding: 8px 18px;
   font-size: 15px;
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
-  margin-left: 220px;
+  margin-left: 250px;
+  margin-top: -10px;
 }
 
 .edit-button:hover {
@@ -582,7 +583,6 @@ input#updateLocation {
 .save-button, .cancel-button {
   display: none;
   padding: 8px 14px;
-  margin: 2px;
   border: none;
   cursor: pointer;
   border-radius: 4px;

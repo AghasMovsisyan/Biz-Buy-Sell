@@ -121,6 +121,17 @@ var cardDisplayModule = (function () {
                         data.price = editedPrice;
                         data.size = editedSize;
                         data.tel_number = editedTel;
+                        
+                        if(isNaN(editedSize)) {
+                            alert("Size Must be Integer");
+                            return;
+                        }
+
+                        if(isNaN(editedPrice)) {
+                            alert("Price Must be Integer");
+                            return;
+                        }
+                        
 
                         // Update card details on the server
                         $.ajax({
