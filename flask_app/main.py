@@ -262,6 +262,7 @@ def get_current_user():
     # Return the user_id in JSON format
     return jsonify({"user_id": user_id})
 
+
 @app.route("/api/me/<int:user_id>", methods=["PUT"])
 def update_user_tel_number(user_id):
     """Update the telephone number for a specific user."""

@@ -572,3 +572,32 @@ input#updateLocation {
 }
 
 
+/* ---------Ediible------------ */
+
+/* Style for the "Save" and "Cancel" buttons */
+.save-button, .cancel-button {
+  display: none;
+  padding: 8px 16px;
+  margin: 4px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.save-button {
+  background-color: green;
+  color: white;
+}
+
+.cancel-button {
+  background-color: red;
+  color: white;
+}
+
+/* Optional hover effect for buttons */
+.save-button:hover, .cancel-button:hover {
+  opacity: 0.8;
+}
+
