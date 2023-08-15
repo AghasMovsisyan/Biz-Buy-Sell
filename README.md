@@ -119,7 +119,6 @@ Retrieve details of a specific business by ID.
   "location": "Business location",
   "price": "Business price",
   "name": "Business name",
-  // Other business details...
   "authenticated_user_id": 2
 }
 ```
