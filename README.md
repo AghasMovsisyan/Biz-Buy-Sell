@@ -51,3 +51,40 @@ To import the predefined data into the database, follow these steps:
 ##### How to use black
 
     black your_file.py
+
+## API Documentation
+
+### Base URL
+
+The base URL for all API endpoints is: `http://localhost:5000/api`
+
+### Endpoints
+
+#### 1. GET /api/business
+
+Retrieve paginated business items.
+
+- **Parameters**:
+- `page` (optional): Page number (default is 1).
+- `limit` (optional): Number of items per page (default is 6).
+
+- **Response**:
+- `data`: List of business items with attributes such as `id`, `image_dir`, `location`, `price`, and `name`.
+- `items_per_page`: Total items per page.
+- `total`: Total number of business items.
+- `page`: Current page number.
+
+#### 2. POST /api/business
+
+Create a new business item.
+
+- **Request Body**:
+```json
+{
+ "user_id": "User ID",
+ "id": "Business ID",
+ "image_dir": "Directory path to image",
+ "location": "Business location",
+ "price": "Business price",
+ "name": "Business name"
+}
