@@ -4,7 +4,7 @@
 
 
 body {
-  --bs-bg-opacity: 1;
+  --bs-bg-opacity: 1; 
   background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity)) !important;
 
 }
@@ -386,6 +386,7 @@ input {
 
 .cardv-info ul li strong {
     font-size: 19px;
+    margin: 3px;
 }
 
 .cardv-info ul li span {
@@ -623,4 +624,45 @@ input#updateLocation {
   appearance: none;
   border-radius: var(--bs-border-radius);
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ------------sign-upt------------- */
+
+.sign-upt {
+  margin: 5px 150px 5px 320px;
+}
+
+
+
+.cards{
+  position: relative;
+  background: #fff;
+  max-width: 400px;
+  width: 400px;
+  height: auto;
+  margin: 15px;
+  box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+
+
+
+/* --------------Buy------------------- */
+
+.buy {
+    margin: 10px 390px 10px;
 }

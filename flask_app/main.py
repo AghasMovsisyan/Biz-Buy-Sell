@@ -173,6 +173,9 @@ def get_business_by_id(business_id):
     # Hardcoded authenticatedUserId for testing purposes
     authenticated_user_id = 2
 
+    if business_id <= 0:
+        return jsonify(message="Invalid business ID"), 400
+
     with Session() as session:
         try:
             business = (
@@ -185,13 +188,16 @@ def get_business_by_id(business_id):
                 business_data["authenticated_user_id"] = authenticated_user_id
                 return jsonify(business_data)
             return jsonify(message="Business not found"), 404
-        except ImportError as error:
+        except SQLAlchemyError as error:
             return jsonify(error=str(error)), 500
 
 
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
 def update_business(business_id):
     """Update a specific business by ID"""
+    if business_id <= 0:
+        return jsonify(message="Invalid business ID"), 400  # Bad Request
+
     data = request.json
     session = Session()
     try:
@@ -209,6 +215,7 @@ def update_business(business_id):
 @app.route("/api/business/<int:business_id>", methods=["DELETE"])
 def delete_business(business_id):
     """Delete a specific business by ID"""
+
     session = Session()
     try:
         business = session.query(Business).get(business_id)
@@ -217,6 +224,9 @@ def delete_business(business_id):
             session.commit()
             return jsonify(message="Business deleted successfully")
         return jsonify(message="Business not found"), 404
+    except SQLAlchemyError as error:
+        session.rollback()  # Rollback the transaction in case of an error
+        return jsonify(error=str(error)), 500
     finally:
         session.close()
 
