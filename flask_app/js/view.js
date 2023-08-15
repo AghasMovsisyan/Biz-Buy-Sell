@@ -30,7 +30,6 @@ var cardDisplayModule = (function () {
                     </div>
                     <div class="cardv-info" id="card-info-${cardId}">
                         <ul>
-                        
                             <li><strong>Business Name:</strong> <span>${data.name}</span><input type="text"  class="form-controlt" id="edit-name-${cardId}" value="${data.name}" style="display: none;"></li>
                             <li><strong>Location:</strong> <span>${data.location}</span><input class="form-controlt" type="text" id="edit-location-${cardId}" value="${data.location}" style="display: none;"><img class="location" src="../logo/icons8-location-48.png"></li>
                             <li><strong>Price:</strong> <span>${data.price}</span><input class="form-controlt" type="text" id="edit-price-${cardId}" value="${data.price}" style="display: none;"><img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></li>
@@ -128,7 +127,7 @@ var cardDisplayModule = (function () {
                         }
 
                         if(isNaN(editedPrice)) {
-                            alert("Price Must be Integer");
+                            alert("Price Must be Integer");``
                             return;
                         }
                         

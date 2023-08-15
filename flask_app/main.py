@@ -123,45 +123,44 @@ def get_business():
 
 @app.route("/api/business", methods=["POST"])
 def create_business():
-    """Create businesses"""
+    """Create a business"""
     data = request.json
     session = Session()
+
+    user_id = data.get("user_id")
+    user = session.query(User).get(user_id)
+    if user:
+        business_id = data.get("id")
+        existing_business = (
+            session.query(Business).filter(Business.id == business_id).first()
+        )
+        if existing_business:
+            return (
+                jsonify(
+                    message=f"Business with id {business_id} already exists"
+                ),
+                400,
+            )
+
+        business = Business(
+            user_id=user_id,
+            id=business_id,
+            image_dir=data.get("image_dir"),
+            location=data.get("location"),
+            property_type=data.get("property_type"),
+            price=data.get("price"),
+            year_built=data.get("year_built"),
+            size=data.get("size"),
+            name=data.get("name"),
+            description=data.get("description"),
+        )
+        session.add(business)
+    else:
+        return jsonify(message=f"User with id {user_id} not found"), 404
+
     try:
-        for business_data in data:
-            user_id = business_data.get("user_id")
-            user = session.query(User).get(user_id)
-            if user:
-                business_id = business_data.get("id")
-                existing_business = (
-                    session.query(Business).filter(Business.id == business_id).first()
-                )
-                if existing_business:
-                    return (
-                        jsonify(
-                            message=f"Business with id {business_id} already exists"
-                        ),
-                        400,
-                    )
-
-                business = Business(
-                    user_id=user_id,
-                    id=business_id,
-                    image_dir=business_data.get("image_dir"),
-                    location=business_data.get("location"),
-                    property_type=business_data.get("property_type"),
-                    price=business_data.get("price"),
-                    year_built=business_data.get("year_built"),
-                    size=business_data.get("size"),
-                    name=business_data.get("name"),
-                    description=business_data.get("description"),
-                )
-                session.add(business)
-
-            else:
-                return jsonify(message=f"User with id {user_id} not found"), 404
-
         session.commit()
-        return jsonify(message="Businesses created successfully")
+        return jsonify(message="Business created successfully")
     finally:
         session.close()
 
