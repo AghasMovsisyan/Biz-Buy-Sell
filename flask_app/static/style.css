@@ -4,8 +4,8 @@
 
 
 body {
-  background-color: rgb(245, 245, 245) !important;
-
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity)) !important;
 }
 
 .jumbotron {
@@ -405,7 +405,7 @@ input {
 
 .decsribe-paragraph {
     position: relative;
-    right: -400px;
+    right: -470px;
     top: 60px;
 }
 
