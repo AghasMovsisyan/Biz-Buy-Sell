@@ -54,10 +54,6 @@ To import the predefined data into the database, follow these steps:
 
 ## API Documentation
 
-### Base URL
-
-The base URL for all API endpoints is: `http://localhost:5000/api`
-
 ### Endpoints
 
 #### 1. GET /api/business
