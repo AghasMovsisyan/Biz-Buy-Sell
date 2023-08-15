@@ -148,3 +148,25 @@ Update details of a specific business by ID.
   "name": "Updated business name",
   "description": "Updated business description"
 }
+```
+
+#### 5. DELETE /api/business/{business_id}
+
+Delete a specific business by ID.
+
+- **Request Method**: DELETE
+- **URL**: `/api/business/{business_id}`
+
+##### Parameters
+
+- `business_id` (integer, path): The ID of the business to delete.
+
+##### Response
+
+- **Status Code**: 200 (OK)
+- **Response Body**:
+
+```json
+{
+  "message": "Business deleted successfully"
+}
