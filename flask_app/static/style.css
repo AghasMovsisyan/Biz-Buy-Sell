@@ -410,7 +410,7 @@ input {
 }
 
 .scrollable-section {
-  max-height: 900px; /* Set a preferred maximum height */
+  height: 900px; /* Set a preferred maximum height */
   overflow: auto;
 }
 
@@ -473,7 +473,7 @@ input {
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
-  margin-left: 250px;
+  margin-left: 220px;
 }
 
 .edit-button:hover {
@@ -577,8 +577,8 @@ input#updateLocation {
 /* Style for the "Save" and "Cancel" buttons */
 .save-button, .cancel-button {
   display: none;
-  padding: 8px 16px;
-  margin: 4px;
+  padding: 8px 14px;
+  margin: 2px;
   border: none;
   cursor: pointer;
   border-radius: 4px;
@@ -601,3 +601,23 @@ input#updateLocation {
   opacity: 0.8;
 }
 
+.buttons {
+  margin-left: 180px;
+}
+
+.form-controlt {
+  display: block;
+  width: 120px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+  background-clip: padding-box;
+  border: var(--bs-border-width) solid var(--bs-border-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: var(--bs-border-radius);
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
