@@ -20,35 +20,37 @@ var cardDisplayModule = (function () {
 
                 const html = `
                 <div class="scrollable-section">
-                    <div class="par">
-                        <h1>${data.name}    </h1>
-                    </div>
-                    <div class="cardv">
-                        <div class="card-image">
-                            <img class="imgv" src="${data.image_dir}">
+                    <div class="cardv-container">
+                        <div class="par">
+                            <h1>${data.name}    </h1>
                         </div>
-                    </div>
-                    <div class="cardv-info" id="card-info-${cardId}">
-                        <ul>
-                            <li><strong>Year Built:</strong> <span>${data.year_built}</span><input type="text"  class="form-controlt" id="edit-year-${cardId}" value="${data.year_built}" style="display: none;"></li>
-                            <li><strong>Property Type:</strong> <span>${data.property_type}</span><input type="text"  class="form-controlt" id="edit-type-${cardId}" value="${data.property_type}" style="display: none;"></li>
-                            <li><strong>Location:</strong> <span>${data.location}</span><input class="form-controlt" type="text" id="edit-location-${cardId}" value="${data.location}" style="display: none;"><img class="location" src="../logo/icons8-location-48.png"></li>
-                            <li><strong>Price:</strong> <span>${data.price}</span><input class="form-controlt" type="text" id="edit-price-${cardId}" value="${data.price}" style="display: none;"><img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></li>
-                            <li><strong>Size:</strong> <span>${data.size}</span><input class="form-controlt"  type="text" id="edit-size-${cardId}" value="${data.size}" style="display: none;"><img class="size" src="../logo/icons8-size-24.png"></li>
-                            <li><strong>Telephone Number:</strong> <span>${data.tel_number}</span><input class="form-controlt" type="text" id="edit-tel-${cardId}" value="${data.tel_number}" style="display: none;"><img class="ico1" src="../logo/telephone-call.png"></li>
-                        </ul>
-                        ${editLink}
-                        ${isOwner ? `
-                        <div class='buttons'>
-                            <button class="save-button" data-card-id="${cardId}" style="display: none;">Save</button>
-                            <button class="cancel-button" style="display: none;">Cancel</button>
+                        <div class="cardv">
+                            <div class="card-image">
+                                <img class="imgv" src="${data.image_dir}">
+                            </div>
                         </div>
-                    ` : ''}
-                    </div>
-                    <div class="cardv-descript">
-                        <h2 class="decsribe-paragraph">Business Description</h2>
-                        <div class="cardv-description">
-                            <p>${data.description}</p>  
+                        <div class="cardv-info" id="card-info-${cardId}">
+                            <ul>
+                                <li><strong>Year Built:</strong> <span>${data.year_built}</span><input type="text"  class="form-controlt" id="edit-year-${cardId}" value="${data.year_built}" style="display: none;"></li>
+                                <li><strong>Property Type:</strong> <span>${data.property_type}</span><input type="text"  class="form-controlt" id="edit-type-${cardId}" value="${data.property_type}" style="display: none;"></li>
+                                <li><strong>Location:</strong> <span>${data.location}</span><input class="form-controlt" type="text" id="edit-location-${cardId}" value="${data.location}" style="display: none;"><img class="location" src="../logo/icons8-location-48.png"></li>
+                                <li><strong>Price:</strong> <span>${data.price}</span><input class="form-controlt" type="text" id="edit-price-${cardId}" value="${data.price}" style="display: none;"><img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></li>
+                                <li><strong>Size:</strong> <span>${data.size}</span><input class="form-controlt"  type="text" id="edit-size-${cardId}" value="${data.size}" style="display: none;"><img class="size" src="../logo/icons8-size-24.png"></li>
+                                <li><strong>Telephone Number:</strong> <span>${data.tel_number}</span><input class="form-controlt" type="text" id="edit-tel-${cardId}" value="${data.tel_number}" style="display: none;"><img class="ico1" src="../logo/telephone-call.png"></li>
+                            </ul>
+                            ${editLink}
+                            ${isOwner ? `
+                            <div class='buttons'>
+                                <button class="save-button" data-card-id="${cardId}" style="display: none;">Save</button>
+                                <button class="cancel-button" style="display: none;">Cancel</button>
+                            </div>
+                        ` : ''}
+                        </div>
+                        <div class="cardv-descript">
+                            <h2 class="decsribe-paragraph">Business Description</h2>
+                            <div class="cardv-description">
+                                <p>${data.description}</p>  
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,6 +87,9 @@ var cardDisplayModule = (function () {
                 const cancelButton = cardDetails.querySelector('.cancel-button');
                 if (cancelButton) {
                     cancelButton.addEventListener('click', function () {
+                        // Reset input values to original data
+                        resetInputValues(cardId, data);
+
                         // Hide editable fields and "Save" and "Cancel" buttons, and show "Edit" button
                         const cardInfo = document.getElementById(`card-info-${cardId}`);
                         cardInfo.querySelectorAll('input').forEach(input => {
@@ -101,7 +106,17 @@ var cardDisplayModule = (function () {
                         editButton.style.display = 'inline'; // Show the "Edit" button again
                     });
                 }
+                
 
+                function resetInputValues(cardId, data) {
+                    const editedYearInput = document.getElementById(`edit-year-${cardId}`);
+                    editedYearInput.value = data.year_built;
+            
+                    const editedLocationInput = document.getElementById(`edit-location-${cardId}`);
+                    editedLocationInput.value = data.location;
+            
+                    // Repeat the same for other input fields...
+                }
                 
                 // Add event listener to the "Save" button
                // Add event listener to the "Save" button
@@ -162,7 +177,7 @@ var cardDisplayModule = (function () {
                 console.log(error);
             }
         });
-    }
+    }   
 
     // Function to update user's tel_number
     function updateUserTelNumber(userId, newTelNumber, cardId) {

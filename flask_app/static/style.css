@@ -353,9 +353,11 @@ input {
 }
 
 .par {
-    margin-left: 480px;
+    display: flex;
+    position: relative;
+    right: 390px; 
+    top: 40px;
     padding: 5px;
-    margin-top: 80px;
 }
 
 .cardv-info {
@@ -364,7 +366,7 @@ input {
     align-items: center;
     justify-content: center;
     margin-top: -400px;
-    margin-left: 770px;
+    margin-left: 750px;
 }
 
 .cardv-info ul {
@@ -401,19 +403,42 @@ input {
     padding: 10px;
     position: relative;
     top: 70px;
-    left: 370px;
+    left: 30px;
     height: 150px;
 }
 
 .decsribe-paragraph {
     position: relative;
-    right: -470px;
+    left: 65px;
     top: 60px;
 }
 
 .scrollable-section {
   height: 900px; /* Set a preferred maximum height */
   overflow: auto;
+}
+
+.cardv-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.cardv {
+  background: #fff;
+  max-width: 550px;
+  width: 100%;
+  height: 400px;
+  margin: 25px auto;
+  box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  position: relative; /* Add relative positioning */
+  right: 265px;
+  top: 20px;
 }
 
 
