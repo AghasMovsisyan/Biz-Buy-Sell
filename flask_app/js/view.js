@@ -144,11 +144,6 @@ var cardDisplayModule = (function () {
                             data: JSON.stringify(data),
                             contentType: 'application/json',
                             success: function(response) {
-                                // Handle success (e.g., display a success message)
-                                $('#successMessage').fadeIn();
-                                setTimeout(function() {
-                                    $('#successMessage').fadeOut();
-                                }, 3000);
 
                                 // Update user's tel_number
                                 updateUserTelNumber(data.user_id, editedTel, cardId);
