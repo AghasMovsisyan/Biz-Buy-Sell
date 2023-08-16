@@ -60,6 +60,9 @@ To import the predefined data into the database, follow these steps:
 
 Retrieve paginated business items.
 
+- **Request Method**: POST
+- **URL**: `/api/business`
+
 - **Parameters**:
 - `page` (optional): Page number (default is 1).
 - `limit` (optional): Number of items per page (default is 6).
