@@ -21,7 +21,7 @@ var cardDisplayModule = (function () {
                 const html = `
                 <div class="scrollable-section">
                     <div class="par">
-                        <h1>${data.property_type} For Sale</h1>
+                        <h1>${data.name}    </h1>
                     </div>
                     <div class="cardv">
                         <div class="card-image">
@@ -30,7 +30,7 @@ var cardDisplayModule = (function () {
                     </div>
                     <div class="cardv-info" id="card-info-${cardId}">
                         <ul>
-                            <li><strong>Business Name:</strong> <span>${data.name}</span><input type="text"  class="form-controlt" id="edit-name-${cardId}" value="${data.name}" style="display: none;"></li>
+                            <li><strong>Year Built:</strong> <span>${data.year_built}</span><input type="text"  class="form-controlt" id="edit-year-${cardId}" value="${data.year_built}" style="display: none;"></li>
                             <li><strong>Location:</strong> <span>${data.location}</span><input class="form-controlt" type="text" id="edit-location-${cardId}" value="${data.location}" style="display: none;"><img class="location" src="../logo/icons8-location-48.png"></li>
                             <li><strong>Price:</strong> <span>${data.price}</span><input class="form-controlt" type="text" id="edit-price-${cardId}" value="${data.price}" style="display: none;"><img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></li>
                             <li><strong>Size:</strong> <span>${data.size}</span><input class="form-controlt"  type="text" id="edit-size-${cardId}" value="${data.size}" style="display: none;"><img class="size" src="../logo/icons8-size-24.png"></li>
@@ -108,14 +108,14 @@ var cardDisplayModule = (function () {
                 if (saveButton) {
                     saveButton.addEventListener('click', function () {
                         // Get edited values from input fields
-                        const editedName = document.getElementById(`edit-name-${cardId}`).value;
+                        const editedYear = document.getElementById(`edit-year-${cardId}`).value;
                         const editedLocation = document.getElementById(`edit-location-${cardId}`).value;
                         const editedPrice = document.getElementById(`edit-price-${cardId}`).value;
                         const editedSize = document.getElementById(`edit-size-${cardId}`).value;
                         const editedTel = document.getElementById(`edit-tel-${cardId}`).value;
 
                         // Update card details with edited values
-                        data.name = editedName;
+                        data.year_built = editedYear;
                         data.location = editedLocation;
                         data.price = editedPrice;
                         data.size = editedSize;
