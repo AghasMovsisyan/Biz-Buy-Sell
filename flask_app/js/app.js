@@ -46,14 +46,14 @@ function updatePagination(items_per_page) {
 
 function updateCardDisplay(data) {
   const html = data
-    .map(user => {
+    .map(business => {
       return `
-      <div class="card" onclick="window.location='#/business/${user.id}';" style="cursor: pointer;">
-        <div class="card-image"><img class="img" src=${user.image_dir}></div>
+      <div class="card" onclick="window.location='#/business/${business.id}';" style="cursor: pointer;">
+        <div class="card-image"><img class="img" src=${business.image_dir}></div>
         <div class="card-info">
-          <h3>${user.name}</h3>   
-          <p>${user.location}<img class="location" src="../logo/icons8-location-48.png"></p>
-          <p>${user.price}<img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></p>
+          <h3>${business.name}</h3>   
+          <p>${business.location}<img class="location" src="../logo/icons8-location-48.png"></p>
+          <p>${business.price}<img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></p>
         </div>
     </div>
     
