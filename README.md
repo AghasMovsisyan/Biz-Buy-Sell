@@ -64,20 +64,30 @@ Retrieve paginated business items.
 - `page` (optional): Page number (default is 1).
 - `limit` (optional): Number of items per page (default is 6).
 
-##### Request Body
+##### Response Body
 
 ```json
 {
-  "user_id": "User ID",
-  "id": "Business ID",
-  "image_dir": "Directory path to image",
-  "location": "Business location",
-  "property_type": "Type of property",
-  "price": "Business price",
-  "year_built": "Year the property was built",
-  "size": "Size of the property",
-  "name": "Business name",
-  "description": "Business description"
+  "data": [
+    {
+      "id": 1,
+      "image_dir": "/path/to/image1.jpg",
+      "location": "New York",
+      "price": "$200,000",
+      "name": "Example Business 1"
+    },
+    {
+      "id": 2,
+      "image_dir": "/path/to/image2.jpg",
+      "location": "Los Angeles",
+      "price": "$150,000",
+      "name": "Example Business 2"
+    },
+    // ... (more business items)
+  ],
+  "items_per_page": 10,
+  "total": 42,
+  "page": 2
 }
 
 ```
