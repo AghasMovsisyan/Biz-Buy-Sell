@@ -17,8 +17,8 @@ body {
 }
 @media (min-width: 768px) {
     .jumbotron {
-      padding-top: calc(var(--jumbotron-padding-y) * 0.2);
-      padding-bottom: calc(var(--jumbotron-padding-y) * 0.2);
+      padding-top: calc(var(--jumbotron-padding-y) * 0);
+      padding-bottom: calc(var(--jumbotron-padding-y) * 0);
     }
 }
   
@@ -216,7 +216,7 @@ input {
 .card-info{
   position: relative;
   color: #222;
-  padding: 25px 20px 20px;
+  padding: 15px 20px 15px;
 }
 
 .card-info h3{
@@ -233,7 +233,7 @@ input {
 
 .pagination{
   justify-content: center;
-  margin: 30px 30px 60px;
+  margin: 28px 28px 56px;
   user-select: none;
 }
 
@@ -489,11 +489,9 @@ input {
 
 
 .pagination-row {
-  
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  position: absolute;
+  right: 35%;
 }
 
 .pagination-container {
@@ -501,7 +499,7 @@ input {
   align-items: center;
 }
 
-.pagination {
+.pagination { 
   margin: 0;
   padding: 0;
   list-style: none;
@@ -528,7 +526,7 @@ input {
 
   /*------------------Scroll----------------------*/
 .scrollable-content {
-  max-height: 810px; /* Set the maximum height for the scrollable area */
+  max-height: 773px; /* Set the maximum height for the scrollable area */
   overflow-y: auto; /* Enable vertical scrolling when content overflows */
 }
 
