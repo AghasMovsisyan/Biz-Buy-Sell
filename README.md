@@ -64,11 +64,23 @@ Retrieve paginated business items.
 - `page` (optional): Page number (default is 1).
 - `limit` (optional): Number of items per page (default is 6).
 
-- **Response**:
-- `data`: List of business items with attributes such as `id`, `image_dir`, `location`, `price`, and `name`.
-- `items_per_page`: Total items per page.
-- `total`: Total number of business items.
-- `page`: Current page number.
+##### Request Body
+
+```json
+{
+  "user_id": "User ID",
+  "id": "Business ID",
+  "image_dir": "Directory path to image",
+  "location": "Business location",
+  "property_type": "Type of property",
+  "price": "Business price",
+  "year_built": "Year the property was built",
+  "size": "Size of the property",
+  "name": "Business name",
+  "description": "Business description"
+}
+
+```
 
 #### 2. POST /api/business
 
