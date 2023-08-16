@@ -41,8 +41,9 @@ var cardDisplayModule = (function () {
                             ${editLink}
                             ${isOwner ? `
                             <div class='buttons'>
-                                <button class="save-button" data-card-id="${cardId}" style="display: none;">Save</button>
-                                <button class="cancel-button" style="display: none;">Cancel</button>
+                                    <button class="save-button" data-card-id="${cardId}" style="display: none;">Save</button>
+                                    <button class="reset-button" data-card-id="${cardId}" style="display: none;">Reset</button>
+                                    <button class="cancel-button" style="display: none;">Cancel</button>
                             </div>
                         ` : ''}
                         </div>
@@ -74,6 +75,10 @@ var cardDisplayModule = (function () {
                         const saveButton = cardInfo.querySelector('.save-button');
                         if (saveButton) {
                             saveButton.style.display = 'inline';
+                        }
+                        const resetButton = cardInfo.querySelector('.reset-button');
+                        if (resetButton) {
+                            resetButton.style.display = 'inline'; // Display the "Reset" button
                         }
                         const cancelButton = cardInfo.querySelector('.cancel-button');
                         if (cancelButton) {
@@ -107,17 +112,23 @@ var cardDisplayModule = (function () {
                     });
                 }
                 
-
+                const resetButton = cardDetails.querySelector('.reset-button');
+                if (resetButton) {
+                    resetButton.addEventListener('click', function () {
+                        // Reset input values to original data
+                        resetInputValues(cardId, data);
+                    });
+                }
                 function resetInputValues(cardId, data) {
-                    const editedYearInput = document.getElementById(`edit-year-${cardId}`);
-                    editedYearInput.value = data.year_built;
-            
-                    const editedLocationInput = document.getElementById(`edit-location-${cardId}`);
-                    editedLocationInput.value = data.location;
-            
-                    // Repeat the same for other input fields...
+                    document.getElementById(`edit-year-${cardId}`).value = data.year_built;
+                    document.getElementById(`edit-type-${cardId}`).value = data.property_type;
+                    document.getElementById(`edit-location-${cardId}`).value = data.location;
+                    document.getElementById(`edit-price-${cardId}`).value = data.price;
+                    document.getElementById(`edit-size-${cardId}`).value = data.size;
+                    document.getElementById(`edit-tel-${cardId}`).value = data.tel_number;
                 }
                 
+                                
                 // Add event listener to the "Save" button
                // Add event listener to the "Save" button
                 const saveButton = cardDetails.querySelector('.save-button');
