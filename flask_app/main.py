@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, joinedload
 from sqlalchemy.exc import SQLAlchemyError
 from models import User, Business, Base, database_uri
-
+import logging
 
 app = Flask(__name__)
 CORS(app)  # This will enable CORS   for all routes in the app
@@ -124,21 +124,30 @@ def get_business():
 @app.route("/api/business", methods=["POST"])
 def create_business():
     """Create a business"""
-    data = request.json
-    session = Session()
+    try:
+        data = request.json
+        if not data:
+            return jsonify(message="Invalid JSON data"), 400
 
-    user_id = data.get("user_id")
-    user = session.query(User).get(user_id)
-    if user:
+        user_id = data.get("user_id")
+       
+
+        session = Session()
+
+        user = session.query(User).get(user_id)
+        if not user:
+            session.close()
+            return jsonify(message=f"User with id {user_id} not found"), 404
+
         business_id = data.get("id")
-        existing_business = (
-            session.query(Business).filter(Business.id == business_id).first()
-        )
+        if not business_id:
+            session.close()
+            return jsonify(message="Missing business ID"), 400
+
+        existing_business = session.query(Business).filter(Business.id == business_id).first()
         if existing_business:
-            return (
-                jsonify(message=f"Business with id {business_id} already exists"),
-                400,
-            )
+            session.close()
+            return jsonify(message=f"Business with id {business_id} already exists"), 400
 
         business = Business(
             user_id=user_id,
@@ -153,14 +162,14 @@ def create_business():
             description=data.get("description"),
         )
         session.add(business)
-    else:
-        return jsonify(message=f"User with id {user_id} not found"), 404
-
-    try:
         session.commit()
-        return jsonify(message="Business created successfully")
-    finally:
         session.close()
+
+        return jsonify(message="Business created successfully", business_id=business_id), 201
+
+    except Exception as e:
+        logging.error(f"Error creating business: {e}")
+        return jsonify(message="An error occurred"), 500
 
 
 @app.route("/api/business/<int:business_id>", methods=["GET"])
