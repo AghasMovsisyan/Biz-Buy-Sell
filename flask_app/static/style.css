@@ -593,6 +593,7 @@ input#updateLocation {
 .save-button {
   background-color: green;
   color: white;
+  margin-left: 30px;
 }
 
 .cancel-button {

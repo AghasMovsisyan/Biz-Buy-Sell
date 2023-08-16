@@ -130,6 +130,11 @@ var cardDisplayModule = (function () {
                             alert("Price Must be Integer");``
                             return;
                         }
+
+                        if(isNaN(editedTel)) {
+                            alert("Tel Must be Integer");``
+                            return;
+                        }
                         
 
                         // Update card details on the server

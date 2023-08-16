@@ -6,7 +6,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, joinedload
 from sqlalchemy.exc import SQLAlchemyError
 from models import User, Business, Base, database_uri
-import logging
 
 app = Flask(__name__)
 CORS(app)  # This will enable CORS   for all routes in the app
@@ -126,28 +125,29 @@ def create_business():
     """Create a business"""
     try:
         data = request.json
-        if not data:
-            return jsonify(message="Invalid JSON data"), 400
 
         user_id = data.get("user_id")
-       
+        if not user_id:
+            return jsonify(message="Missing user_id"), 400
 
         session = Session()
 
         user = session.query(User).get(user_id)
         if not user:
-            session.close()
             return jsonify(message=f"User with id {user_id} not found"), 404
 
         business_id = data.get("id")
         if not business_id:
-            session.close()
             return jsonify(message="Missing business ID"), 400
 
-        existing_business = session.query(Business).filter(Business.id == business_id).first()
+        existing_business = (
+            session.query(Business).filter(Business.id == business_id).first()
+        )
         if existing_business:
-            session.close()
-            return jsonify(message=f"Business with id {business_id} already exists"), 400
+            return (
+                jsonify(message=f"Business with id {business_id} already exists"),
+                400,
+            )
 
         business = Business(
             user_id=user_id,
@@ -163,12 +163,13 @@ def create_business():
         )
         session.add(business)
         session.commit()
-        session.close()
 
-        return jsonify(message="Business created successfully", business_id=business_id), 201
+        return (
+            jsonify(message="Business created successfully", business_id=business_id),
+            201,
+        )
 
-    except Exception as e:
-        logging.error(f"Error creating business: {e}")
+    except ImportError:
         return jsonify(message="An error occurred"), 500
 
 
