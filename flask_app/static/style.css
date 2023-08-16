@@ -514,7 +514,7 @@ input {
 .pagination-row {
   display: flex;
   position: absolute;
-  right: 35%;
+  right: 41%;
 }
 
 .pagination-container {
@@ -534,17 +534,20 @@ input {
   align-items: center;
 }
 
-#limitSelect {
-  margin-left: 50px;
-}
-
 .mr-2 {
-  margin-left: 50px;
+  position: relative;
+  top: 15px;
+  margin: 1px 10px 1px;
 }
 
 #limitSelect {
+  display: flex;
   width: 131px;
   height: 30px;
+  position: relative;
+  left: 150px;
+  bottom: 10px;
+
 }
 
   /*------------------Scroll----------------------*/
