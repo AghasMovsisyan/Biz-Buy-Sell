@@ -107,6 +107,12 @@ var cardDisplayModule = (function () {
                         if (saveButton) {
                             saveButton.style.display = 'none';
                         }
+                        const resetButton = cardInfo.querySelector('.reset-button')
+                        if (resetButton) {
+                            resetButton.style.display = 'none';
+                        }
+                        
+                        resetButton.style.display = 'none';
                         cancelButton.style.display = 'none';
                         editButton.style.display = 'inline'; // Show the "Edit" button again
                     });
