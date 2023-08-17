@@ -32,9 +32,10 @@ class Base(DeclarativeBase):
 
 
 class PropertyType(Enum):
-    House = "House"
+    Hotel = "Hotel"
     Cafe = "Cafe"
     Supermarket = "Supermarket"
+    Restuarant = "Restuarant"
     # Add more property types as needed
 
 
@@ -96,7 +97,7 @@ class Business(Base):
             "id": self.id,
             "user_id": self.user_id,
             "location": self.location,
-            "property_type": self.property_type,
+            "property_type": self.property_type.value,
             "price": self.price,
             "year_built": self.year_built,
             "size": self.size,
