@@ -148,13 +148,6 @@ var cardDisplayModule = (function () {
                         const editedTel = document.getElementById(`edit-tel-${cardId}`).value;
                         const editType = document.getElementById(`edit-type-${cardId}`).value;
                         // Update card details with edited values
-                        data.year_built = editedYear;
-                        data.property_type = editType;
-                        data.location = editedLocation;
-                        data.price = editedPrice;
-                        data.size = editedSize;
-                        data.tel_number = editedTel;
-                        
                         if(isNaN(editedSize)) {
                             alert("Size Must be Integer");
                             return;
@@ -169,6 +162,14 @@ var cardDisplayModule = (function () {
                             alert("Tel Must be Integer");``
                             return;
                         }
+                        
+                        data.year_built = editedYear;
+                        data.property_type = editType;
+                        data.location = editedLocation;
+                        data.price = editedPrice;
+                        data.size = editedSize;
+                        data.tel_number = editedTel;
+                        
                         
 
                         // Update card details on the server
