@@ -36,7 +36,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String)
     password_hash = Column(String)
-    salt = Column(Integer)
+    salt = Column(String)
     first_name = Column(String)
     last_name = Column(String)
     tel_number = Column(String)
