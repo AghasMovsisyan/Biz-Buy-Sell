@@ -440,6 +440,12 @@ input {
   top: 20px;
 }
 
+.justify-text {
+  text-align: justify;
+  margin: 0 auto; /* Centers the container horizontally */
+  padding: 0 20px; /* Adds space on the sides */
+}
+
 
 /*-----------------------icons----------------- */
 .ico1 {
