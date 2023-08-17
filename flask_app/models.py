@@ -8,6 +8,8 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, relationship, sessionmaker
 from sqlalchemy import Column, Integer, String, Date
+from enum import Enum
+from sqlalchemy import Enum as SQLAlchemyEnum
 
 # Load environment variables from .env file
 load_dotenv()
@@ -27,6 +29,19 @@ database_uri = (
 
 class Base(DeclarativeBase):
     """Base class for SQLAlchemy models."""
+
+
+class PropertyType(Enum):
+    House = "House"
+    Cafe = "Cafe"
+    Supermarket = "Supermarket"
+    # Add more property types as needed
+
+
+class Status(Enum):
+    Listed = "Listed"
+    On_Sale = "On_Sale"
+    Sold = "Sold"
 
 
 class User(Base):
@@ -69,6 +84,8 @@ class Business(Base):
     size = Column(Integer)
     name = Column(String)
     description = Column(String)
+    property_type = Column(SQLAlchemyEnum(PropertyType), nullable=True)
+    status = Column(SQLAlchemyEnum(Status), default=Status.Listed)
 
     # Define the relationship between User and Business
     user = relationship("User", back_populates="businesses")
