@@ -107,8 +107,8 @@ input {
  .search {
   position: relative;
   /* box-shadow: 0 0 40px rgba(51, 51, 51, .1); Remove or adjust this line */
-  width: 1065px; /* Set a fixed width for the search bar */
-  right: -4px;
+  width: 1066px; /* Set a fixed width for the search bar */
+  right: -6px;
   margin: 0 auto; /* Center the search bar horizontally */
 }
 
@@ -183,7 +183,7 @@ input {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-left: -55px;
+  margin-left: -45px;
 }
 
 .card-content{
@@ -197,7 +197,7 @@ input {
   position: relative;
   background: #fff;
   max-width: 335px;
-  width: 335px;
+  width: 338px;
   height: auto;
   margin: 15px;
   box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
@@ -364,7 +364,7 @@ input {
     align-items: center;
     justify-content: center;
     margin-top: -400px;
-    margin-left: 750px;
+    margin-left: 735px;
 }
 
 .cardv-info ul {
@@ -401,13 +401,14 @@ input {
     padding: 10px;
     position: relative;
     top: 70px;
-    left: 30px;
+    left: 32px;
     height: 150px;
+    width: 1118px;
 }
 
 .decsribe-paragraph {
     position: relative;
-    left: 65px;
+    left: 92px;
     top: 60px;
 }
 
@@ -435,7 +436,7 @@ input {
   display: flex;
   justify-content: center;
   position: relative; /* Add relative positioning */
-  right: 265px;
+  right: 256px;
   top: 20px;
 }
 
