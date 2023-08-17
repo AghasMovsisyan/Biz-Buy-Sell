@@ -62,7 +62,6 @@ class Business(Base):
     __tablename__ = "Business"
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("User.id"))
-    image_dir = Column(String)
     location = Column(String)
     property_type = Column(String)
     price = Column(Integer)
