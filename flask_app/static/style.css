@@ -408,7 +408,7 @@ input {
 
 .decsribe-paragraph {
     position: relative;
-    left: 92px;
+    left: 97px;
     top: 60px;
 }
 
@@ -446,7 +446,18 @@ input {
   padding: 0 20px; /* Adds space on the sides */
 }
 
+.business-name {
+  font-family: Arial, sans-serif;
+  font-size: 35px;
+  color: #333;
+  text-align: center;
+}
 
+.business-descript {
+  font-family: Arial, sans-serif;
+  font-size: 32px;
+  color: #333;
+}
 /*-----------------------icons----------------- */
 .ico1 {
   height: 22px;

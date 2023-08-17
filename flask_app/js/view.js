@@ -22,7 +22,7 @@ var cardDisplayModule = (function () {
                 <div class="scrollable-section">
                     <div class="cardv-container">
                         <div class="par">
-                            <h1>${data.name}    </h1>
+                            <h1 class="business-name">${data.name}</h1>
                         </div>
                         <div class="cardv">
                             <div class="card-image">
@@ -48,7 +48,7 @@ var cardDisplayModule = (function () {
                         ` : ''}
                         </div>
                         <div class="cardv-descript">
-                            <h2 class="decsribe-paragraph">Business Description</h2>
+                            <h2 class="decsribe-paragraph business-descript">Business Description</h2>
                             <div class="cardv-description">
                                 <div class="justify-text">${data.description}</div>    
                             </div>
