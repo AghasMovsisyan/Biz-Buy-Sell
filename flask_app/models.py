@@ -78,7 +78,6 @@ class Business(Base):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "image_dir": self.image_dir,
             "location": self.location,
             "property_type": self.property_type,
             "price": self.price,

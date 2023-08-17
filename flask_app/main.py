@@ -81,7 +81,6 @@ def get_business():
             .with_entities(
                 Business.id,
                 Business.user_id,
-                Business.image_dir,
                 Business.location,
                 Business.price,
                 Business.name,
@@ -103,7 +102,6 @@ def get_business():
             data=[
                 {
                     "id": item.id,
-                    "image_dir": item.image_dir,
                     "location": item.location,
                     "price": item.price,
                     "name": item.name,
@@ -152,7 +150,6 @@ def create_business():
         business = Business(
             user_id=user_id,
             id=business_id,
-            image_dir=data.get("image_dir"),
             location=data.get("location"),
             property_type=data.get("property_type"),
             price=data.get("price"),

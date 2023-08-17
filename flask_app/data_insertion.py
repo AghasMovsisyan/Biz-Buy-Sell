@@ -23,7 +23,6 @@ def insert_data():
         Business(
             id=14,
             user_id=user.id,
-            image_dir="",
             location="Avan 10/6",
             property_type="Office",
             price=300000,
@@ -35,7 +34,6 @@ def insert_data():
         Business(
             id=15,
             user_id=user.id,
-            image_dir="",
             location="Downtown",
             property_type="Retail",
             price=400000,
