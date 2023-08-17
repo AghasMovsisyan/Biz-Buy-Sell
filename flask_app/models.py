@@ -40,7 +40,7 @@ class User(Base):
     first_name = Column(String)
     last_name = Column(String)
     tel_number = Column(String)
-    dalte_of_birth = Column(Date)
+    date_of_birth = Column(Date)
     businesses = relationship("Business", back_populates="user")
 
     def json(self):
@@ -52,7 +52,7 @@ class User(Base):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "tel_number": self.tel_number,
-            "dalte_of_birth": self.dalte_of_birth,
+            "date_of_birth": self.date_of_birth,
         }
 
 
