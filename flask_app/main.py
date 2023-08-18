@@ -17,10 +17,11 @@ engine = create_engine(database_uri)
 Base.metadata.bind = engine
 Session = sessionmaker(bind=engine)
 
-UPLOAD_FOLDER = 'static/business'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+UPLOAD_FOLDER = "static/business"
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
 
 def root_dir():
     """Gives the directory name of the current script file."""
@@ -48,16 +49,15 @@ def serve_index_page():
     return Response(content, mimetype="text/html")
 
 
-
 @app.route("/api/business", methods=["GET"])
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'."""
     max_limit = 30
     max_page = 30
-     
+
     try:
         page = int(request.args.get("page", 1))
-        limit = int(request.args.get("limit",6))
+        limit = int(request.args.get("limit", 6))
     except ValueError:
         return (
             jsonify(
@@ -66,19 +66,19 @@ def get_business():
             ),
             400,
         )
-    
+
     # Ensure limit is within valid range
     if limit < 1 or limit > max_limit:
         limit = 6
-    
+
     # Ensure page is within valid range
     if page < 1 or page > max_page:
         page = 1
-    
+
     # Limit the maximum 'limit' value to MAX_LIMITS
     limit = min(limit, max_limit)
     offset = (page - 1) * limit
-    
+
     # Open a new session for the API call
     session = Session()
     try:
@@ -94,18 +94,18 @@ def get_business():
             .limit(limit)
             .all()
         )
-        
+
         if not paginated_items:
             return (
                 jsonify(error="Page not found. The requested page does not exist."),
                 404,
             )
-        
+
         total = session.query(Business).count()
         # Calculate total pages for pagination
         additional_page_needed = 1 if total % limit != 0 else 0
         items_per_page = (total // limit) + additional_page_needed
-        
+
         # Construct the JSON response
         response_data = {
             "error": False,
@@ -114,9 +114,11 @@ def get_business():
             "total": total,
             "page": page,
         }
-        
+
         for item in paginated_items:
-            business_images_folder = os.path.join(app.config['UPLOAD_FOLDER'], str(item.id))
+            business_images_folder = os.path.join(
+                app.config["UPLOAD_FOLDER"], str(item.id)
+            )
             if os.path.exists(business_images_folder):
                 images = [
                     f"/static/business/{item.id}/{filename}"
@@ -136,47 +138,61 @@ def get_business():
 
             response_data["data"].append(business_data)
 
-        
         return jsonify(response_data), 200
-    
+
     finally:
         # Close the session after the API call is completed
         session.close()
 
+
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route("/api/business/<int:business_id>/upload", methods=["POST"])
 def upload_images(business_id):
-    if 'images' not in request.files:
+    if "images" not in request.files:
         return jsonify(error=True, message="No images provided."), 400
-    
-    images = request.files.getlist('images')
-    
+
+    images = request.files.getlist("images")
+
     # Ensure business_id exists in the database
     session = Session()
     business = session.query(Business).filter_by(id=business_id).first()
     if not business:
         session.close()
         return jsonify(error=True, message="Business not found."), 404
-    
+
     uploaded_images = []
     for image in images:
         if image and allowed_file(image.filename):
             filename = secure_filename(image.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], str(business_id), filename)
+            filepath = os.path.join(
+                app.config["UPLOAD_FOLDER"], str(business_id), filename
+            )
             os.makedirs(os.path.dirname(filepath), exist_ok=True)
             image.save(filepath)
             uploaded_images.append(filepath)
-    
+
     # Close the session
     session.close()
-    
-    return jsonify(error=False, message="Images uploaded successfully.", uploaded_images=uploaded_images), 201
 
-@app.route('/static/business/<int:business_id>/<path:filename>')
+    return (
+        jsonify(
+            error=False,
+            message="Images uploaded successfully.",
+            uploaded_images=uploaded_images,
+        ),
+        201,
+    )
+
+
+@app.route("/static/business/<int:business_id>/<path:filename>")
 def serve_image(business_id, filename):
-    return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER'], str(business_id)), filename)
+    return send_from_directory(
+        os.path.join(app.config["UPLOAD_FOLDER"], str(business_id)), filename
+    )
+
 
 @app.route("/api/business", methods=["POST"])
 def create_business():
@@ -353,6 +369,7 @@ def update_user_tel_number(user_id):
         return jsonify(message="User not found"), 404
     finally:
         session.close()
+
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
