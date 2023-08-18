@@ -48,7 +48,7 @@ def get_business():
     max_limit = 30
     default_limit = 6
     max_page = 30
-    
+
     try:
         page = int(request.args.get("page", 1))
         limit = int(request.args.get("limit", default_limit))
@@ -60,20 +60,19 @@ def get_business():
             ),
             400,
         )
-    
+
     # Ensure limit is within valid range
     if limit < 1 or limit > max_limit:
         limit = default_limit
-    
+
     # Ensure page is within valid range
     if page < 1 or page > max_page:
         page = 1
-    
-    
+
     # Limit the maximum 'limit' value to MAX_LIMITS
     limit = min(limit, max_limit)
     offset = (page - 1) * limit
-    
+
     # Open a new session for the API call
     session = Session()
     try:
@@ -89,18 +88,18 @@ def get_business():
             .limit(limit)
             .all()
         )
-        
+
         if not paginated_items:
             return (
                 jsonify(error="Page not found. The requested page does not exist."),
                 404,
             )
-        
+
         total = session.query(Business).count()
         # Calculate total pages for pagination
         additional_page_needed = 1 if total % limit != 0 else 0
         items_per_page = (total // limit) + additional_page_needed
-        
+
         # Construct the JSON response
         response_data = {
             "error": False,
@@ -117,13 +116,12 @@ def get_business():
             "total": total,
             "page": page,
         }
-        
+
         return jsonify(response_data), 200
-    
+
     finally:
         # Close the session aft er the API call is completed
         session.close()
-
 
 
 @app.route("/api/business", methods=["POST"])
