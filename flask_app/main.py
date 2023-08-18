@@ -1,13 +1,13 @@
 """aplication run"""
 import os
-from flask import Flask, Response, request, jsonify
+from flask import Flask, Response, request, jsonify, send_from_directory
 from flask_cors import CORS
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, joinedload
 from sqlalchemy.exc import SQLAlchemyError
 from models import User, Business, Base, database_uri
-from flask import Flask, request, jsonify, send_from_directory
-from werkzeug.utils import secure_filename  
+from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__)
 CORS(app)  # This will enable CORS   for all routes in the app
@@ -53,12 +53,11 @@ def serve_index_page():
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'."""
     max_limit = 30
-    default_limit = 6
     max_page = 30
-    
+     
     try:
         page = int(request.args.get("page", 1))
-        limit = int(request.args.get("limit", default_limit))
+        limit = int(request.args.get("limit",6))
     except ValueError:
         return (
             jsonify(
@@ -70,7 +69,7 @@ def get_business():
     
     # Ensure limit is within valid range
     if limit < 1 or limit > max_limit:
-        limit = default_limit
+        limit = 6
     
     # Ensure page is within valid range
     if page < 1 or page > max_page:
