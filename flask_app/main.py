@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker, joinedload
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.utils import secure_filename
 from models import User, Business, Base, database_uri
+import shutil
 
 
 app = Flask(__name__)
@@ -152,13 +153,24 @@ def allowed_file(filename):
 
 @app.route("/api/business/<int:business_id>/upload", methods=["POST"])
 def upload_images(business_id):
-    """Uploads and saves images for a specific business."""
+    """
+    Uploads and saves images for a specific business.
+
+    Args:
+        business_id (int): ID of the business.
+
+    Returns:
+        JSON response: Result of image upload.
+
+    Raises:
+        400 Bad Request: If no images were provided.
+        404 Not Found: If business ID is not found.
+    """
     if "images" not in request.files:
         return jsonify(error=True, message="No images provided."), 400
 
     images = request.files.getlist("images")
 
-    # Ensure business_id exists in the database
     session = Session()
     business = session.query(Business).filter_by(id=business_id).first()
     if not business:
@@ -169,24 +181,14 @@ def upload_images(business_id):
     for image in images:
         if image and allowed_file(image.filename):
             filename = secure_filename(image.filename)
-            filepath = os.path.join(
-                app.config["UPLOAD_FOLDER"], str(business_id), filename
-            )
+            filepath = os.path.join(app.config["UPLOAD_FOLDER"], str(business_id), filename)
             os.makedirs(os.path.dirname(filepath), exist_ok=True)
             image.save(filepath)
             uploaded_images.append(filepath)
 
-    # Close the session
     session.close()
+    return jsonify(error=False, message="Images uploaded successfully.", uploaded_images=uploaded_images), 201
 
-    return (
-        jsonify(
-            error=False,
-            message="Images uploaded successfully.",
-            uploaded_images=uploaded_images,
-        ),
-        201,
-    )
 
 
 @app.route("/static/business/<int:business_id>/<path:filename>")
@@ -195,6 +197,36 @@ def serve_image(business_id, filename):
     return send_from_directory(
         os.path.join(app.config["UPLOAD_FOLDER"], str(business_id)), filename
     )
+
+@app.route("/api/business/<int:business_id>/delete/<path:filename>", methods=["DELETE"])
+def delete_image(business_id, filename):
+    """
+    Deletes a specific image for a business.
+
+    Args:
+        business_id (int): ID of the business.
+        filename (str): Name of the image file to be deleted.
+
+    Returns:
+        JSON response: Result of image deletion.
+
+    Raises:
+        404 Not Found: If business ID is not found or image does not exist.
+    """
+    session = Session()
+    business = session.query(Business).filter_by(id=business_id).first()
+    if not business:
+        session.close()
+        return jsonify(error=True, message="Business not found."), 404
+
+    image_path = os.path.join(app.config["UPLOAD_FOLDER"], str(business_id), filename)
+    if os.path.exists(image_path):
+        os.remove(image_path)
+        session.close()
+        return jsonify(error=False, message="Image deleted successfully."), 200
+    else:
+        session.close()
+        return jsonify(error=True, message="Image not found."), 404
 
 
 @app.route("/api/business", methods=["POST"])
