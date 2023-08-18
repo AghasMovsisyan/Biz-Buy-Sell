@@ -47,7 +47,7 @@ function updateCardDisplay(data) {
     .map(business => {
       return `
       <div class="card" onclick="window.location='#/business/${business.id}';" style="cursor: pointer;">
-        <div class="card-image"><img class="img" src=${business.image_dir}></div>
+        <div class="card-image"><img class="img" src=${business.images[0]}></div>
         <div class="card-info">
           <h3>${business.name}</h3>   
           <p>${business.location}<img class="location" src="../logo/icons8-location-48.png"></p>
@@ -65,7 +65,7 @@ function updateCardDisplay(data) {
 function showPage(whichPage) {
   currentPage = whichPage;
   fetchData(currentPage, limitPerPage);
-}
+} 
 
 $(document).on('click', '.pagination li a', function(event) {
   event.preventDefault();

@@ -5,8 +5,8 @@ from flask_cors import CORS
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, joinedload
 from sqlalchemy.exc import SQLAlchemyError
-from models import User, Business, Base, database_uri
 from werkzeug.utils import secure_filename
+from models import User, Business, Base, database_uri
 
 
 app = Flask(__name__)
@@ -146,11 +146,13 @@ def get_business():
 
 
 def allowed_file(filename):
+    """Check if a filename has an allowed file extension."""
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route("/api/business/<int:business_id>/upload", methods=["POST"])
 def upload_images(business_id):
+    """Uploads and saves images for a specific business."""
     if "images" not in request.files:
         return jsonify(error=True, message="No images provided."), 400
 
@@ -189,6 +191,7 @@ def upload_images(business_id):
 
 @app.route("/static/business/<int:business_id>/<path:filename>")
 def serve_image(business_id, filename):
+    """Serves a static image file for a specific business."""
     return send_from_directory(
         os.path.join(app.config["UPLOAD_FOLDER"], str(business_id)), filename
     )
