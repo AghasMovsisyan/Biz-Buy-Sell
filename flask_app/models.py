@@ -4,11 +4,11 @@ models.py
 This module contains the SQLAlchemy models for the database schema.
 """
 import os
+from enum import Enum
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, relationship, sessionmaker
 from sqlalchemy import Column, Integer, String, Date
-from enum import Enum
 from sqlalchemy import Enum as SQLAlchemyEnum
 
 # Load environment variables from .env file
@@ -32,17 +32,20 @@ class Base(DeclarativeBase):
 
 
 class PropertyType(Enum):
-    Hotel = "Hotel"
-    Cafe = "Cafe"
-    Supermarket = "Supermarket"
-    Restuarant = "Restuarant"
-    # Add more property types as needed
+    """Property Type Business"""
+
+    HOTEL = "HOTEL"
+    CAFE = "CAFE"
+    SUPERMARKET = "SUPERMARKET"
+    RESTUARANT = "RESTUARANT"
 
 
 class Status(Enum):
-    Listed = "Listed"
-    On_Sale = "On_Sale"
-    Sold = "Sold"
+    """Status of the Business"""
+
+    LISTED = "LISTED"
+    ON_SALE = "ON_SALE"
+    SOLD = "SOLD"
 
 
 class User(Base):
@@ -86,7 +89,7 @@ class Business(Base):
     name = Column(String)
     description = Column(String)
     property_type = Column(SQLAlchemyEnum(PropertyType), nullable=True)
-    status = Column(SQLAlchemyEnum(Status), default=Status.Listed)
+    status = Column(SQLAlchemyEnum(Status), default=Status.LISTED)
 
     # Define the relationship between User and Business
     user = relationship("User", back_populates="businesses")
