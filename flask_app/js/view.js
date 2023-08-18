@@ -1,13 +1,11 @@
 var cardDisplayModule = (function () {
     // Get the current hostname and port to build the server URL
-    const serverURL = "";
-
     /**
      * @param  {string} cardId
      */
     function fetchCardDetails(cardId) {
         $.ajax({
-            url: `${serverURL}/api/business/${cardId}`,
+            url: `/api/business/${cardId}`,
             method: 'GET',
             success: function (data) {
                 const cardDetails = document.getElementById("card-details");

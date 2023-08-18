@@ -1,11 +1,9 @@
 let limitPerPage; // The default value will be provided by the API
 let currentPage; // The default value will be provided by the API
 
-const serverURL = "";
-
 function fetchData(page, limitPerPage) {
   $.ajax({
-    url: `${serverURL}/api/business`,
+    url: `/api/business`,
     type: "GET",
     data: {
       page: page,
