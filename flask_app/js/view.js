@@ -23,10 +23,24 @@ var cardDisplayModule = (function () {
                             <h1 class="business-name">${data.name}</h1>
                         </div>
                         <div class="cardv">
-                            <div class="card-image">
-                                <img class="imgv" src="${data.image_dir}">
+                        <div id="image-slider" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                ${data.images.map((imageUrl, index) => `
+                                    <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                        <img class="slider-image d-block w-100" src="${imageUrl}" alt="">
+                                    </div>
+                                `).join('')}
                             </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#image-slider" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#image-slider" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
+                    </div>
                         <div class="cardv-info" id="card-info-${cardId}">
                             <ul>
                                 <li><strong>Year Built:</strong> <span>${data.year_built}</span><input type="text"  class="form-controlt" id="edit-year-${cardId}" value="${data.year_built}" style="display: none;"></li>
@@ -142,9 +156,9 @@ var cardDisplayModule = (function () {
                         const editedYear = document.getElementById(`edit-year-${cardId}`).value;
                         const editedLocation = document.getElementById(`edit-location-${cardId}`).value;
                         const editedPrice = document.getElementById(`edit-price-${cardId}`).value;
-                        const editedSize = document.getElementById(`edit-size-${cardId}`).value;
                         const editedTel = document.getElementById(`edit-tel-${cardId}`).value;
                         const editType = document.getElementById(`edit-type-${cardId}`).value;
+                        const editedSize = document.getElementById(`edit-size-${cardId}`).value;
                         // Update card details with edited values
                         if(isNaN(editedSize)) {
                             alert("Size Must be Integer");
@@ -188,6 +202,23 @@ var cardDisplayModule = (function () {
                     });
                 }
 
+                const sliderContainer = cardDetails.querySelector('.carousel-inner');
+                let currentImageIndex = 0;
+
+                function updateSliderImage() {
+                    const images = data.images;
+                    if (images.length > 0) {
+                        const imageUrl = images[currentImageIndex];
+                        sliderContainer.querySelector('.slider-image').src = imageUrl;
+                    }
+                }
+
+                
+
+                // Initialize the image slider
+                updateSliderImage();
+            
+            
             },
             error: function (error) {
                 console.log(error);

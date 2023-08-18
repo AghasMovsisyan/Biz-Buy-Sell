@@ -724,3 +724,26 @@ input#updateLocation {
 .buy {
     margin: 10px 390px 10px;
 }
+
+
+#image-slider {
+  text-align: center;
+  margin: 20px;
+}
+
+.slider-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+
+.slider-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slider-nav {
+  margin-top: 10px;
+}
