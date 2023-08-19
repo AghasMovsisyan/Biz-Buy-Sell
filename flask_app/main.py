@@ -313,7 +313,7 @@ def get_business_by_id(business_id):
                     "location": business.location,
                     "price": business.price,
                     "authenticated_user_id": authenticated_user_id,
-                }   
+                }
 
                 # Get image URLs for the business
                 business_images_folder = os.path.join(
@@ -330,7 +330,7 @@ def get_business_by_id(business_id):
 
                 business_data["images"] = images
                 return jsonify(business_data)
-            
+
             return jsonify(message="Business not found"), 404
         except SQLAlchemyError as error:
             return jsonify(error=str(error)), 400
