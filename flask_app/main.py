@@ -313,7 +313,7 @@ def get_business_by_id(business_id):
                     "location": business.location,
                     "price": business.price,
                     "authenticated_user_id": authenticated_user_id,
-                }
+                }   
 
                 # Get image URLs for the business
                 business_images_folder = os.path.join(
@@ -330,7 +330,7 @@ def get_business_by_id(business_id):
 
                 business_data["images"] = images
                 return jsonify(business_data)
-
+            
             return jsonify(message="Business not found"), 404
         except SQLAlchemyError as error:
             return jsonify(error=str(error)), 400
@@ -343,12 +343,18 @@ def update_business(business_id):
         return jsonify(message="Invalid business ID"), 400  # Bad Request
 
     data = request.json
+    if not isinstance(data, dict) or not data:
+        return jsonify(message="Invalid data format or empty data"), 400
+
     session = Session()
     try:
         business = session.query(Business).get(business_id)
         if business:
             for key, value in data.items():
-                setattr(business, key, value)
+                if hasattr(business, key):
+                    setattr(business, key, value)
+                else:
+                    return jsonify(message=f"Invalid field: {key}"), 400
             session.commit()
             return jsonify(message="Business updated successfully")
         return jsonify(message="Business not found"), 404
@@ -359,6 +365,8 @@ def update_business(business_id):
 @app.route("/api/business/<int:business_id>", methods=["DELETE"])
 def delete_business(business_id):
     """Delete a specific business by ID"""
+    if business_id <= 0:
+        return jsonify(message="Invalid business ID"), 400  # Bad Request
 
     session = Session()
     try:
@@ -370,7 +378,7 @@ def delete_business(business_id):
         return jsonify(message="Business not found"), 404
     except SQLAlchemyError as error:
         session.rollback()  # Rollback the transaction in case of an error
-        return jsonify(error=str(error)), 500
+        return jsonify(error=str(error)), 400
     finally:
         session.close()
 
