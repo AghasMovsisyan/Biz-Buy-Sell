@@ -7,7 +7,6 @@ from sqlalchemy.orm import sessionmaker, joinedload
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.utils import secure_filename
 from models import User, Business, Base, database_uri
-import shutil
 
 
 app = Flask(__name__)
@@ -181,14 +180,22 @@ def upload_images(business_id):
     for image in images:
         if image and allowed_file(image.filename):
             filename = secure_filename(image.filename)
-            filepath = os.path.join(app.config["UPLOAD_FOLDER"], str(business_id), filename)
+            filepath = os.path.join(
+                app.config["UPLOAD_FOLDER"], str(business_id), filename
+            )
             os.makedirs(os.path.dirname(filepath), exist_ok=True)
             image.save(filepath)
             uploaded_images.append(filepath)
 
     session.close()
-    return jsonify(error=False, message="Images uploaded successfully.", uploaded_images=uploaded_images), 201
-
+    return (
+        jsonify(
+            error=False,
+            message="Images uploaded successfully.",
+            uploaded_images=uploaded_images,
+        ),
+        201,
+    )
 
 
 @app.route("/static/business/<int:business_id>/<path:filename>")
@@ -197,6 +204,7 @@ def serve_image(business_id, filename):
     return send_from_directory(
         os.path.join(app.config["UPLOAD_FOLDER"], str(business_id)), filename
     )
+
 
 @app.route("/api/business/<int:business_id>/delete/<path:filename>", methods=["DELETE"])
 def delete_image(business_id, filename):
@@ -224,9 +232,8 @@ def delete_image(business_id, filename):
         os.remove(image_path)
         session.close()
         return jsonify(error=False, message="Image deleted successfully."), 200
-    else:
-        session.close()
-        return jsonify(error=True, message="Image not found."), 404
+    session.close()
+    return jsonify(error=True, message="Image not found."), 404
 
 
 @app.route("/api/business", methods=["POST"])
@@ -280,6 +287,7 @@ def create_business():
     except ImportError:
         return jsonify(message="An error occurred"), 500
 
+
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
     """Retrieve a specific business by ID"""
@@ -301,7 +309,9 @@ def get_business_by_id(business_id):
                 business_data = business.json()
 
                 # Get image URLs for the business
-                business_images_folder = os.path.join(app.config["UPLOAD_FOLDER"], str(business_id))
+                business_images_folder = os.path.join(
+                    app.config["UPLOAD_FOLDER"], str(business_id)
+                )
                 if os.path.exists(business_images_folder):
                     images = [
                         f"/static/business/{business_id}/{filename}"
@@ -317,7 +327,6 @@ def get_business_by_id(business_id):
             return jsonify(message="Business not found"), 404
         except SQLAlchemyError as error:
             return jsonify(error=str(error)), 500
-
 
 
 @app.route("/api/business/<int:business_id>", methods=["PUT"])

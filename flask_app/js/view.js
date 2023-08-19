@@ -27,7 +27,7 @@ var cardDisplayModule = (function () {
                             <div class="carousel-inner">
                                 ${data.images.map((imageUrl, index) => `
                                     <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                                        <img class="slider-image d-block w-100" src="${imageUrl}" alt="">
+                                        <img class="slider-image" src="${imageUrl}" alt="">
                                     </div>
                                 `).join('')}
                             </div>
@@ -212,8 +212,6 @@ var cardDisplayModule = (function () {
                         sliderContainer.querySelector('.slider-image').src = imageUrl;
                     }
                 }
-
-                
 
                 // Initialize the image slider
                 updateSliderImage();
