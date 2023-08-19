@@ -287,7 +287,6 @@ def create_business():
     except ImportError:
         return jsonify(message="An error occurred"), 500
 
-
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
     """Retrieve a specific business by ID"""
@@ -295,7 +294,7 @@ def get_business_by_id(business_id):
     # Hardcoded authenticatedUserId for testing purposes
     authenticated_user_id = 2
 
-    if business_id <= 0:
+    if not isinstance(business_id, int) or business_id <= 0:
         return jsonify(message="Invalid business ID"), 400
 
     with Session() as session:
@@ -305,8 +304,15 @@ def get_business_by_id(business_id):
                 .options(joinedload(Business.user))
                 .get(business_id)
             )
+
             if business:
-                business_data = business.json()
+                business_data = {
+                    "id": business.id,
+                    "name": business.name,
+                    "location": business.location,
+                    "price": business.price,
+                    "authenticated_user_id": authenticated_user_id,
+                }
 
                 # Get image URLs for the business
                 business_images_folder = os.path.join(
@@ -322,12 +328,11 @@ def get_business_by_id(business_id):
                     images = []
 
                 business_data["images"] = images
-                business_data["authenticated_user_id"] = authenticated_user_id
                 return jsonify(business_data)
+            
             return jsonify(message="Business not found"), 404
         except SQLAlchemyError as error:
-            return jsonify(error=str(error)), 500
-
+            return jsonify(error=str(error)), 400
 
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
 def update_business(business_id):
