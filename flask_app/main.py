@@ -307,15 +307,13 @@ def get_business_by_id(business_id):
             )
 
             if business:
-                business_data = {
-                    "id": business.id,
-                    "name": business.name,
-                    "location": business.location,
-                    "price": business.price,
-                    "authenticated_user_id": authenticated_user_id,
-                }
+                # Use the json() method from the Business model to get all columns
+                business_data = business.json()
 
-                # Get image URLs for the business
+                # Add the authenticated_user_id
+                business_data["authenticated_user_id"] = authenticated_user_id
+
+                # Get image URLs for the business (same as in your previous code)
                 business_images_folder = os.path.join(
                     app.config["UPLOAD_FOLDER"], str(business_id)
                 )
@@ -334,7 +332,7 @@ def get_business_by_id(business_id):
             return jsonify(message="Business not found"), 404
         except SQLAlchemyError as error:
             return jsonify(error=str(error)), 400
-
+        
 
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
 def update_business(business_id):

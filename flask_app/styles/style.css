@@ -243,8 +243,8 @@ input {
 
 .pagination li a{
   text-decoration: none;
-  font-size: 1.2em;
-  line-height: 34px;
+  font-size: 1.1em;
+  line-height: 30px;
 }
 
 .previous-page, .next-page{
@@ -544,6 +544,7 @@ input {
   margin: 0;
   padding: 0;
   list-style: none;
+  margin-left: 630px;
   display: flex;
   align-items: center;
 }
@@ -556,6 +557,7 @@ input {
   position: relative;
   top: 15px;
   margin: 1px 10px 1px;
+  right: 750px;
 }
 
 #limitSelect {
@@ -563,7 +565,7 @@ input {
   width: 131px;
   height: 30px;
   position: relative;
-  left: 150px;
+  right: 600px;
   bottom: 10px;
 
 }
@@ -745,4 +747,17 @@ input#updateLocation {
 
 .slider-nav {
   margin-top: 10px;
+}
+
+
+.pagination-wrapper {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000; /* Ensure the pagination stays on top of other content */
 }

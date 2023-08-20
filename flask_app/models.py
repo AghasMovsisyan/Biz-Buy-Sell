@@ -82,14 +82,13 @@ class Business(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("User.id"))
     location = Column(String)
-    property_type = Column(String)
     price = Column(Integer)
     year_built = Column(String)
     size = Column(Integer)
     name = Column(String)
     description = Column(String)
     property_type = Column(SQLAlchemyEnum(PropertyType), nullable=True)
-    status = Column(SQLAlchemyEnum(Status), default=Status.LISTED)
+    status = Column(SQLAlchemyEnum(Status),nullable=True)
 
     # Define the relationship between User and Business
     user = relationship("User", back_populates="businesses")
