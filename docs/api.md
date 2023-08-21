@@ -195,10 +195,11 @@ Upload and Save Images for a Specific Business.
   "error": true,
   "message": "No images provided."
 }
-Status Code: 404 (Not Found)
-Response Body:
-json
-Copy code
+```
+- **Status Code**: 404 (Not Found)
+- **Response Body**:
+
+```json
 {
   "error": true,
   "message": "Business not found."
