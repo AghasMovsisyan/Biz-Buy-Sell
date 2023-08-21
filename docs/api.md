@@ -70,7 +70,13 @@ Create a new business item.
 }
 
 ```
+##### Response Body
+```json
+{
+  Business created successfully id(business)
+}
 
+```
 #### 3. GET /api/business/{business_id}
 
 Retrieve details of a specific business by ID.
