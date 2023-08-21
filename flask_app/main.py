@@ -131,9 +131,9 @@ def get_business():
             business_data = {
                 "id": item.id,
                 "images": images,
+                "name": item.name,
                 "location": item.location,
                 "price": item.price,
-                "name": item.name,
             }
 
             response_data["data"].append(business_data)

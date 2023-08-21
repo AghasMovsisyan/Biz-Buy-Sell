@@ -228,7 +228,6 @@ input {
   margin-bottom: 5px;
 }
 
-
 .pagination{
   justify-content: center;
   margin: 25px 26px 54px;
@@ -761,5 +760,3 @@ input#updateLocation {
   align-items: center;
   z-index: 1000; /* Ensure the pagination stays on top of other content */
 }
-
-
