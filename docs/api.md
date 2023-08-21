@@ -157,7 +157,7 @@ Delete a specific business by ID.
 
 Upload and Save Images for a Specific Business.
 
--**Request Method**: POST
+- **Request Method**: POST
 - **URL**: `/api/business/{business_id}/upload`
 
 ##### Parameters
@@ -186,10 +186,11 @@ json
   ]
 }
 ```  
-Status Code: 400 (Bad Request)
-Response Body:
+- **Status Code**: 400 (Bad Request)
+- **Response Body**:
+
 json
-Copy code
+```
 {
   "error": true,
   "message": "No images provided."
@@ -202,3 +203,4 @@ Copy code
   "error": true,
   "message": "Business not found."
 }
+```
