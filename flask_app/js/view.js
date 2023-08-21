@@ -183,15 +183,20 @@ var cardDisplayModule = (function () {
                         data.tel_number = editedTel;
                         
                         
-
+                            
                         // Update card details on the server
                         $.ajax({
                             type: 'PUT',
-                            url: `${serverURL}/api/business/${cardId}`,
-                            data: JSON.stringify(data),
+                            url: `/api/business/${cardId}`,
+                            data: JSON.stringify({
+                                year_built: editedYear,
+                                property_type: editType,
+                                location: editedLocation,
+                                price: editedPrice,
+                                size: editedSize,
+                            }),
                             contentType: 'application/json',
                             success: function(response) {
-
                                 // Update user's tel_number
                                 updateUserTelNumber(data.user_id, editedTel, cardId);
                             },
@@ -199,6 +204,7 @@ var cardDisplayModule = (function () {
                                 console.error('Error updating business:', error);
                             }
                         });
+                        
                     });
                 }
 
@@ -228,7 +234,7 @@ var cardDisplayModule = (function () {
     function updateUserTelNumber(userId, newTelNumber, cardId) {
         $.ajax({
             type: 'PUT',
-            url: `${serverURL}/api/me/${userId}`,
+            url: `/api/me/${userId}`,
             data: JSON.stringify({ tel_number: newTelNumber }),
             contentType: 'application/json',
             success: function(response) {

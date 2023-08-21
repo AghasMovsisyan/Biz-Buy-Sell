@@ -755,7 +755,7 @@ input#updateLocation {
   bottom: 0;
   width: 100%;
   background-color: #fff;
-  padding: 2px;
+  padding: 1px;
   display: flex;
   justify-content: space-between;
   align-items: center;

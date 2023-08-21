@@ -8,39 +8,39 @@ def insert_data():
     session = Session()
 
     user = User(
-        id=3,
-        email="astest@example.com",
-        password_hash="dsada51",
-        salt="ss",
-        first_name="John",
-        last_name="Doe",
-        tel_number="+37494388825",
-        date_of_birth=date(2000, 1, 1),
+        id=8,
+        email="vardan@mial.ru",
+        password_hash="123456a",
+        salt="ads",
+        first_name="Vardan",
+        last_name="Melqonyan",
+        tel_number="+37494388882",
+        date_of_birth=date(2002, 4, 15),
     )
 
     # Create multiple businesses for the user
     businesses = [
         Business(
-            id=3,
+            id=13,
             user_id=user.id,
-            location="Avan 10/6",
+            location="Kentron 2/5",
             property_type=PropertyType.RESTUARANT,
-            price=300000,
+            price=500000,
             year_built="2010",
-            size=2500,
-            name="Rest Adas",
-            description="",
+            size=4000,
+            name="Gase Rest",
+            description="Pre-pandemic, to Potomac.",
         ),
         Business(
-            id=4,
+            id=14,
             user_id=user.id,
-            location="Downtown",
+            location="Dilijan 1/7",
             property_type=PropertyType.RESTUARANT,
-            price=400000,
-            year_built="2015",
-            size=1800,
-            name="John Astra",
-            description="",
+            price=350000,
+            year_built="2017",
+            size=5500,
+            name="Elya Nora",
+            description="Pre-that the and bites overlooking the elegant Potomac.",
         ),
         # Add more businesses as needed
     ]
