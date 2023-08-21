@@ -6,8 +6,8 @@
 
 Retrieve Paginated Business Items.
 
--- **Request Method**: GET
--- **URL**: ``/api/business``
+- **Request Method**: GET
+-  **URL**: ``/api/business``
 
 ##### Parameters
 - `page` (optional): Page number for pagination (default is 1).
@@ -234,8 +234,8 @@ Upload and Save Images for a Specific Business.
 
 Delete Image for a Specific Business
 
--- **Request Method**: DELETE
--- **URL**: `/api/business/{business_id}/delete/{filename}`
+- **Request Method**: DELETE
+- **URL**: `/api/business/{business_id}/delete/{filename}`
 
 ##### Parameters
 - `business_id` (integer, path): The ID of the business.
