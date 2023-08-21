@@ -151,3 +151,54 @@ Delete a specific business by ID.
 {
   "message": "Business deleted successfully"
 }
+```
+
+#### 6. POST /api/business/{business_id}/upload
+
+Upload and Save Images for a Specific Business.
+
+-**Request Method**: POST
+- **URL**: `/api/business/{business_id}/upload`
+
+##### Parameters
+
+- `business_id` (integer, path): The ID of the business to upload images for.
+
+##### Request
+
+- Request Headers: Content-Type: multipart/form-data
+- Request Body: images (multiple files): The images to be uploaded.
+
+##### Response
+
+- **Status Code**: 201 (Created)
+- **Response Body**:
+
+json
+```
+{
+  "error": false,
+  "message": "Images uploaded successfully.",
+  "uploaded_images": [
+    "/static/business/{business_id}/image1.jpg",
+    "/static/business/{business_id}/image2.jpg",
+    "/static/business/{business_id}/image3.jpg"
+  ]
+}
+```  
+Status Code: 400 (Bad Request)
+Response Body:
+json
+Copy code
+{
+  "error": true,
+  "message": "No images provided."
+}
+Status Code: 404 (Not Found)
+Response Body:
+json
+Copy code
+{
+  "error": true,
+  "message": "Business not found."
+}
