@@ -34,10 +34,10 @@ class Base(DeclarativeBase):
 class PropertyType(Enum):
     """Property Type Business"""
 
-    HOTEL = "Hotel"
-    CAFE = "Cafe"
-    SUPERMARKET = "Supermarket"
-    RESTUARANT = "Restuarant"
+    HOTEL = "HOTEL"
+    CAFE = "CAFE"
+    SUPERMARKET = "SUPERMARKET"
+    RESTUARANT = "RESTUARANT"
 
 
 class Status(Enum):

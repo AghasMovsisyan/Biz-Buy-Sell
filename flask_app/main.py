@@ -97,7 +97,10 @@ def get_business():
 
         if not paginated_items:
             return (
-                jsonify(error="Page not found. The requested page does not exist."),
+                jsonify(
+                    error=True,
+                    message="Invalid page or limit value. Please provide valid integers.",
+                ),
                 404,
             )
 
@@ -152,19 +155,8 @@ def allowed_file(filename):
 
 @app.route("/api/business/<int:business_id>/upload", methods=["POST"])
 def upload_images(business_id):
-    """
-    Uploads and saves images for a specific business.
+    """Uploads and saves images for a specific business."""
 
-    Args:
-        business_id (int): ID of the business.
-
-    Returns:
-        JSON response: Result of image upload.
-
-    Raises:
-        400 Bad Request: If no images were provided.
-        404 Not Found: If business ID is not found.
-    """
     if "images" not in request.files:
         return jsonify(error=True, message="No images provided."), 400
 
@@ -195,7 +187,7 @@ def upload_images(business_id):
             uploaded_images=uploaded_images,
         ),
         201,
-    )
+    )   
 
 
 @app.route("/static/business/<int:business_id>/<path:filename>")
