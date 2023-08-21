@@ -73,7 +73,7 @@ Create a new business item.
 ##### Response Body
 ```json
 {
-  Business created successfully id(business)
+  "Business created successfully id(business)"
 }
 
 ```
