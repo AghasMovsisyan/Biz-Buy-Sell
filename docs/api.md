@@ -2,48 +2,72 @@
 
 ### Endpoints
 
-#### 1. GET /api/business
+#### 1.  GET /api/business
 
-Retrieve paginated business items.
+Retrieve Paginated Business Items.
 
-- **Request Method**: POST
-- **URL**: `/api/business`
+-- **Request Method**: GET
+-- **URL**: ``/api/business``
 
-#### Parameters
-- `page` (optional): Page number (default is 1).
-- `limit` (optional): Number of items per page (default is 6).
+##### Parameters
+- `page` (optional): Page number for pagination (default is 1).
+- `ada` limit (optional): Number of items per page (default is 6).
 
-##### Response Body
+##### Response
+- **Status Code**: 200 (OK)
+- **Response Body**:
 
 ```json
 {
+  "error": false,
   "data": [
     {
       "id": 1,
-       "images": [
-                "/static/business/1/1.jpg",
-                "/static/business/1/2.jpg",
-                "/static/business/1/3.jpg"
-            ],
+      "images": [
+        "/static/business/1/image1.jpg",
+        "/static/business/1/image2.jpg"
+      ],
+      "name": "Business Name 1",
       "location": "New York",
-      "name": "Example Business 1"
-      "price": "$200,000",
+      "price": "$200,000"
     },
     {
       "id": 2,
-      "image_dir": "/path/to/image2.jpg",
+      "images": [
+        "/static/business/2/image1.jpg",
+        "/static/business/2/image2.jpg"
+      ],
+      "name": "Business Name 2",
       "location": "Los Angeles",
-      "price": "$150,000",
-      "name": "Example Business 2"
+      "price": "$150,000"
     },
     // ... (more business items)
   ],
-  "error": false,
   "items_per_page": 10,
   "total": 42,
   "page": 2
 }
 
+```
+
+- **Status Code**: 400 (Bad Request)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Invalid page or limit value. Please provide valid integers."
+}
+
+```
+- **Status Code**: 404 (Not Found)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Page not found. The requested page does not exist."
+}
 ```
 
 #### 2. POST /api/business
