@@ -332,7 +332,7 @@ def get_business_by_id(business_id):
             return jsonify(message="Business not found"), 404
         except SQLAlchemyError as error:
             return jsonify(error=str(error)), 400
-        
+
 
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
 def update_business(business_id):

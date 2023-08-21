@@ -88,7 +88,7 @@ class Business(Base):
     name = Column(String)
     description = Column(String)
     property_type = Column(SQLAlchemyEnum(PropertyType), nullable=True)
-    status = Column(SQLAlchemyEnum(Status),nullable=True)
+    status = Column(SQLAlchemyEnum(Status), nullable=True)
 
     # Define the relationship between User and Business
     user = relationship("User", back_populates="businesses")
