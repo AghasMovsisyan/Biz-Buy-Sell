@@ -160,20 +160,50 @@ var cardDisplayModule = (function () {
                         const editType = document.getElementById(`edit-type-${cardId}`).value;
                         const editedSize = document.getElementById(`edit-size-${cardId}`).value;
                         // Update card details with edited values
-                        if(isNaN(editedSize)) {
-                            alert("Size Must be Integer");
+                        if (isNaN(editedSize)) {
+                            alert("Size must be an integer");
+                            return;
+                        }
+                        
+                        if (isNaN(editedPrice)) {
+                            alert("Price must be an integer");
+                            return;
+                        }
+                        
+                        if (isNaN(editedTel)) {
+                            alert("Telephone Number must be an integer");
+                            return;
+                        }
+                        
+                        if (editedYear === '') {
+                            alert("Year Built must not be empty");
                             return;
                         }
 
-                        if(isNaN(editedPrice)) {
-                            alert("Price Must be Integer");``
+                        if (editedLocation === '') {
+                            alert("Location must not be empty");
                             return;
                         }
 
-                        if(isNaN(editedTel)) {
-                            alert("Tel Must be Integer");``
+                        if (editedPrice === '') {
+                            alert("Price must not be empty");
                             return;
                         }
+
+                        if (editedTel === '') {
+                            alert("Telephone Number must not be empty");
+                            return;
+                        }
+
+                        if (editedSize === '') {
+                            alert("Size must be not empty");
+                            return;
+                        }
+
+                        
+                        
+                        // Rest of the code for updating card details on the server
+                        
                         
                         data.year_built = editedYear;
                         data.property_type = editType;
