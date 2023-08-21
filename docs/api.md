@@ -174,8 +174,8 @@ Upload and Save Images for a Specific Business.
 - **Status Code**: 201 (Created)
 - **Response Body**:
 
-json
-```
+
+```json
 {
   "error": false,
   "message": "Images uploaded successfully.",
@@ -189,8 +189,8 @@ json
 - **Status Code**: 400 (Bad Request)
 - **Response Body**:
 
-json
-```
+
+```json
 {
   "error": true,
   "message": "No images provided."
