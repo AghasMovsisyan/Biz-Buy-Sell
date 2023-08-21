@@ -11,7 +11,7 @@ Retrieve Paginated Business Items.
 
 ##### Parameters
 - `page` (optional): Page number for pagination (default is 1).
-- `ada` limit (optional): Number of items per page (default is 6).
+- `limit` limit (optional): Number of items per page (default is 6).
 
 ##### Response
 - **Status Code**: 200 (OK)
@@ -228,4 +228,47 @@ Upload and Save Images for a Specific Business.
   "error": true,
   "message": "Business not found."
 }
+```
+
+#### 7. DELETE /api/business/{business_id}/delete/{filename}
+
+Delete Image for a Specific Business
+
+-- **Request Method**: DELETE
+-- **URL**: `/api/business/{business_id}/delete/{filename}`
+
+##### Parameters
+- `business_id` (integer, path): The ID of the business.
+- `filename` (string, path): The name of the image file to be deleted.
+
+##### Response
+
+- **Status Code**: 200 (OK)
+- **Response Body**:
+
+```json
+{
+  "error": false,
+  "message": "Image deleted successfully."
+}
+
+```
+
+- **Status Code**: 404 (Not Found)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Business not found."
+}
+
+```
+
+```json
+{
+  "error": true,
+  "message": "Image not found."
+}
+
 ```
