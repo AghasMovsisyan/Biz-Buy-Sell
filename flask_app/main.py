@@ -187,7 +187,7 @@ def upload_images(business_id):
             uploaded_images=uploaded_images,
         ),
         201,
-    )   
+    )
 
 
 @app.route("/static/business/<int:business_id>/<path:filename>")
