@@ -13,6 +13,7 @@ function fetchData(page, limitPerPage) {
       currentPage = data.page; // Update currentPage with the value from the API response
       updatePagination(data.items_per_page); // Update the pagination links
       updateCardDisplay(data.data); // Update the card display
+      updateCardDisplay(data.data);
     },
     error: function(xhr, textStatus, errorThrown) {
       console.log(errorThrown);
@@ -43,24 +44,47 @@ function updatePagination(items_per_page) {
 }
 
 function updateCardDisplay(data) {
+  const cardWidth = 335; // Adjust this value to match your card width
+  const container = $('.card-content');
+  const containerWidth = container.width(); // Recalculate container width
+  let cardsPerRow = Math.floor(containerWidth / cardWidth);
+  const rowCount = Math.ceil(data.length / cardsPerRow);
+  console.log("data.length",data.length)
+
+
   const html = data
-    .map(business => {
+    .map((business, index) => {
+      const rowIndex = Math.floor(index / cardsPerRow);
+      const isLastRow = rowIndex === rowCount - 1;
+      console.log("rowIndex",rowIndex)
+      console.log("isLastRow",isLastRow)
+      console.log("cardsPerRow",cardsPerRow)
+      console.log("containerWidth",containerWidth)
+  
+      const marginRight = isLastRow && cardsPerRow === 2 ? '190px' : '0';
+      
+
       return `
-      <div class="card" onclick="window.location='#/business/${business.id}';" style="cursor: pointer;">
-        <div class="card-image"><img class="img" src=${business.images[0]}></div>
-        <div class="card-info">
-          <h3>${business.name}</h3>   
-          <p>${business.location}<img class="location" src="../logo/icons8-location-48.png"></p>
-          <p>${business.price}<img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></p>
+        <div class="card"  onclick="window.location='#/business/${business.id}';" style="cursor: pointer; position: relative; right: ${marginRight}">
+          <div class="card-image"><img class="img" src=${business.images[0]}></div>
+          <div class="card-info">
+            <h3>${business.name}</h3>   
+            <p>${business.location}<img class="location" src="../logo/icons8-location-48.png"></p>
+            <p>${business.price}<img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></p>
+          </div>
         </div>
-    </div>
-    
       `;
+      
     })
     .join("");
 
   $('.card-content').html(html);
 }
+
+
+
+
+
 
 function showPage(whichPage) {
   currentPage = whichPage;

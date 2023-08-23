@@ -21,7 +21,7 @@ UPLOAD_FOLDER = "static/business"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
+    
 
 def root_dir():
     """Gives the directory name of the current script file."""
@@ -176,7 +176,7 @@ def upload_images(business_id):
                 app.config["UPLOAD_FOLDER"], str(business_id), filename
             )
             os.makedirs(os.path.dirname(filepath), exist_ok=True)
-            image.save(filepath)
+            image.save(filepath)    
             uploaded_images.append(filepath)
 
     session.close()
@@ -200,19 +200,8 @@ def serve_image(business_id, filename):
 
 @app.route("/api/business/<int:business_id>/delete/<path:filename>", methods=["DELETE"])
 def delete_image(business_id, filename):
-    """
-    Deletes a specific image for a business.
-
-    Args:
-        business_id (int): ID of the business.
-        filename (str): Name of the image file to be deleted.
-
-    Returns:
-        JSON response: Result of image deletion.
-
-    Raises:
-        404 Not Found: If business ID is not found or image does not exist.
-    """
+    """Deletes a specific image for a business."""
+    
     session = Session()
     business = session.query(Business).filter_by(id=business_id).first()
     if not business:
