@@ -160,6 +160,7 @@ var cardDisplayModule = (function () {
                         const editType = document.getElementById(`edit-type-${cardId}`).value;
                         const editedSize = document.getElementById(`edit-size-${cardId}`).value;
                         // Update card details with edited values
+                        const validPropertyTypes = ["HOTEL", "CAFE", "SUPERMARKET", "RESTUARANT"];
                         if (isNaN(editedSize)) {
                             alert("Size must be an integer");
                             return;
@@ -200,7 +201,14 @@ var cardDisplayModule = (function () {
                             return;
                         }
 
-                        
+                        if (validPropertyTypes.includes(editType)) {
+                            // The editType is one of the valid PropertyType values
+                            // You can proceed with your code here
+                          } else {
+                            // The editType is not a valid PropertyType value
+                            alert("Invalid Property Type");
+                            return; // Or handle the error in your desired way
+                          }
                         
                         // Rest of the code for updating card details on the server
                         
