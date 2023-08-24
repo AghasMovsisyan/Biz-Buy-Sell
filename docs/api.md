@@ -148,8 +148,7 @@ Update details of a specific business by ID.
 
 ```json
 {
-  "user_id": "User ID",
-  "image_dir": "Updated directory path to image",
+  "id": "Updated business id",
   "location": "Updated business location",
   "property_type": "Updated type of property",
   "price": "Updated business price",
