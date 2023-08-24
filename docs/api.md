@@ -120,11 +120,17 @@ Retrieve details of a specific business by ID.
 {
   "id": "Business ID",
   "user_id": "User ID",
-  "image_dir": "Directory path to image",
+ "images": [
+        "/static/business/2/1.jpg",
+  ],
   "location": "Business location",
   "price": "Business price",
   "name": "Business name",
-  "authenticated_user_id": 2
+  "property_type": "Business Type",
+  "size": "Business Size",
+  "tel_number": "User Tel Number",
+  "year_built": "Business Year Built"  
+  "description": "Business Description"
 }
 ```
 #### 4. PUT /api/business/{business_id}
