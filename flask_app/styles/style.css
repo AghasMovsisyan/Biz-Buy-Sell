@@ -407,7 +407,7 @@ font-size: zem;
 
 .decsribe-paragraph {
   position: relative;
-  left: 97px;
+  left: 56px;
   top: 60px;
 }
 
@@ -446,10 +446,13 @@ padding: 0 20px; /* Adds space on the sides */
 }
 
 .business-name {
+position: relative;
+left: -20px;
 font-family: Arial, sans-serif;
 font-size: 35px;
 color: #333;
 text-align: center;
+
 }
 
 .business-descript {
@@ -771,4 +774,3 @@ z-index: 1000; /* Ensure the pagination stays on top of other content */
   position: relative;
   right: 200px;
 }
-      
