@@ -96,6 +96,7 @@ Create a new business item.
 ```
 
 ##### Response
+
 - **Status Code**: 201 (Created)
 - **Response Body**:
 
@@ -106,6 +107,31 @@ Create a new business item.
 }
 
 ```
+
+- **Status Code**: 400 (Bad Request)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Invalid business ID"
+}
+```
+
+```json
+{
+  "error": true,
+  "message": "Missing business ID"
+}
+```
+
+```json
+{
+  "error": true,
+  "message": "Business with id {business_id} already exists"
+}
+```
+
 #### 3. GET /api/business/{business_id}
 
 Retrieve details of a specific business by ID.
