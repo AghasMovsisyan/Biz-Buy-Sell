@@ -77,7 +77,11 @@ Create a new business item.
 - **Request Method**: POST
 - **URL**: `/api/business`
 
-##### Request Body
+##### Request
+
+
+- **Status Code**: 200 (OK)
+- **Requset Body**:
 
 ```json
 {
