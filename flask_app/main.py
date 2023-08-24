@@ -273,9 +273,6 @@ def create_business():
 def get_business_by_id(business_id):
     """Retrieve a specific business by ID"""
 
-    # Hardcoded authenticatedUserId for testing purposes
-    authenticated_user_id = 2
-
     if not isinstance(business_id, int) or business_id <= 0:
         return jsonify(message="Invalid business ID"), 400
 
@@ -290,9 +287,6 @@ def get_business_by_id(business_id):
             if business:
                 # Use the json() method from the Business model to get all columns
                 business_data = business.json()
-
-                # Add the authenticated_user_id
-                business_data["authenticated_user_id"] = authenticated_user_id
 
                 # Get image URLs for the business (same as in your previous code)
                 business_images_folder = os.path.join(
@@ -313,6 +307,7 @@ def get_business_by_id(business_id):
             return jsonify(message="Business not found"), 404
         except SQLAlchemyError as error:
             return jsonify(error=str(error)), 400
+
 
 
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
@@ -392,16 +387,21 @@ def login():
     finally:
         session.close()  # Close the session after the API call is compl
 
-
+ 
 @app.route("/api/me", methods=["GET"])
 def get_current_user():
-    """hardcoded user_id"""
+    """Hardcoded user_id and authenticated_user_id for demonstration"""
+
     # Replace this with your actual logic to retrieve the user_id
     # For now, let's assume you have a user_id hardcoded
     user_id = 2
 
-    # Return the user_id in JSON format
-    return jsonify({"user_id": user_id})
+    # For demonstration purposes, let's also assume you have an authenticated_user_id
+    authenticated_user_id = 2
+
+    # Return the user_id and authenticated_user_id in JSON format
+    return jsonify({"user_id": user_id, "authenticated_user_id": authenticated_user_id})
+
 
 
 @app.route("/api/me/<int:user_id>", methods=["PUT"])
