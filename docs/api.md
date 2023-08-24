@@ -81,6 +81,7 @@ Create a new business item.
 
 ```json
 {
+  "error": false,
   "id": "Business ID",
   "user_id": "User ID",
   "location": "Business location",
@@ -93,9 +94,14 @@ Create a new business item.
 }
 
 ```
-##### Response Body
+
+##### Response
+- **Status Code**: 201 (Created)
+- **Response Body**:
+
 ```json
 {
+ "error": false,
  "message": "Business created successfully id(business)"
 }
 
