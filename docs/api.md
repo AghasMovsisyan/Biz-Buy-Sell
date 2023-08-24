@@ -82,15 +82,17 @@ Create a new business item.
 ```json
 {
   "error": false,
-  "id": "Business ID",
-  "user_id": "User ID",
-  "location": "Business location",
-  "property_type": "Type of property",
-  "price": "Business price",
-  "year_built": "Year the property was built",
-  "size": "Size of the property",
-  "name": "Business name",
-  "description": "Business description"
+  "data":{ 
+      "id": "Business ID",
+      "user_id": "User ID",
+      "location": "Business location",
+      "property_type": "Type of property",
+      "price": "Business price",
+      "year_built": "Year the property was built",
+      "size": "Size of the property",
+      "name": "Business name",
+      "description": "Business description"
+  }
 }
 
 ```
