@@ -56,6 +56,9 @@ function updateCardDisplay(data) {
     .map((business, index) => {
       const rowIndex = Math.floor(index / cardsPerRow);
       const isLastRow = rowIndex === rowCount - 1;
+      console.log("isLastRow",isLastRow)
+      console.log("cardsPerRow",cardsPerRow)
+      console.log("cardWidth",cardWidth)
 
       let marginRight = '0';
       if (isLastRow && cardsInLastRow > 0) {
@@ -63,6 +66,9 @@ function updateCardDisplay(data) {
       }
       if (isLastRow && cardsPerRow === 2) {
         marginRight = `190px`
+      }
+      if (cardsPerRow === 1){
+        marginRight = `371px`
       }
       
       return `
