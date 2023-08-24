@@ -82,7 +82,7 @@ def get_business():
     # Open a new session for the API call
     session = Session()
     try:
-        paginated_items = (
+        businesses_items = (
             session.query(Business)
             .with_entities(
                 Business.id,
@@ -95,7 +95,7 @@ def get_business():
             .all()
         )
 
-        if not paginated_items:
+        if not businesses_items:
             return (
                 jsonify(
                     error=True,
@@ -118,7 +118,7 @@ def get_business():
             "page": page,
         }
 
-        for item in paginated_items:
+        for item in businesses_items:
             business_images_folder = os.path.join(
                 app.config["UPLOAD_FOLDER"], str(item.id)
             )
