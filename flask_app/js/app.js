@@ -43,27 +43,28 @@ function updatePagination(items_per_page) {
   $('.pagination').html(paginationHTML);
 }
 
+
 function updateCardDisplay(data) {
   const cardWidth = 335; // Adjust this value to match your card width
   const container = $('.card-content');
   const containerWidth = container.width(); // Recalculate container width
-  let cardsPerRow = Math.floor(containerWidth / cardWidth);
+  const cardsPerRow = Math.floor(containerWidth / cardWidth);
   const rowCount = Math.ceil(data.length / cardsPerRow);
-  console.log("data.length",data.length)
-
+  const cardsInLastRow = data.length % cardsPerRow;
 
   const html = data
     .map((business, index) => {
       const rowIndex = Math.floor(index / cardsPerRow);
       const isLastRow = rowIndex === rowCount - 1;
-      console.log("rowIndex",rowIndex)
-      console.log("isLastRow",isLastRow)
-      console.log("cardsPerRow",cardsPerRow)
-      console.log("containerWidth",containerWidth)
-  
-      const marginRight = isLastRow && cardsPerRow === 2 ? '190px' : '0';
-      
 
+      let marginRight = '0';
+      if (isLastRow && cardsInLastRow > 0) {
+        marginRight = `180px`;
+      }
+      if (isLastRow && cardsPerRow === 2) {
+        marginRight = `190px`
+      }
+      
       return `
         <div class="card"  onclick="window.location='#/business/${business.id}';" style="cursor: pointer; position: relative; right: ${marginRight}">
           <div class="card-image"><img class="img" src=${business.images[0]}></div>
@@ -74,17 +75,11 @@ function updateCardDisplay(data) {
           </div>
         </div>
       `;
-      
     })
     .join("");
 
   $('.card-content').html(html);
 }
-
-
-
-
-
 
 function showPage(whichPage) {
   currentPage = whichPage;
