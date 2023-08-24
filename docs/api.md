@@ -81,9 +81,8 @@ Create a new business item.
 
 ```json
 {
-  "user_id": "User ID",
   "id": "Business ID",
-  "image_dir": "Directory path to image",
+  "user_id": "User ID",
   "location": "Business location",
   "property_type": "Type of property",
   "price": "Business price",
