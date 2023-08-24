@@ -222,32 +222,41 @@ def create_business():
     """Create a business"""
     try:
         data = request.json
-
-        user_id = data.get("user_id")
-        if not user_id:
-            return jsonify(message="Missing user_id"), 400
-
         session = Session()
 
-        user = session.query(User).get(user_id)
-        if not user:
-            return jsonify(message=f"User with id {user_id} not found"), 404
-
         business_id = data.get("id")
+        if not isinstance(business_id, int) or business_id < 0:
+            return (
+                jsonify(
+                    error=True,
+                    message="Invalid business ID",
+                ),
+                400,
+            )
+
         if not business_id:
-            return jsonify(message="Missing business ID"), 400
+            return (
+                jsonify(
+                    error=True,
+                    message="Missing business ID",
+                ),
+                400,
+            )
 
         existing_business = (
             session.query(Business).filter(Business.id == business_id).first()
         )
         if existing_business:
             return (
-                jsonify(message=f"Business with id {business_id} already exists"),
+                jsonify(
+                    error=True,
+                    message=f"Business with id {business_id} already exists",
+                ),
                 400,
             )
 
         business = Business(
-            user_id=user_id,
+            user_id=data.get("user_id"),
             id=business_id,
             location=data.get("location"),
             property_type=data.get("property_type"),
@@ -264,7 +273,6 @@ def create_business():
             jsonify(message="Business created successfully", business_id=business_id),
             201,
         )
-
     except ImportError:
         return jsonify(message="An error occurred"), 500
 
@@ -274,7 +282,13 @@ def get_business_by_id(business_id):
     """Retrieve a specific business by ID"""
 
     if not isinstance(business_id, int) or business_id <= 0:
-        return jsonify(message="Invalid business ID"), 400
+        return (
+            jsonify(
+                error=True,
+                message="Invalid business ID",
+            ),
+            400,
+        )
 
     with Session() as session:
         try:
@@ -309,16 +323,25 @@ def get_business_by_id(business_id):
             return jsonify(error=str(error)), 400
 
 
-
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
 def update_business(business_id):
     """Update a specific business by ID"""
-    if business_id <= 0:
-        return jsonify(message="Invalid business ID"), 400  # Bad Request
-
     data = request.json
+
+    if not isinstance(business_id, int) or business_id <= 0:
+        return (
+            jsonify(
+                error=True,
+                message="Invalid business ID",
+            ),
+            400,
+        )
+
     if not isinstance(data, dict) or not data:
-        return jsonify(message="Invalid data format or empty data"), 400
+        return (
+            jsonify(error=True, message="Invalid data format or empty data"),
+            400,
+        )
 
     session = Session()
     try:
@@ -387,7 +410,7 @@ def login():
     finally:
         session.close()  # Close the session after the API call is compl
 
- 
+
 @app.route("/api/me", methods=["GET"])
 def get_current_user():
     """Hardcoded user_id and authenticated_user_id for demonstration"""
@@ -401,7 +424,6 @@ def get_current_user():
 
     # Return the user_id and authenticated_user_id in JSON format
     return jsonify({"user_id": user_id, "authenticated_user_id": authenticated_user_id})
-
 
 
 @app.route("/api/me/<int:user_id>", methods=["PUT"])
