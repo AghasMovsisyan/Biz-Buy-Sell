@@ -96,7 +96,7 @@ Create a new business item.
 ##### Response Body
 ```json
 {
-  "Business created successfully id(business)"
+ "message": "Business created successfully id(business)"
 }
 
 ```
