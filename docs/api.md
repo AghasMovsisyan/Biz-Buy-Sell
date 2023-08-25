@@ -124,20 +124,6 @@ Create a new business item.
 }
 ```
 
-```json
-{
-  "error": true,
-  "message": "Missing business ID"
-}
-```
-
-```json
-{
-  "error": true,
-  "message": "Business with id {business_id} already exists"
-}
-```
-
 #### 3. GET /api/business/{business_id}
 
 Retrieve details of a specific business by ID.
