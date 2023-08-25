@@ -80,7 +80,7 @@ Create a new business item.
 ##### Request
 
 
-- **Status Code**: 200 (OK)
+- **Status Code**: 201 (Created)
 - **Requset Body**:
 
 ```json
@@ -97,19 +97,6 @@ Create a new business item.
       "name": "Business name",
       "description": "Business description"
   }
-}
-
-```
-
-##### Response
-
-- **Status Code**: 201 (Created)
-- **Response Body**:
-
-```json
-{
- "error": false,
- "message": "Business created successfully id(business)"
 }
 
 ```
