@@ -110,6 +110,15 @@ Create a new business item.
   "message": "Invalid business ID"
 }
 ```
+or
+```json
+{
+  "error": true,
+  "message": "Missing business ID"
+}
+```
+
+
 
 #### 3. GET /api/business/{business_id}
 
