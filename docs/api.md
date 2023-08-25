@@ -111,6 +111,7 @@ Create a new business item.
 }
 ```
 or
+
 ```json
 {
   "error": true,
@@ -118,7 +119,15 @@ or
 }
 ```
 
+- **Status Code**: 500 (Internal Server Error)
+- **Response Body**:
 
+```json
+{
+  "error": true,
+  "message": "An error occurred"
+}
+```
 
 #### 3. GET /api/business/{business_id}
 
