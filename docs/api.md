@@ -247,17 +247,6 @@ or
 }
 ```
 
-
-- **Status Code**: 400 (Bad Request)
-- **Response Body**:
-
-```json
-{
-  "error": true,
-  "message": "Invalid business ID"
-}
-```
-
 - **Status Code**: 401 (Unauthorized)
 - **Response Body**:
 
