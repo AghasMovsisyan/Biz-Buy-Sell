@@ -77,29 +77,68 @@ Create a new business item.
 - **Request Method**: POST
 - **URL**: `/api/business`
 
-##### Request Body
+##### Request
+
+- **Status Code**: 201 (Created)
+- **Requset Body**:
 
 ```json
 {
-  "id": "Business ID",
-  "user_id": "User ID",
-  "location": "Business location",
-  "property_type": "Type of property",
-  "price": "Business price",
-  "year_built": "Year the property was built",
-  "size": "Size of the property",
-  "name": "Business name",
-  "description": "Business description"
+  "error": false,
+  "data": { 
+      "id": "Business ID",
+      "user_id": "User ID",
+      "location": "Business location",
+      "property_type": "Type of property",
+      "price": "Business price",
+      "year_built": "Year the property was built",
+      "size": "Size of the property",
+      "name": "Business name",
+      "description": "Business description"
+  }
 }
 
 ```
-##### Response Body
+##### Response
+
+- **Status Code**: 201 (Created)
+- **Response Body**:
+
 ```json
 {
- "message": "Business created successfully id(business)"
+  "error": false,
+  "message": "Business created successfully"
 }
-
 ```
+
+- **Status Code**: 400 (Bad Request)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Invalid business ID"
+}
+```
+or
+
+```json
+{
+  "error": true,
+  "message": "Missing business ID"
+}
+```
+
+- **Status Code**: 401 (Internal Server Error)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Unauthorized"
+}
+```
+
 #### 3. GET /api/business/{business_id}
 
 Retrieve details of a specific business by ID.
@@ -118,45 +157,136 @@ Retrieve details of a specific business by ID.
 
 ```json
 {
-  "id": "Business ID",
-  "user_id": "User ID",
- "images": [
-        "/static/business/2/1.jpg",
-  ],
-  "location": "Business location",
-  "price": "Business price",
-  "name": "Business name",
-  "property_type": "Business Type",
-  "size": "Business Size",
-  "tel_number": "User Tel Number",
-  "year_built": "Business Year Built"  
-  "description": "Business Description"
+
+ "error": false,
+ "data": {
+   "id": "Business ID",
+   "user_id": "User ID",
+   "images": [
+          "/static/business/2/1.jpg",
+    ],
+    "location": "Business location",
+    "price": "Business price",
+    "name": "Business name",
+    "property_type": "Business Type",
+    "size": "Business Size",
+    "tel_number": "User Tel Number",
+    "year_built": "Business Year Built"  
+    "description": "Business Description"
+   }
 }
 ```
+
+- **Status Code**: 404 (Not Found))
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Business not found"
+}
+```
+
+- **Status Code**: 400 (Bad Requset))
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Invalid business ID"
+}
+```
+
 #### 4. PUT /api/business/{business_id}
 
 Update details of a specific business by ID.
 
 - **Request Method**: PUT
-- **URL**: `/api/business/{business_id}`
+- **URL**: `/api/business/{business_id}`z  
 
 ##### Parameters
 
 - `business_id` (integer, path): The ID of the business to update.
 
-##### Request Body
+##### Request
+
+- **Status Code**: 200 (OK)
+- **Requset Body**:
+
 
 ```json
 {
-  "id": "Updated business id",
-  "location": "Updated business location",
-  "property_type": "Updated type of property",
-  "price": "Updated business price",
-  "year_built": "Updated year the property was built",
-  "size": "Updated size of the property",
-  "name": "Updated business name",
-  "description": "Updated business description"
+  "error": false,
+  "data": {
+      "id": "Updated business id",
+      "location": "Updated business location",
+      "property_type": "Updated type of property",
+      "price": "Updated business price",
+      "year_built": "Updated year the property was built",
+      "size": "Updated size of the property",
+      "name": "Updated business name",
+      "description": "Updated business description"
+  }
 }
+```
+
+##### Response
+
+- **Status Code**: 200 (OK)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Business updated successfully"
+}
+```
+
+- **Status Code**: 400 (Bad Request)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Invalid business ID"
+}
+```
+or
+
+```json
+{
+  "error": true,
+  "message":  "Invalid data format or empty data"
+}
+```
+
+- **Status Code**: 401 (Unauthorized)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Unauthorized"
+}
+```
+
+- **Status Code**: 403 (Forbidden)
+- **Response Body**:
+```json
+{
+  "error": true,
+  "message": "Forbidden"
+}
+```
+
+- **Status Code**: 404 (Not Found)
+- **Response Body**:
+```json
+{
+  "error": true,
+  "message": "Not Found"
+}
+
 ```
 
 #### 5. DELETE /api/business/{business_id}
@@ -172,12 +302,49 @@ Delete a specific business by ID.
 
 ##### Response
 
-- **Status Code**: 200 (OK)
+- **Status Code**: 202 (Accepted)
 - **Response Body**:
 
 ```json
 {
+  "error": "false"
   "message": "Business deleted successfully"
+}
+```
+- **Status Code**: 400 (Bad Requset)
+- **Response Body**:
+
+```json
+{
+  "error": "true"
+  "message": "Invalid business ID"
+}
+```
+- **Status Code**: 401 (Unauthorized)
+- **Response Body**:
+
+```json
+{
+  "error": "true"
+  "message": "Unauthorized"
+}
+```
+- **Status Code**: 403 (Forbidden)
+- **Response Body**:
+
+```json
+{
+  "error": "true"
+  "message": "Forbidden"
+}
+```
+- **Status Code**: 404 (Not Found)
+- **Response Body**:
+
+```json
+{
+  "error": "true"
+  "message": "Not Found"
 }
 ```
 
