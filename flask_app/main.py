@@ -255,6 +255,13 @@ def create_business():
                 400,
             )
 
+        unauthorized_condition = True  # Change this condition as needed
+        if unauthorized_condition:
+            return (
+            jsonify(error=True, message="Unauthorized"),
+            401,
+        )
+        
         business = Business(
             user_id=data.get("user_id"),
             id=business_id,
@@ -343,6 +350,22 @@ def update_business(business_id):
             400,
         )
 
+    # Simulate unauthorized access (401 error)
+    unauthorized_condition = True  # Change this condition as needed
+    if unauthorized_condition:
+        return (
+            jsonify(error=True, message="Unauthorized"),
+            401,
+        )
+
+    # Simulate forbidden access (403 error)
+    forbidden_condition = True  # Change this condition as needed
+    if forbidden_condition:
+        return (
+            jsonify(error=True, message="Forbidden"),
+            403,
+        )
+
     session = Session()
     try:
         business = session.query(Business).get(business_id)
@@ -365,19 +388,36 @@ def delete_business(business_id):
     if business_id <= 0:
         return jsonify(message="Invalid business ID"), 400  # Bad Request
 
+    # Simulate unauthorized access (401 error)
+    unauthorized_condition = True  # Change this condition as needed
+    if unauthorized_condition:
+        return (
+            jsonify(error=True, message="Unauthorized"),
+            401,
+        )
+
+    # Simulate forbidden access (403 error)
+    forbidden_condition = True  # Change this condition as needed
+    if forbidden_condition:
+        return (
+            jsonify(error=True, message="Forbidden"),
+            403,
+        )
+
     session = Session()
     try:
         business = session.query(Business).get(business_id)
         if business:
             session.delete(business)
             session.commit()
-            return jsonify(message="Business deleted successfully")
+            return jsonify(message="Business deleted successfully"), 202  # Accepted
         return jsonify(message="Business not found"), 404
     except SQLAlchemyError as error:
         session.rollback()  # Rollback the transaction in case of an error
         return jsonify(error=str(error)), 400
     finally:
         session.close()
+
 
 
 @app.route("/api/login", methods=["POST"])
