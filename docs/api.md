@@ -147,21 +147,46 @@ Retrieve details of a specific business by ID.
 
 ```json
 {
-  "id": "Business ID",
-  "user_id": "User ID",
- "images": [
-        "/static/business/2/1.jpg",
-  ],
-  "location": "Business location",
-  "price": "Business price",
-  "name": "Business name",
-  "property_type": "Business Type",
-  "size": "Business Size",
-  "tel_number": "User Tel Number",
-  "year_built": "Business Year Built"  
-  "description": "Business Description"
+
+ "error": false,
+ "data" {
+   "id": "Business ID",
+   "user_id": "User ID",
+   "images": [
+          "/static/business/2/1.jpg",
+    ],
+    "location": "Business location",
+    "price": "Business price",
+    "name": "Business name",
+    "property_type": "Business Type",
+    "size": "Business Size",
+    "tel_number": "User Tel Number",
+    "year_built": "Business Year Built"  
+    "description": "Business Description"
+   }
 }
 ```
+
+- **Status Code**: 404 (Not Found))
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Business not found"
+}
+```
+
+- **Status Code**: 400 (Bad Requset))
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Invalid business ID"
+}
+```
+
 #### 4. PUT /api/business/{business_id}
 
 Update details of a specific business by ID.
