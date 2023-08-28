@@ -79,14 +79,13 @@ Create a new business item.
 
 ##### Request
 
-
 - **Status Code**: 201 (Created)
 - **Requset Body**:
 
 ```json
 {
   "error": false,
-  "data":{ 
+  "data": { 
       "id": "Business ID",
       "user_id": "User ID",
       "location": "Business location",
@@ -192,25 +191,100 @@ Retrieve details of a specific business by ID.
 Update details of a specific business by ID.
 
 - **Request Method**: PUT
-- **URL**: `/api/business/{business_id}`
+- **URL**: `/api/business/{business_id}`z  
 
 ##### Parameters
 
 - `business_id` (integer, path): The ID of the business to update.
 
-##### Request Body
+##### Request
+
+- **Status Code**: 200 (OK)
+- **Requset Body**:
+
 
 ```json
 {
-  "id": "Updated business id",
-  "location": "Updated business location",
-  "property_type": "Updated type of property",
-  "price": "Updated business price",
-  "year_built": "Updated year the property was built",
-  "size": "Updated size of the property",
-  "name": "Updated business name",
-  "description": "Updated business description"
+  "error": false,
+  "data": {
+      "id": "Updated business id",
+      "location": "Updated business location",
+      "property_type": "Updated type of property",
+      "price": "Updated business price",
+      "year_built": "Updated year the property was built",
+      "size": "Updated size of the property",
+      "name": "Updated business name",
+      "description": "Updated business description"
+  }
 }
+```
+
+- **Status Code**: 200 (OK)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Business updated successfully"
+}
+```
+
+- **Status Code**: 400 (Bad Request)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Invalid business ID"
+}
+```
+or
+
+```json
+{
+  "error": true,
+  "message":  "Invalid data format or empty data"
+}
+```
+
+
+- **Status Code**: 400 (Bad Request)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Invalid business ID"
+}
+```
+
+- **Status Code**: 401 (Unauthorized)
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Unauthorized"
+}
+```
+
+- **Status Code**: 403 (Forbidden)
+- **Response Body**:
+```json
+{
+  "error": true,
+  "message": "Forbidden"
+}
+```
+
+- **Status Code**: 404 (Not Found)
+- **Response Body**:
+```json
+{
+  "error": true,
+  "message": "Not Found"
+}
+
 ```
 
 #### 5. DELETE /api/business/{business_id}
