@@ -99,6 +99,17 @@ Create a new business item.
 }
 
 ```
+##### Response
+
+- **Status Code**: 201 (Created)
+- **Response Body**:
+
+```json
+{
+  "error": false,
+  "message": "Business created successfully"
+}
+```
 
 - **Status Code**: 400 (Bad Request)
 - **Response Body**:
@@ -118,13 +129,13 @@ or
 }
 ```
 
-- **Status Code**: 500 (Internal Server Error)
+- **Status Code**: 401 (Internal Server Error)
 - **Response Body**:
 
 ```json
 {
   "error": true,
-  "message": "An error occurred"
+  "message": "Unauthorized"
 }
 ```
 
@@ -218,6 +229,8 @@ Update details of a specific business by ID.
   }
 }
 ```
+
+##### Response
 
 - **Status Code**: 200 (OK)
 - **Response Body**:
