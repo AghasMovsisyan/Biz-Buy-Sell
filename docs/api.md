@@ -149,7 +149,7 @@ Retrieve details of a specific business by ID.
 {
 
  "error": false,
- "data" {
+ "data": {
    "id": "Business ID",
    "user_id": "User ID",
    "images": [
