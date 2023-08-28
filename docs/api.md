@@ -300,12 +300,49 @@ Delete a specific business by ID.
 
 ##### Response
 
-- **Status Code**: 200 (OK)
+- **Status Code**: 202 (Accepted)
 - **Response Body**:
 
 ```json
 {
+  "error": "false"
   "message": "Business deleted successfully"
+}
+```
+- **Status Code**: 400 (Bad Requset)
+- **Response Body**:
+
+```json
+{
+  "error": "true"
+  "message": "Invalid business ID"
+}
+```
+- **Status Code**: 401 (Unauthorized)
+- **Response Body**:
+
+```json
+{
+  "error": "true"
+  "message": "Unauthorized"
+}
+```
+- **Status Code**: 403 (Forbidden)
+- **Response Body**:
+
+```json
+{
+  "error": "true"
+  "message": "Forbidden"
+}
+```
+- **Status Code**: 404 (Not Found)
+- **Response Body**:
+
+```json
+{
+  "error": "true"
+  "message": "Not Found"
 }
 ```
 
