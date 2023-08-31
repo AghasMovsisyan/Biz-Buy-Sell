@@ -233,7 +233,9 @@ def create_business():
             error_message = "Missing business ID"
             raise ValueError(error_message)
 
-        existing_business = session.query(Business).filter(Business.id == business_id).first()
+        existing_business = (
+            session.query(Business).filter(Business.id == business_id).first()
+        )
         if existing_business:
             error_message = f"Business with id {business_id} already exists"
             raise ValueError(error_message)
@@ -263,7 +265,6 @@ def create_business():
     except (ValueError, SQLAlchemyError) as error:
         response_message = str(error)
         return jsonify(message=response_message), 400
-
 
 
 @app.route("/api/business/<int:business_id>", methods=["GET"])
@@ -312,7 +313,6 @@ def get_business_by_id(business_id):
             return jsonify(error=str(error)), 400
 
 
-
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
 def update_business(business_id):
     """Update a specific business by ID"""
@@ -357,7 +357,6 @@ def update_business(business_id):
         return jsonify(message="Business not found"), 404
     finally:
         session.close()
-
 
 
 @app.route("/api/business/<int:business_id>", methods=["DELETE"])
