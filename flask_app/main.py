@@ -226,42 +226,23 @@ def create_business():
 
         business_id = data.get("id")
         if not isinstance(business_id, int) or business_id < 0:
-            return (
-                jsonify(
-                    error=True,
-                    message="Invalid business ID",
-                ),
-                400,
-            )
+            error_message = "Invalid business ID"
+            raise ValueError(error_message)
 
         if not business_id:
-            return (
-                jsonify(
-                    error=True,
-                    message="Missing business ID",
-                ),
-                400,
-            )
+            error_message = "Missing business ID"
+            raise ValueError(error_message)
 
-        existing_business = (
-            session.query(Business).filter(Business.id == business_id).first()
-        )
+        existing_business = session.query(Business).filter(Business.id == business_id).first()
         if existing_business:
-            return (
-                jsonify(
-                    error=True,
-                    message=f"Business with id {business_id} already exists",
-                ),
-                400,
-            )
+            error_message = f"Business with id {business_id} already exists"
+            raise ValueError(error_message)
 
         unauthorized_condition = True  # Change this condition as needed
         if unauthorized_condition:
-            return (
-            jsonify(error=True, message="Unauthorized"),
-            401,
-        )
-        
+            error_message = "Unauthorized"
+            raise ValueError(error_message)
+
         business = Business(
             user_id=data.get("user_id"),
             id=business_id,
@@ -276,12 +257,13 @@ def create_business():
         session.add(business)
         session.commit()
 
-        return (
-            jsonify(message="Business created successfully", business_id=business_id),
-            201,
-        )
-    except ImportError:
-        return jsonify(message="An error occurred"), 500
+        response_message = "Business created successfully"
+        return jsonify(message=response_message, business_id=business_id), 201
+
+    except (ValueError, SQLAlchemyError) as error:
+        response_message = str(error)
+        return jsonify(message=response_message), 400
+
 
 
 @app.route("/api/business/<int:business_id>", methods=["GET"])
@@ -330,6 +312,7 @@ def get_business_by_id(business_id):
             return jsonify(error=str(error)), 400
 
 
+
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
 def update_business(business_id):
     """Update a specific business by ID"""
@@ -341,12 +324,6 @@ def update_business(business_id):
                 error=True,
                 message="Invalid business ID",
             ),
-            400,
-        )
-
-    if not isinstance(data, dict) or not data:
-        return (
-            jsonify(error=True, message="Invalid data format or empty data"),
             400,
         )
 
@@ -380,6 +357,7 @@ def update_business(business_id):
         return jsonify(message="Business not found"), 404
     finally:
         session.close()
+
 
 
 @app.route("/api/business/<int:business_id>", methods=["DELETE"])
@@ -417,7 +395,6 @@ def delete_business(business_id):
         return jsonify(error=str(error)), 400
     finally:
         session.close()
-
 
 
 @app.route("/api/login", methods=["POST"])
