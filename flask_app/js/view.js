@@ -45,14 +45,63 @@ var cardDisplayModule = (function () {
                                 </div>
                             </div>
                                 <div class="cardv-info" id="card-info-${cardId}">
-                                    <ul>
-                                        <li><strong>Year Built:</strong> <span>${data.year_built}</span><input type="text"  class="form-controlt" id="edit-year-${cardId}" value="${data.year_built}" style="display: none;"></li>
-                                        <li><strong>Property Type:</strong> <span>${data.property_type}</span><input type="text"  class="form-controlt" id="edit-type-${cardId}" value="${data.property_type}" style="display: none;"></li>
-                                        <li><strong>Location:</strong> <span>${data.location}</span><input class="form-controlt" type="text" id="edit-location-${cardId}" value="${data.location}" style="display: none;"><img class="location" src="../logo/icons8-location-48.png"></li>
-                                        <li><strong>Price:</strong> <span>${data.price}</span><input class="form-controlt" type="text" id="edit-price-${cardId}" value="${data.price}" style="display: none;"><img class="dollar" src="../logo/free-icon-dollar-symbol-2150150.png"></li>
-                                        <li><strong>Size:</strong> <span>${data.size}</span><input class="form-controlt"  type="text" id="edit-size-${cardId}" value="${data.size}" style="display: none;"><img class="size" src="../logo/icons8-size-24.png"></li>
-                                        <li><strong>Telephone Number:</strong> <span>${data.tel_number}</span><input class="form-controlt" type="text" id="edit-tel-${cardId}" value="${data.tel_number}" style="display: none;"><img class="ico1" src="../logo/telephone-call.png"></li>
-                                    </ul>
+                                <ul>
+                                    <li>
+                                        <label for="edit-year-${cardId}">Year Built:</label>
+                                        <span id="span-year-${cardId}">${data.year_built}</span>
+                                        <form style="display: none;">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="edit-year-${cardId}" value="${data.year_built}">
+                                            </div>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <label for="edit-type-${cardId}">Property Type:</label>
+                                        <span id="span-type-${cardId}">${data.property_type}</span>
+                                        <form id="edit-type-form-${cardId}" style="display: none;">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="edit-type-${cardId}" value="${data.property_type}">
+                                            </div>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <label for="edit-location-${cardId}">Location:</label>
+                                        <span id="span-location-${cardId}">${data.location}</span>
+                                        <form id="edit-location-form-${cardId}" style="display: none;">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="edit-location-${cardId}" value="${data.location}">
+                                            </div>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <label for="edit-price-${cardId}">Price:</label>
+                                        <span id="span-price-${cardId}">${data.price}</span>
+                                        <form id="edit-price-form-${cardId}" style="display: none;">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="edit-price-${cardId}" value="${data.price}">
+                                            </div>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <label for="edit-size-${cardId}">Size:</label>
+                                        <span id="span-size-${cardId}">${data.size}</span>
+                                        <form id="edit-size-form-${cardId}" style="display: none;">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="edit-size-${cardId}" value="${data.size}">
+                                            </div>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <label for="edit-tel-${cardId}">Telephone Number:</label>
+                                        <span id="span-tel-${cardId}">${data.tel_number}</span>
+                                        <form id="edit-tel-form-${cardId}" style="display: none;">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="edit-tel-${cardId}" value="${data.tel_number}">
+                                            </div>
+                                        </form>
+                                    </li>
+                                </ul>
+ 
                                     ${editLink}
                                     ${isOwner ? `
                                     <div class='buttons'>
@@ -84,8 +133,8 @@ var cardDisplayModule = (function () {
                                 cardInfo.querySelectorAll('span').forEach(span => {
                                     span.style.display = 'none';
                                 });
-                                cardInfo.querySelectorAll('input').forEach(input => {
-                                    input.style.display = 'inline';
+                                cardInfo.querySelectorAll('form').forEach(form => {
+                                    form.style.display = 'inline';
                                 });
                                 const saveButton = cardInfo.querySelector('.save-button');
                                 if (saveButton) {
@@ -112,8 +161,8 @@ var cardDisplayModule = (function () {
 
                                 // Hide editable fields and "Save" and "Cancel" buttons, and show "Edit" button
                                 const cardInfo = document.getElementById(`card-info-${cardId}`);
-                                cardInfo.querySelectorAll('input').forEach(input => {
-                                    input.style.display = 'none';
+                                cardInfo.querySelectorAll('form').forEach(form => {
+                                    form.style.display = 'none';
                                 });
                                 cardInfo.querySelectorAll('span').forEach(span => {
                                     span.style.display = 'inline';
@@ -246,10 +295,10 @@ var cardDisplayModule = (function () {
                                     }
                                 });
                                 const sliderContainer = cardDetails.querySelector('.carousel-inner');
-                                let currentImageIndex = 0;
-                
+                                
                                 function updateSliderImage() {
                                     const images = data.images;
+                                let currentImageIndex = 0;
                                     if (images.length > 0) {
                                         const imageUrl = images[currentImageIndex];
                                         sliderContainer.querySelector('.slider-image').src = imageUrl;
@@ -294,7 +343,7 @@ var cardDisplayModule = (function () {
                 telInput.style.display = 'none';
                 telSpan.style.display = 'inline';
     
-                // Fetch updated card details to refresh the content
+                // Fetch updated card details to refresh the cont   ent
                 fetchCardDetails(cardId);
             },
             error: function(error) {
