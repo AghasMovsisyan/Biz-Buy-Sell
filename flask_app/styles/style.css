@@ -688,17 +688,15 @@ border-radius: var(--bs-border-radius);
 transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+.smaller-label {
+  font-size: 19px;
+  color: #000000;
+}
 
-
-
-
-
-
-
-
-
-
-
+.smaller-input {
+  height: 32px; /* Adjust the height as needed */
+  /* Add any other desired styles here */
+} 
 
 /* ------------sign-upt------------- */
 

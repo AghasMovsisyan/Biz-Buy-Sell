@@ -47,56 +47,61 @@ var cardDisplayModule = (function () {
                                 <div class="cardv-info" id="card-info-${cardId}">
                                 <ul>
                                     <li>
-                                        <label for="edit-year-${cardId}">Year Built:</label>
-                                        <span id="span-year-${cardId}">${data.year_built}</span>
-                                        <form style="display: none;">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="edit-year-${cardId}" value="${data.year_built}">
+                                        <label for="edit-year-${cardId}" style="display: inline-block;" class="smaller-label">Year Built:</label>
+                                        <span id="span-year-${cardId}" style="display: inline-block; margin-right: 10px">${data.year_built}</span>
+                                        <form id="edit-year-form-${cardId}" style="display: none;">
+                                            <div class="form-group" style="display: inline-block;">
+                                                <input type="text" class="form-control smaller-input" id="edit-year-${cardId}" value="${data.year_built}">
                                             </div>
                                         </form>
                                     </li>
+                                    
                                     <li>
-                                        <label for="edit-type-${cardId}">Property Type:</label>
-                                        <span id="span-type-${cardId}">${data.property_type}</span>
+                                        <label for="edit-type-${cardId}" style="display: inline-block;" class="smaller-label">Property Type:</label>
+                                        <span id="span-type-${cardId}" style="display: inline-block; margin-right: 10px;">${data.property_type}</span>
                                         <form id="edit-type-form-${cardId}" style="display: none;">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="edit-type-${cardId}" value="${data.property_type}">
+                                            <div class="form-group" style="display: inline-block;">
+                                                <input type="text" class="form-control smaller-input" id="edit-type-${cardId}" value="${data.property_type}">
                                             </div>
                                         </form>
                                     </li>
+
                                     <li>
-                                        <label for="edit-location-${cardId}">Location:</label>
-                                        <span id="span-location-${cardId}">${data.location}</span>
+                                        <label for="edit-location-${cardId}" class="smaller-label" style="display: inline-block;">Location:</label>
+                                        <span id="span-location-${cardId}" style="display: inline-block; margin-right: 10px;">${data.location}</span>
                                         <form id="edit-location-form-${cardId}" style="display: none;">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="edit-location-${cardId}" value="${data.location}">
+                                            <div class="form-group" style="display: inline-block;">
+                                                <input type="text" class="form-control smaller-input" id="edit-location-${cardId}" value="${data.location}">
                                             </div>
                                         </form>
                                     </li>
                                     <li>
-                                        <label for="edit-price-${cardId}">Price:</label>
-                                        <span id="span-price-${cardId}">${data.price}</span>
-                                        <form id="edit-price-form-${cardId}" style="display: none;">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="edit-price-${cardId}" value="${data.price}">
-                                            </div>
-                                        </form>
-                                    </li>
-                                    <li>
-                                        <label for="edit-size-${cardId}">Size:</label>
-                                        <span id="span-size-${cardId}">${data.size}</span>
+                                        <label for="edit-size-${cardId}" class="smaller-label" class="smaller-label">Size:</label>
+                                        <span id="span-size-${cardId}" style="display: inline-block; margin-right: 10px;">${data.size}</span>
                                         <form id="edit-size-form-${cardId}" style="display: none;">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="edit-size-${cardId}" value="${data.size}">
+                                            <div class="form-group" style="display: inline-block;">
+                                                <input type="text" class="form-control smaller-input" id="edit-size-${cardId}" value="${data.size}">
                                             </div>
                                         </form>
                                     </li>
+
+
                                     <li>
-                                        <label for="edit-tel-${cardId}">Telephone Number:</label>
-                                        <span id="span-tel-${cardId}">${data.tel_number}</span>
+                                        <label for="edit-price-${cardId}" style="display: inline-block;" class="smaller-label">Price:</label>
+                                        <span id="span-price-${cardId}" style="display: inline-block; margin-right: 10px;">${data.price}</span>
+                                        <form id="edit-price-form-${cardId}" style="display: none;">
+                                            <div class="form-group" style="display: inline-block;">
+                                                <input type="text" class="form-control smaller-input" id="edit-price-${cardId}" value="${data.price}">
+                                            </div>
+                                        </form>
+                                    </li>
+
+                                    <li>
+                                        <label for="edit-tel-${cardId}" style="display: inline-block;" class="smaller-label">Telephone Number:</label>
+                                        <span id="span-tel-${cardId}" style="display: inline-block; margin-right: 10px;">${data.tel_number}</span>
                                         <form id="edit-tel-form-${cardId}" style="display: none;">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="edit-tel-${cardId}" value="${data.tel_number}">
+                                            <div class="form-group" style="display: inline-block;">
+                                                <input type="text" class="form-control smaller-input" id="edit-tel-${cardId}" value="${data.tel_number}">
                                             </div>
                                         </form>
                                     </li>
