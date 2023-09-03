@@ -696,6 +696,7 @@ transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 .smaller-input {
   height: 32px; /* Adjust the height as needed */
   /* Add any other desired styles here */
+  width: 50px;
 } 
 
 /* ------------sign-upt------------- */

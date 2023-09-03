@@ -51,7 +51,7 @@ var cardDisplayModule = (function () {
                                         <span id="span-year-${cardId}" style="display: inline-block; margin-right: 10px">${data.year_built}</span>
                                         <form id="edit-year-form-${cardId}" style="display: none;">
                                             <div class="form-group" style="display: inline-block;">
-                                                <input type="text" class="form-control smaller-input" id="edit-year-${cardId}" value="${data.year_built}">
+                                                <input type="text" class="form-control smaller-input" id="edit-year-${cardId}" value="${data.year_built}" style="width: 160px;">
                                             </div>
                                         </form>
                                     </li>
@@ -61,7 +61,7 @@ var cardDisplayModule = (function () {
                                         <span id="span-type-${cardId}" style="display: inline-block; margin-right: 10px;">${data.property_type}</span>
                                         <form id="edit-type-form-${cardId}" style="display: none;">
                                             <div class="form-group" style="display: inline-block;">
-                                                <input type="text" class="form-control smaller-input" id="edit-type-${cardId}" value="${data.property_type}">
+                                                <input type="text" class="form-control smaller-input" id="edit-type-${cardId}" value="${data.property_type}" style="width: 160px;">
                                             </div>
                                         </form>
                                     </li>
@@ -71,7 +71,7 @@ var cardDisplayModule = (function () {
                                         <span id="span-location-${cardId}" style="display: inline-block; margin-right: 10px;">${data.location}</span>
                                         <form id="edit-location-form-${cardId}" style="display: none;">
                                             <div class="form-group" style="display: inline-block;">
-                                                <input type="text" class="form-control smaller-input" id="edit-location-${cardId}" value="${data.location}">
+                                                <input type="text" class="form-control smaller-input" id="edit-location-${cardId}" value="${data.location}" style="width: 160px;">
                                             </div>
                                         </form>
                                     </li>
@@ -80,7 +80,7 @@ var cardDisplayModule = (function () {
                                         <span id="span-size-${cardId}" style="display: inline-block; margin-right: 10px;">${data.size}</span>
                                         <form id="edit-size-form-${cardId}" style="display: none;">
                                             <div class="form-group" style="display: inline-block;">
-                                                <input type="text" class="form-control smaller-input" id="edit-size-${cardId}" value="${data.size}">
+                                                <input type="text" class="form-control smaller-input" id="edit-size-${cardId}" value="${data.size}" style="width: 160px;">
                                             </div>
                                         </form>
                                     </li>
@@ -91,7 +91,7 @@ var cardDisplayModule = (function () {
                                         <span id="span-price-${cardId}" style="display: inline-block; margin-right: 10px;">${data.price}</span>
                                         <form id="edit-price-form-${cardId}" style="display: none;">
                                             <div class="form-group" style="display: inline-block;">
-                                                <input type="text" class="form-control smaller-input" id="edit-price-${cardId}" value="${data.price}">
+                                                <input type="text" class="form-control smaller-input" id="edit-price-${cardId}" value="${data.price}" style="width: 160px;">
                                             </div>
                                         </form>
                                     </li>
@@ -101,7 +101,7 @@ var cardDisplayModule = (function () {
                                         <span id="span-tel-${cardId}" style="display: inline-block; margin-right: 10px;">${data.tel_number}</span>
                                         <form id="edit-tel-form-${cardId}" style="display: none;">
                                             <div class="form-group" style="display: inline-block;">
-                                                <input type="text" class="form-control smaller-input" id="edit-tel-${cardId}" value="${data.tel_number}">
+                                                <input type="text" class="form-control smaller-input" id="edit-tel-${cardId}" value="${data.tel_number}" style="width: 160px;">
                                             </div>
                                         </form>
                                     </li>
