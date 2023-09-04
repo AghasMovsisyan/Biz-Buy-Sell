@@ -177,15 +177,6 @@ Retrieve details of a specific business by ID.
 }
 ```
 
-- **Status Code**: 404 (Not Found))
-- **Response Body**:
-
-```json
-{
-  "error": true,
-  "message": "Business not found"
-}
-```
 
 - **Status Code**: 400 (Bad Requset))
 - **Response Body**:
@@ -194,6 +185,15 @@ Retrieve details of a specific business by ID.
 {
   "error": true,
   "message": "Invalid business ID"
+}
+```
+- **Status Code**: 404 (Not Found))
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Business not found"
 }
 ```
 
