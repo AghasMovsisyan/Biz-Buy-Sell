@@ -237,7 +237,7 @@ Update details of a specific business by ID.
 
 ```json
 {
-  "error": true,
+  "error": false,
   "message": "Business updated successfully"
 }
 ```
