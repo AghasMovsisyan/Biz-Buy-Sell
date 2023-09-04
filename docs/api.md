@@ -41,7 +41,7 @@ Retrieve Paginated Business Items.
       "location": "Los Angeles",
       "price": "$150,000"
     },
-    // ... (more business items)
+    
   ],
   "items_per_page": 10,
   "total": 42,
