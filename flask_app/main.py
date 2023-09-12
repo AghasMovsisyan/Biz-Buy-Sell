@@ -148,6 +148,224 @@ def get_business():
         session.close()
 
 
+@app.route("/api/business", methods=["POST"])
+def create_business():
+    """Create a business"""
+    try:
+        data = request.json
+        session = Session()
+
+        business_id = data.get("id")
+        if not isinstance(business_id, int) or business_id < 0:
+            return (
+                jsonify(
+                    error=True,
+                    message="Invalid business ID",
+                ),
+                400,
+            )
+
+        if not business_id:
+            return (
+                jsonify(
+                    error=True,
+                    message="Missing business ID",
+                ),
+                400,
+            )
+
+
+        existing_business = (
+            session.query(Business).filter(Business.id == business_id).first()
+        )
+
+        if existing_business:
+            return (
+                jsonify(
+                    error=True,
+                    message= f"Business with id {business_id} already exists",
+                ),
+                400,
+            )
+
+        unauthorized_condition = False
+        if unauthorized_condition:
+            return (
+                jsonify(
+                    error=True,
+                    message="Unauthorized",
+                ),
+                401,
+            )
+            
+        business = Business(
+            user_id=data.get("user_id"),
+            id=business_id,
+            location=data.get("location"),
+            property_type=data.get("property_type"),
+            price=data.get("price"),
+            year_built=data.get("year_built"),
+            size=data.get("size"),
+            name=data.get("name"),
+            description=data.get("description"),
+        )
+        session.add(business)
+        session.commit()
+
+        response_message = "Business created successfully"
+        return jsonify(message=response_message, business_id=business_id), 201
+
+    except (ValueError, SQLAlchemyError) as error:
+        response_message = str(error)
+        return jsonify(message=response_message), 400
+
+
+@app.route("/api/business/<int:business_id>", methods=["GET"])
+def get_business_by_id(business_id):
+    """Retrieve a specific business by ID"""
+
+    if not isinstance(business_id, int) or business_id <= 0:
+        return (
+            jsonify(
+                error=True,
+                message="Invalid business ID",
+            ),
+            400,
+        )
+
+    with Session() as session:
+        try:
+            business = (
+                session.query(Business)
+                .options(joinedload(Business.user))
+                .get(business_id)
+            )
+
+            if business:
+                # Use the json() method from the Business model to get all columns
+                business_data = business.json()
+
+                # Get image URLs for the business (same as in your previous code)
+                business_images_folder = os.path.join(
+                    app.config["UPLOAD_FOLDER"], str(business_id)
+                )
+                if os.path.exists(business_images_folder):
+                    images = [
+                        f"/static/business/{business_id}/{filename}"
+                        for filename in os.listdir(business_images_folder)
+                        if allowed_file(filename)
+                    ]
+                else:
+                    images = []
+
+                business_data["images"] = images
+
+                # Create the desired response format
+                response_data = {
+                    "error": False,
+                    "data": business_data
+                }
+
+                return jsonify(response_data)
+
+            return jsonify(error=False, message="Business not found"), 404
+        except SQLAlchemyError as error:
+            return jsonify(error=True, message=str(error)), 400
+
+
+
+
+@app.route("/api/business/<int:business_id>", methods=["PUT"])
+def update_business(business_id):
+    """Update a specific business by ID"""
+    data = request.json
+
+    if not isinstance(business_id, int) or business_id <= 0:
+        return (
+            jsonify(
+                error=True,
+                message="Invalid business ID",
+            ),
+            400,
+        )
+
+
+    unauthorized_condition = False
+    if unauthorized_condition:
+        return (
+            jsonify(error=True, message="Unauthorized"),
+            401,
+        )
+
+    forbidden_condition = False
+    if forbidden_condition:
+        return (
+            jsonify(error=True, message="Forbidden"),
+            403,
+        )
+
+    session = Session()
+    try:
+        business = session.query(Business).get(business_id)
+        if business:
+            for key, value in data.items():
+                if hasattr(business, key):
+                    setattr(business, key, value)
+                else:
+                    return jsonify(message=f"Invalid field: {key}"), 400
+            session.commit()
+            return jsonify(
+                error=False,
+                message="Business updated successfully"), 200
+        return jsonify(
+            error=True,
+            message="Business not found"), 404
+    finally:
+        session.close()
+
+
+@app.route("/api/business/<int:business_id>", methods=["DELETE"])
+def delete_business(business_id):
+    """Delete a specific business by ID"""
+    if business_id <= 0:
+        return jsonify(message="Invalid business ID"), 400
+
+    unauthorized_condition = False
+    if unauthorized_condition:
+        return (
+            jsonify(error=True, 
+                    message="Unauthorized"),
+            401,
+        )
+
+    forbidden_condition = False
+    if forbidden_condition:
+        return (
+            jsonify(error=True, 
+                    message="Forbidden"),
+            403,
+        )
+
+    session = Session()
+    try:
+        business = session.query(Business).get(business_id)
+        if business:
+            session.delete(business)
+            session.commit()
+            return jsonify(
+                error=False,
+                message="Business deleted successfully"), 202  # Accepted
+        return jsonify(
+            error=True,
+            message="Business not found"), 404
+    except SQLAlchemyError as error:
+        session.rollback()  # Rollback the transaction in case of an error
+        return jsonify(error=str(error)), 400
+    finally:
+        session.close()
+
+
+
 def allowed_file(filename):
     """Check if a filename has an allowed file extension."""
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -216,186 +434,6 @@ def delete_image(business_id, filename):
     session.close()
     return jsonify(error=True, message="Image not found."), 404
 
-
-@app.route("/api/business", methods=["POST"])
-def create_business():
-    """Create a business"""
-    try:
-        data = request.json
-        session = Session()
-
-        business_id = data.get("id")
-        if not isinstance(business_id, int) or business_id < 0:
-            error_message = "Invalid business ID"
-            raise ValueError(error_message)
-
-        if not business_id:
-            error_message = "Missing business ID"
-            raise ValueError(error_message)
-
-        existing_business = (
-            session.query(Business).filter(Business.id == business_id).first()
-        )
-        if existing_business:
-            error_message = f"Business with id {business_id} already exists"
-            raise ValueError(error_message)
-
-        unauthorized_condition = True  # Change this condition as needed
-        if unauthorized_condition:
-            error_message = "Unauthorized"
-            raise ValueError(error_message)
-
-        business = Business(
-            user_id=data.get("user_id"),
-            id=business_id,
-            location=data.get("location"),
-            property_type=data.get("property_type"),
-            price=data.get("price"),
-            year_built=data.get("year_built"),
-            size=data.get("size"),
-            name=data.get("name"),
-            description=data.get("description"),
-        )
-        session.add(business)
-        session.commit()
-
-        response_message = "Business created successfully"
-        return jsonify(message=response_message, business_id=business_id), 201
-
-    except (ValueError, SQLAlchemyError) as error:
-        response_message = str(error)
-        return jsonify(message=response_message), 400
-
-
-@app.route("/api/business/<int:business_id>", methods=["GET"])
-def get_business_by_id(business_id):
-    """Retrieve a specific business by ID"""
-
-    if not isinstance(business_id, int) or business_id <= 0:
-        return (
-            jsonify(
-                error=True,
-                message="Invalid business ID",
-            ),
-            400,
-        )
-
-    with Session() as session:
-        try:
-            business = (
-                session.query(Business)
-                .options(joinedload(Business.user))
-                .get(business_id)
-            )
-
-            if business:
-                # Use the json() method from the Business model to get all columns
-                business_data = business.json()
-
-                # Get image URLs for the business (same as in your previous code)
-                business_images_folder = os.path.join(
-                    app.config["UPLOAD_FOLDER"], str(business_id)
-                )
-                if os.path.exists(business_images_folder):
-                    images = [
-                        f"/static/business/{business_id}/{filename}"
-                        for filename in os.listdir(business_images_folder)
-                        if allowed_file(filename)
-                    ]
-                else:
-                    images = []
-
-                business_data["images"] = images
-                return jsonify(business_data)
-
-            return jsonify(message="Business not found"), 404
-        except SQLAlchemyError as error:
-            return jsonify(error=str(error)), 400
-
-
-@app.route("/api/business/<int:business_id>", methods=["PUT"])
-def update_business(business_id):
-    """Update a specific business by ID"""
-    data = request.json
-
-    if not isinstance(business_id, int) or business_id <= 0:
-        return (
-            jsonify(
-                error=True,
-                message="Invalid business ID",
-            ),
-            400,
-        )
-
-    # Simulate unauthorized access (401 error)
-    unauthorized_condition = True  # Change this condition as needed
-    if unauthorized_condition:
-        return (
-            jsonify(error=True, message="Unauthorized"),
-            401,
-        )
-
-    # Simulate forbidden access (403 error)
-    forbidden_condition = True  # Change this condition as needed
-    if forbidden_condition:
-        return (
-            jsonify(error=True, message="Forbidden"),
-            403,
-        )
-
-    session = Session()
-    try:
-        business = session.query(Business).get(business_id)
-        if business:
-            for key, value in data.items():
-                if hasattr(business, key):
-                    setattr(business, key, value)
-                else:
-                    return jsonify(message=f"Invalid field: {key}"), 400
-            session.commit()
-            return jsonify(message="Business updated successfully")
-        return jsonify(message="Business not found"), 404
-    finally:
-        session.close()
-
-
-@app.route("/api/business/<int:business_id>", methods=["DELETE"])
-def delete_business(business_id):
-    """Delete a specific business by ID"""
-    if business_id <= 0:
-        return jsonify(message="Invalid business ID"), 400  # Bad Request
-
-    # Simulate unauthorized access (401 error)
-    unauthorized_condition = True  # Change this condition as needed
-    if unauthorized_condition:
-        return (
-            jsonify(error=True, message="Unauthorized"),
-            401,
-        )
-
-    # Simulate forbidden access (403 error)
-    forbidden_condition = True  # Change this condition as needed
-    if forbidden_condition:
-        return (
-            jsonify(error=True, message="Forbidden"),
-            403,
-        )
-
-    session = Session()
-    try:
-        business = session.query(Business).get(business_id)
-        if business:
-            session.delete(business)
-            session.commit()
-            return jsonify(message="Business deleted successfully"), 202  # Accepted
-        return jsonify(message="Business not found"), 404
-    except SQLAlchemyError as error:
-        session.rollback()  # Rollback the transaction in case of an error
-        return jsonify(error=str(error)), 400
-    finally:
-        session.close()
-
-
 @app.route("/api/login", methods=["POST"])
 def login():
     """Handles the login process"""
@@ -404,11 +442,11 @@ def login():
     password = data.get("password")
 
     if not email or not password:
+        user = session.query(User).filter_by(email=email).first()
         return jsonify(error="Email and password are required."), 400
 
     session = Session()  # Open a new session for the API call
     try:
-        user = session.query(User).filter_by(email=email).first()
 
         if not user:
             return jsonify(error="Invalid email."), 401
