@@ -79,7 +79,6 @@ Create a new business item.
 
 ##### Request
 
-- **Status Code**: 201 (Created)
 - **Requset Body**:
 
 ```json
@@ -210,7 +209,6 @@ Update details of a specific business by ID.
 
 ##### Request
 
-- **Status Code**: 200 (OK)
 - **Requset Body**:
 
 
