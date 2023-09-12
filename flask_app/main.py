@@ -420,7 +420,6 @@ def delete_image(business_id, filename):
     return jsonify(error=True, message="Image not found."), 404
 
 
-
 @app.route("/api/login", methods=["POST"])
 def login():
     """Handles the login process"""
