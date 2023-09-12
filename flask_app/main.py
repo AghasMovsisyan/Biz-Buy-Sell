@@ -174,7 +174,6 @@ def create_business():
                 400,
             )
 
-
         existing_business = (
             session.query(Business).filter(Business.id == business_id).first()
         )
@@ -183,7 +182,7 @@ def create_business():
             return (
                 jsonify(
                     error=True,
-                    message= f"Business with id {business_id} already exists",
+                    message=f"Business with id {business_id} already exists",
                 ),
                 400,
             )
@@ -197,7 +196,7 @@ def create_business():
                 ),
                 401,
             )
-            
+
         business = Business(
             user_id=data.get("user_id"),
             id=business_id,
@@ -261,18 +260,13 @@ def get_business_by_id(business_id):
                 business_data["images"] = images
 
                 # Create the desired response format
-                response_data = {
-                    "error": False,
-                    "data": business_data
-                }
+                response_data = {"error": False, "data": business_data}
 
                 return jsonify(response_data)
 
             return jsonify(error=False, message="Business not found"), 404
         except SQLAlchemyError as error:
             return jsonify(error=True, message=str(error)), 400
-
-
 
 
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
@@ -288,7 +282,6 @@ def update_business(business_id):
             ),
             400,
         )
-
 
     unauthorized_condition = False
     if unauthorized_condition:
@@ -314,12 +307,8 @@ def update_business(business_id):
                 else:
                     return jsonify(message=f"Invalid field: {key}"), 400
             session.commit()
-            return jsonify(
-                error=False,
-                message="Business updated successfully"), 200
-        return jsonify(
-            error=True,
-            message="Business not found"), 404
+            return jsonify(error=False, message="Business updated successfully"), 200
+        return jsonify(error=True, message="Business not found"), 404
     finally:
         session.close()
 
@@ -333,16 +322,14 @@ def delete_business(business_id):
     unauthorized_condition = False
     if unauthorized_condition:
         return (
-            jsonify(error=True, 
-                    message="Unauthorized"),
+            jsonify(error=True, message="Unauthorized"),
             401,
         )
 
     forbidden_condition = False
     if forbidden_condition:
         return (
-            jsonify(error=True, 
-                    message="Forbidden"),
+            jsonify(error=True, message="Forbidden"),
             403,
         )
 
@@ -352,18 +339,16 @@ def delete_business(business_id):
         if business:
             session.delete(business)
             session.commit()
-            return jsonify(
-                error=False,
-                message="Business deleted successfully"), 202  # Accepted
-        return jsonify(
-            error=True,
-            message="Business not found"), 404
+            return (
+                jsonify(error=False, message="Business deleted successfully"),
+                202,
+            )  # Accepted
+        return jsonify(error=True, message="Business not found"), 404
     except SQLAlchemyError as error:
         session.rollback()  # Rollback the transaction in case of an error
         return jsonify(error=str(error)), 400
     finally:
         session.close()
-
 
 
 def allowed_file(filename):
@@ -434,6 +419,8 @@ def delete_image(business_id, filename):
     session.close()
     return jsonify(error=True, message="Image not found."), 404
 
+
+
 @app.route("/api/login", methods=["POST"])
 def login():
     """Handles the login process"""
@@ -442,27 +429,29 @@ def login():
     password = data.get("password")
 
     if not email or not password:
-        user = session.query(User).filter_by(email=email).first()
         return jsonify(error="Email and password are required."), 400
 
-    session = Session()  # Open a new session for the API call
+    # Create a session
+    session = Session()
+
     try:
+        # Query the database to find the user by email
+        user = session.query(User).filter_by(email=email).first()
 
         if not user:
             return jsonify(error="Invalid email."), 401
 
-        if (
-            password == user.password_hash
-        ):  # Compare provided password with stored password hash
+        if password == user.password_hash:
             # Password matches, return a success response along with user details
             return jsonify(message="Login successful", user=user.json()), 200
-        return jsonify(error="Invalid email or password."), 401
+        return jsonify(error="Invalid password."), 401
+
     except SQLAlchemyError as error:
         # Catch specific SQLAlchemy errors and handle them
         session.rollback()  # Rollback the transaction in case of an error
         return jsonify(error=str(error)), 500
     finally:
-        session.close()  # Close the session after the API call is compl
+        session.close()  # Close the session af
 
 
 @app.route("/api/me", methods=["GET"])
