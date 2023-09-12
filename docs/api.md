@@ -267,7 +267,6 @@ or
   "message": "Unauthorized"
 }
 ```
-
 - **Status Code**: 403 (Forbidden)
 - **Response Body**:
 ```json
