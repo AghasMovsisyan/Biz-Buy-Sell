@@ -258,15 +258,11 @@ def get_business_by_id(business_id):
                     images = []
 
                 business_data["images"] = images
+                return jsonify(business_data)
 
-                # Create the desired response format
-                response_data = {"error": False, "data": business_data}
-
-                return jsonify(response_data)
-
-            return jsonify(error=False, message="Business not found"), 404
+            return jsonify(error=True, message="Business not found"), 404
         except SQLAlchemyError as error:
-            return jsonify(error=True, message=str(error)), 400
+            return jsonify(error=str(error)), 400
 
 
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
