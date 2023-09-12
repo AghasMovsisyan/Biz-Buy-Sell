@@ -41,7 +41,7 @@ Retrieve Paginated Business Items.
       "location": "Los Angeles",
       "price": "$150,000"
     },
-    // ... (more business items)
+    
   ],
   "items_per_page": 10,
   "total": 42,
@@ -79,7 +79,6 @@ Create a new business item.
 
 ##### Request
 
-- **Status Code**: 201 (Created)
 - **Requset Body**:
 
 ```json
@@ -177,15 +176,6 @@ Retrieve details of a specific business by ID.
 }
 ```
 
-- **Status Code**: 404 (Not Found))
-- **Response Body**:
-
-```json
-{
-  "error": true,
-  "message": "Business not found"
-}
-```
 
 - **Status Code**: 400 (Bad Requset))
 - **Response Body**:
@@ -194,6 +184,15 @@ Retrieve details of a specific business by ID.
 {
   "error": true,
   "message": "Invalid business ID"
+}
+```
+- **Status Code**: 404 (Not Found))
+- **Response Body**:
+
+```json
+{
+  "error": true,
+  "message": "Business not found"
 }
 ```
 
@@ -210,7 +209,6 @@ Update details of a specific business by ID.
 
 ##### Request
 
-- **Status Code**: 200 (OK)
 - **Requset Body**:
 
 
@@ -237,7 +235,7 @@ Update details of a specific business by ID.
 
 ```json
 {
-  "error": true,
+  "error": false,
   "message": "Business updated successfully"
 }
 ```
