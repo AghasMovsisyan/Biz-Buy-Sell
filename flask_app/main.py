@@ -219,18 +219,13 @@ def create_business():
         return jsonify(message=response_message), 400
 
 
+
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
     """Retrieve a specific business by ID"""
 
     if not isinstance(business_id, int) or business_id <= 0:
-        return (
-            jsonify(
-                error=True,
-                message="Invalid business ID",
-            ),
-            400,
-        )
+        return jsonify(data=None, error=True, message="Invalid business ID"), 400
 
     with Session() as session:
         try:
@@ -258,11 +253,12 @@ def get_business_by_id(business_id):
                     images = []
 
                 business_data["images"] = images
-                return jsonify(business_data)
 
-            return jsonify(error=True, message="Business not found"), 404
+                return jsonify(data=business_data, error=False)
+
+            return jsonify(data=None, error=True, message="Business not found"), 404
         except SQLAlchemyError as error:
-            return jsonify(error=str(error)), 400
+            return jsonify(data=None, error=True, message=str(error)), 400
 
 
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
