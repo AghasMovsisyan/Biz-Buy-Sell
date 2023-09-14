@@ -234,6 +234,13 @@ var cardDisplayModule = (function () {
                                     return;
                                 }
                                 
+
+                                if (isNaN(editedYear)) {
+                                    alert("Year Built must be an integer");
+                                    return;
+                                }
+
+
                                 if (editedYear === '') {
                                     alert("Year Built must not be empty");
                                     return;
