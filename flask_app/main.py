@@ -219,7 +219,6 @@ def create_business():
         return jsonify(message=response_message), 400
 
 
-
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
     """Retrieve a specific business by ID"""
