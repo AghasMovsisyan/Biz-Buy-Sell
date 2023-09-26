@@ -7,7 +7,7 @@ var cardDisplayModule = (function () {
             url: `/api/business/${cardId}`,
             method: 'GET',
             success: function (response) {
-                const data = response.data; 
+                const data = response.data;
                 // Fetch authenticated_user_id and user_id using a new AJAX request
                 $.ajax({
                     url: '/api/me',
