@@ -54,8 +54,10 @@ var cardDisplayModule = (function () {
                                             <div class="form-group" style="display: inline-block;">
                                                 <input type="text" class="form-control smaller-input" id="edit-year-${cardId}" value="${data.year_built}" style="width: 160px;">
                                             </div>
+                                            <div id="edit-year-error-${cardId}" class="text-danger" style="display: none;">Please enter a valid integer.</div>
                                         </form>
                                     </li>
+                            
                                     
                                     <li>
                                         <label for="edit-type-${cardId}" style="display: inline-block;" class="smaller-label">Property Type:</label>
@@ -173,6 +175,12 @@ var cardDisplayModule = (function () {
                                 cardInfo.querySelectorAll('span').forEach(span => {
                                     span.style.display = 'inline';
                                 });
+
+                                const editYearError = document.getElementById(`edit-year-error-${cardId}`);
+                                editYearError.style.display = 'none';
+                                const yearBuiltInput = document.getElementById(`edit-year-${cardId}`);
+                                yearBuiltInput.style.borderColor = ''; // Reset border color
+
                                 const saveButton = cardInfo.querySelector('.save-button');
                                 if (saveButton) {
                                     saveButton.style.display = 'none';
@@ -204,14 +212,45 @@ var cardDisplayModule = (function () {
                             document.getElementById(`edit-tel-${cardId}`).value = data.tel_number;
                         }
                         
-                                        
-                        // Add event listener to the "Save" button
-                    // Add event listener to the "Save" button
+                        
+                        // Add an event listener to the "Year Built" input field for live validation
+                        const yearBuiltInput = document.getElementById(`edit-year-${cardId}`);
+                        yearBuiltInput.addEventListener('input', function () {
+                            const inputValue = yearBuiltInput.value;
+
+                            if (inputValue.trim() === '') {
+                                // Input is empty
+                                const editYearError = document.getElementById(`edit-year-error-${cardId}`);
+                                editYearError.textContent = 'Year must not be empty'; // Set the error message
+                                editYearError.style.display = 'block';
+                                yearBuiltInput.style.borderColor = 'red'; // Highlight the input field
+                            } else if (/^\d+$/.test(inputValue)) {
+                                // Input is a valid integer
+                                const editedYear = parseInt(inputValue);
+
+                                // Reset error state if the input is valid
+                                const editYearError = document.getElementById(`edit-year-error-${cardId}`);
+                                editYearError.style.display = 'none';
+                                yearBuiltInput.style.borderColor = ''; // Reset border color
+
+                                // You can use 'editedYear' for further processing if needed
+                            } else {
+                                // Input is not a valid integer
+                                const editYearError = document.getElementById(`edit-year-error-${cardId}`);
+                                editYearError.textContent = 'Please enter a valid integer'; // Set the error message
+                                editYearError.style.display = 'block';
+                                yearBuiltInput.style.borderColor = 'red'; // Highlight the input field
+                            }
+                        });
+
+
+
                         const saveButton = cardDetails.querySelector('.save-button');
                         if (saveButton) {
                             saveButton.addEventListener('click', function () {
                                 // Get edited values from input fields
-                                const editedYear = document.getElementById(`edit-year-${cardId}`).value;
+                                const editedYearInput = document.getElementById(`edit-year-${cardId}`);
+                                const editedYear = parseInt(editedYearInput.value); // Parse input as an integer
                                 const editedLocation = document.getElementById(`edit-location-${cardId}`).value;
                                 const editedPrice = document.getElementById(`edit-price-${cardId}`).value;
                                 const editedTel = document.getElementById(`edit-tel-${cardId}`).value;
@@ -235,19 +274,9 @@ var cardDisplayModule = (function () {
                                 }
                                 
 
-                                if (isNaN(editedYear)) {
-                                    alert("Year Built must be an integer");
-                                    return;
-                                }
-
-
-                                if (editedYear === '') {
-                                    alert("Year Built must not be empty");
-                                    return;
-                                }
 
                                 if (editedLocation === '') {
-                                    alert("Location must not be empty");
+                                    alert("Location                                                                                                                                                                 ");                                                                                                                                                                 
                                     return;
                                 }
 
@@ -258,7 +287,7 @@ var cardDisplayModule = (function () {
 
                                 if (editedTel === '') {
                                     alert("Telephone Number must not be empty");
-                                    return;
+                                    return; 
                                 }
 
                                 if (editedSize === '') {
