@@ -210,6 +210,12 @@ var cardDisplayModule = (function () {
                             document.getElementById(`edit-price-${cardId}`).value = data.price;
                             document.getElementById(`edit-size-${cardId}`).value = data.size;
                             document.getElementById(`edit-tel-${cardId}`).value = data.tel_number;
+
+                            const editYearError = document.getElementById(`edit-year-error-${cardId}`);
+                            editYearError.style.display = 'none';
+                            const yearBuiltInput = document.getElementById(`edit-year-${cardId}`);
+                            yearBuiltInput.style.borderColor = ''; // Reset border color
+
                         }
                         
                         
