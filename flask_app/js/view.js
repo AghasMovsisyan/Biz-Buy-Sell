@@ -220,8 +220,11 @@ var cardDisplayModule = (function () {
                         
                         
                         // Add an event listener to the "Year Built" input field for live validation
+                                                // Add an event listener to the "Year Built" input field for live validation
                         const yearBuiltInput = document.getElementById(`edit-year-${cardId}`);
-                        yearBuiltInput.addEventListener('input', function () {
+                        const saveButton = cardDetails.querySelector('.save-button');
+
+                        function validateYearInput() {
                             const inputValue = yearBuiltInput.value;
 
                             if (inputValue.trim() === '') {
@@ -230,6 +233,9 @@ var cardDisplayModule = (function () {
                                 editYearError.textContent = 'Year must not be empty'; // Set the error message
                                 editYearError.style.display = 'block';
                                 yearBuiltInput.style.borderColor = 'red'; // Highlight the input field
+
+                                // Disable the "Save" button
+                                saveButton.disabled = true;
                             } else if (/^\d+$/.test(inputValue)) {
                                 // Input is a valid integer
                                 const editedYear = parseInt(inputValue);
@@ -239,19 +245,28 @@ var cardDisplayModule = (function () {
                                 editYearError.style.display = 'none';
                                 yearBuiltInput.style.borderColor = ''; // Reset border color
 
-                                // You can use 'editedYear' for further processing if needed
+                                // Enable the "Save" button
+                                saveButton.disabled = false;
                             } else {
                                 // Input is not a valid integer
                                 const editYearError = document.getElementById(`edit-year-error-${cardId}`);
                                 editYearError.textContent = 'Please enter a valid integer'; // Set the error message
                                 editYearError.style.display = 'block';
                                 yearBuiltInput.style.borderColor = 'red'; // Highlight the input field
+
+                                // Disable the "Save" button
+                                saveButton.disabled = true;
                             }
-                        });
+                        }
+
+                        yearBuiltInput.addEventListener('input', validateYearInput);
+
+                        // Initially validate the year input on page load
+                        validateYearInput();
 
 
 
-                        const saveButton = cardDetails.querySelector('.save-button');
+
                         if (saveButton) {
                             saveButton.addEventListener('click', function () {
                                 // Get edited values from input fields
@@ -263,55 +278,6 @@ var cardDisplayModule = (function () {
                                 const editType = document.getElementById(`edit-type-${cardId}`).value;
                                 const editedSize = document.getElementById(`edit-size-${cardId}`).value;
                                 // Update card details with edited values
-                                const validPropertyTypes = ["HOTEL", "CAFE", "SUPERMARKET", "RESTUARANT"];
-                                if (isNaN(editedSize)) {
-                                    alert("Size must be an integer");
-                                    return;
-                                }
-                                
-                                if (isNaN(editedPrice)) {
-                                    alert("Price must be an integer");
-                                    return;
-                                }
-                                
-                                if (isNaN(editedTel)) {
-                                    alert("Telephone Number must be an integer");
-                                    return;
-                                }
-                                
-
-
-                                if (editedLocation === '') {
-                                    alert("Location                                                                                                                                                                 ");                                                                                                                                                                 
-                                    return;
-                                }
-
-                                if (editedPrice === '') {
-                                    alert("Price must not be empty");
-                                    return;
-                                }
-
-                                if (editedTel === '') {
-                                    alert("Telephone Number must not be empty");
-                                    return; 
-                                }
-
-                                if (editedSize === '') {
-                                    alert("Size must be not empty");
-                                    return;
-                                }
-
-                                if (validPropertyTypes.includes(editType)) {
-                                    // The editType is one of the valid PropertyType values
-                                    // You can proceed with your code here
-                                } else {
-                                    // The editType is not a valid PropertyType value
-                                    alert("Invalid Property Type");
-                                    return; // Or handle the error in your desired way
-                                }
-                                
-                                // Rest of the code for updating card details on the server
-                                
                                 
                                 data.year_built = editedYear;
                                 data.property_type = editType;
