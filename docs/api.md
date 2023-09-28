@@ -192,7 +192,7 @@
     ```
 
     
-   c) Status Code: 404 (Not Found))
+   c) Status Code: 404 (Not Found)
 
    Business not found
 
