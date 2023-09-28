@@ -20,7 +20,7 @@ var cardDisplayModule = (function () {
 
                         const editLink = isOwner ? `<button class="edit-button">Edit</button>` : '';
 
-                        const html = `
+                        const html = `  
                         <div class="scrollable-section">    
                             <div class="cardv-container">
                                 <div class="par">
@@ -56,9 +56,7 @@ var cardDisplayModule = (function () {
                                             </div>
                                             <div id="edit-year-error-${cardId}" class="text-danger" style="display: none;">Please enter a valid integer.</div>
                                         </form>
-                                        
-                                        </li>
-                                    
+                                                                                
                                     <li>
                                         <label for="edit-type-${cardId}" style="display: inline-block;" class="smaller-label">Property Type:</label>
                                         <span id="span-type-${cardId}" style="display: inline-block; margin-right: 10px;">${data.property_type}</span>
@@ -66,6 +64,7 @@ var cardDisplayModule = (function () {
                                             <div class="form-group" style="display: inline-block;">
                                                 <input type="text" class="form-control smaller-input" id="edit-type-${cardId}" value="${data.property_type}" style="width: 160px;">
                                             </div>
+                                            <div id="edit-type-error-${cardId}" class="text-danger" style="display: none;">Please enter a valid integer.</div>
                                         </form>
                                     </li>
 
@@ -76,6 +75,7 @@ var cardDisplayModule = (function () {
                                             <div class="form-group" style="display: inline-block;">
                                                 <input type="text" class="form-control smaller-input" id="edit-location-${cardId}" value="${data.location}" style="width: 160px;">
                                             </div>
+                                            <div id="edit-location-error-${cardId}" class="text-danger" style="display: none;">Please enter a valid integer.</div>
                                         </form>
                                     </li>
                                     <li>
@@ -217,14 +217,22 @@ var cardDisplayModule = (function () {
                             const editPriceError = document.getElementById(`edit-price-error-${cardId}`);
                             editPriceError.style.display = 'none';
                             priceInput.style.borderColor = ''; // Reset border color
-
+                            
                             const editSizeError = document.getElementById(`edit-size-error-${cardId}`); 
                             editSizeError.style.display = 'none';
-                            sizeInput.borderColor = '';
-
+                            sizeInput.style.borderColor = '';
+                            
                             const editTelError = document.getElementById(`edit-tel-error-${cardId}`);
                             editTelError.style.display = 'none';
                             telInput.style.borderColor = ''; // Reset border color
+
+                            const editTypeError = document.getElementById(`edit-type-error-${cardId}`);
+                            editTypeError.style.display = 'none';
+                            propertyTypeInput.style.borderColor = ''; // Reset border color
+                            
+                            const editLocatError = document.getElementById(`edit-location-error-${cardId}`);
+                            editLocatError.style.display = 'none';
+                            locationInput.style.borderColor = '';
                         }
                         
                         
@@ -232,8 +240,10 @@ var cardDisplayModule = (function () {
                         const priceInput = document.getElementById(`edit-price-${cardId}`);
                         const sizeInput = document.getElementById(`edit-size-${cardId}`);
                         const telInput = document.getElementById(`edit-tel-${cardId}`);
+                        const propertyTypeInput = document.getElementById(`edit-type-${cardId}`);
+                        const locationInput = document.getElementById(`edit-location-${cardId}`);
                         const saveButton = cardDetails.querySelector('.save-button');
-
+                        
                         function validateYearInput() {
                             const inputValue = yearBuiltInput.value;
                         
@@ -377,22 +387,85 @@ var cardDisplayModule = (function () {
                         }
 
 
+                        function validatePropertyTypeInput() {
+                            const inputValue = propertyTypeInput.value;
+                        
+                            // You can define an array of valid property types or use data from your server
+                            const validPropertyTypes = ["HOTEL", "CAFE", "SUPERMARKET", "RESTUARANT"];
+                            
+                            if (inputValue.trim() === '') {
+                                // Input is empty
+                                const editTypeError = document.getElementById(`edit-type-error-${cardId}`);
+                                editTypeError.textContent = 'Telephone Number must not be empty'; // Set the error message
+                                editTypeError.style.display = 'block';
+                                propertyTypeInput.style.borderColor = 'red'; // Highlight the input field
+
+                                // Disable the "Save" button
+                                saveButton.disabled = true;
+                            } else if (validPropertyTypes.includes(inputValue)) {
+                                // Input is a valid property type
+                                // Reset error state and enable the "Save" button
+                                const editTypeError = document.getElementById(`edit-type-error-${cardId}`);
+                                editTypeError.style.display = 'none';
+                                propertyTypeInput.style.borderColor = '';
+                                saveButton.disabled = false;
+                            } else {
+                                // Input is not a valid property type
+                                // Set error state and disable the "Save" button
+                                const editTypeError = document.getElementById(`edit-type-error-${cardId}`);
+                                editTypeError.textContent = 'Please enter a valid property type';
+                                editTypeError.style.display = 'block';
+                                propertyTypeInput.style.borderColor = 'red';
+                                saveButton.disabled = true;
+                            }
+                        }
+                        
+                        function validateLocationInput() {
+                            const  inputValue = locationInput.value;
+
+                            if (inputValue.trim() === '') {
+                                // Input is empty
+                                const editLocatError = document.getElementById(`edit-location-error-${cardId}`);
+                                editLocatError.textContent = 'Location Number must not be empty'; // Set the error message
+                                editLocatError.style.display = 'block';
+                                locationInput.style.borderColor = 'red'; // Highlight the input field
+
+                                // Disable the "Save" button
+                                saveButton.disabled = true;
+                            }  else {
+                                // Input is a valid property type
+                                // Reset error state and enable the "Save" button
+                                const editLocatError = document.getElementById(`edit-location-error-${cardId}`);
+                                editLocatError.style.display = 'none';
+                                locationInput.style.borderColor = '';
+                                
+                                saveButton.disabled = false;
+                            }
+                        }
+
+                            
+
+                        // Initially validate the property type input on page load
+                        
+                        
                         telInput.addEventListener('input', validateTelInput);
                         yearBuiltInput.addEventListener('input', validateYearInput);
                         priceInput.addEventListener('input', validatePriceInput);
                         sizeInput.addEventListener('input', validateSizeInputs);
+                        propertyTypeInput.addEventListener('input', validatePropertyTypeInput);
+                        locationInput.addEventListener('input', validateLocationInput);
                         // Initially validate both year and price inputs on page load
                         validateYearInput();
                         validatePriceInput();
                         validateSizeInputs();
-                        validateTelInput();
-
+                        validateTelInput(); 
+                        validatePropertyTypeInput();
+                        validateLocationInput();
 
                         if (saveButton) {
                             saveButton.addEventListener('click', function () {
                                 // Get edited values from input fields
-                                const editedYearInput = document.getElementById(`edit-year-${cardId}`);
-                                const editedYear = parseInt(editedYearInput.value); // Parse input as an integer
+                                const editedYear = document.getElementById(`edit-year-${cardId}`).value;
                                 const editedLocation = document.getElementById(`edit-location-${cardId}`).value;
                                 const editedPrice = document.getElementById(`edit-price-${cardId}`).value;
                                 const editedTel = document.getElementById(`edit-tel-${cardId}`).value;
