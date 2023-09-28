@@ -56,8 +56,8 @@ var cardDisplayModule = (function () {
                                             </div>
                                             <div id="edit-year-error-${cardId}" class="text-danger" style="display: none;">Please enter a valid integer.</div>
                                         </form>
-                                    </li>
-                            
+                                        
+                                        </li>
                                     
                                     <li>
                                         <label for="edit-type-${cardId}" style="display: inline-block;" class="smaller-label">Property Type:</label>
@@ -108,6 +108,7 @@ var cardDisplayModule = (function () {
                                             <div class="form-group" style="display: inline-block;">
                                                 <input type="text" class="form-control smaller-input" id="edit-tel-${cardId}" value="${data.tel_number}" style="width: 160px;">
                                             </div>
+                                            <div id="edit-tel-error-${cardId}" class="text-danger" style="display: none;">Please enter a valid integer.</div>
                                         </form>
                                     </li>
                                 </ul>
@@ -176,7 +177,7 @@ var cardDisplayModule = (function () {
                                 });
                                 cardInfo.querySelectorAll('span').forEach(span => {
                                     span.style.display = 'inline';
-                                });
+                                }); 
 
                                 
                                 const saveButton = cardInfo.querySelector('.save-button');
@@ -221,14 +222,18 @@ var cardDisplayModule = (function () {
                             editSizeError.style.display = 'none';
                             sizeInput.borderColor = '';
 
+                            const editTelError = document.getElementById(`edit-tel-error-${cardId}`);
+                            editTelError.style.display = 'none';
+                            telInput.style.borderColor = ''; // Reset border color
                         }
                         
                         
                         const yearBuiltInput = document.getElementById(`edit-year-${cardId}`);
                         const priceInput = document.getElementById(`edit-price-${cardId}`);
                         const sizeInput = document.getElementById(`edit-size-${cardId}`);
+                        const telInput = document.getElementById(`edit-tel-${cardId}`);
                         const saveButton = cardDetails.querySelector('.save-button');
-                        
+
                         function validateYearInput() {
                             const inputValue = yearBuiltInput.value;
                         
@@ -333,6 +338,46 @@ var cardDisplayModule = (function () {
                             }
                         }
 
+
+                        // Define the validation function for Telephone Number
+                        // Define the updated validation function for Telephone Number
+                        function validateTelInput() {
+                            const telValue = telInput.value;
+
+                            if (telValue.trim() === '') {
+                                // Input is empty
+                                const editTelError = document.getElementById(`edit-tel-error-${cardId}`);
+                                editTelError.textContent = 'Telephone Number must not be empty'; // Set the error message
+                                editTelError.style.display = 'block';
+                                telInput.style.borderColor = 'red'; // Highlight the input field
+
+                                // Disable the "Save" button
+                                saveButton.disabled = true;
+                            } else if (/^(\+\d+|\d+)$/.test(telValue)) {
+                                // Input is a valid phone number format
+                                // It may start with a plus sign and contain only digits
+
+                                // Reset error state if the input is valid
+                                const editTelError = document.getElementById(`edit-tel-error-${cardId}`);
+                                editTelError.style.display = 'none';
+                                telInput.style.borderColor = ''; // Reset border color
+
+                                // Enable the "Save" button
+                                saveButton.disabled = false;
+                            } else {
+                                // Input does not match the valid phone number format
+                                const editTelError = document.getElementById(`edit-tel-error-${cardId}`);
+                                editTelError.textContent = 'Please enter a valid phone number'; // Set the error message
+                                editTelError.style.display = 'block';
+                                telInput.style.borderColor = 'red'; // Highlight the input field
+
+                                // Disable the "Save" button
+                                saveButton.disabled = true;
+                            }
+                        }
+
+
+                        telInput.addEventListener('input', validateTelInput);
                         yearBuiltInput.addEventListener('input', validateYearInput);
                         priceInput.addEventListener('input', validatePriceInput);
                         sizeInput.addEventListener('input', validateSizeInputs);
@@ -340,7 +385,7 @@ var cardDisplayModule = (function () {
                         validateYearInput();
                         validatePriceInput();
                         validateSizeInputs();
-
+                        validateTelInput();
 
 
                         if (saveButton) {
