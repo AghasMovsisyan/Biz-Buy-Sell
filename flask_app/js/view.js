@@ -22,6 +22,7 @@ var cardDisplayModule = (function () {
 
                         const html = `  
                         <div class="scrollable-section">    
+                            <div class="notification" id="notification" style="display: none;">
                             <div class="cardv-container">
                                 <div class="par">
                                     <h1 class="business-name">${data.name}</h1>
