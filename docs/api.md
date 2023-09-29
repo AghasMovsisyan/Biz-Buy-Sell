@@ -207,9 +207,9 @@
 
 4. PUT /api/business/{business_id}
     
-    Update details of a specific business by ID.
-    
     __API:__ `PUT /api/business/{business_id}`z  
+    
+    Update details of a specific business by ID.
     
     __Parameters__
     
@@ -308,64 +308,77 @@
     
     ```
 
-#### 5. DELETE /api/business/{business_id}
+5. DELETE /api/business/{business_id}
+    
+    Delete a specific business by ID.
+    
+    __API__: `DELETE /api/business/{business_id}`
+    
+    __Parameters__
+    
+    - `business_id` (integer, path): The ID of the business to delete.
+    
+    __Response__
+    
+   a) Status Code: 202 (Accepted)
 
-Delete a specific business by ID.
+   _Response Body_:
+    
+    ```json
+    {
+      "error": "false"
+      "message": "Business deleted successfully"
+    }
+    ```
+   b) Status Code**: 400 (Bad Requset)
 
-- **Request Method**: DELETE
-- **URL**: `/api/business/{business_id}`
+    When validation fails
 
-##### Parameters
+   _Response Body_:
+    
+    ```json
+    {
+      "error": "true"
+      "message": "Invalid business ID"
+    }
+    ```
+   c) Status Code: 401 (Unauthorized)
 
-- `business_id` (integer, path): The ID of the business to delete.
+    When user is not authenticated.
 
-##### Response
+   _Response Body_:
+    
+    ```json
+    {
+      "error": "true"
+      "message": "Unauthorized"
+    }
+    ```
+    
+   d) Status Code: 403 (Forbidden)
 
-- **Status Code**: 202 (Accepted)
-- **Response Body**:
+    When server understands the request but refuses to authorize it.
 
-```json
-{
-  "error": "false"
-  "message": "Business deleted successfully"
-}
-```
-- **Status Code**: 400 (Bad Requset)
-- **Response Body**:
+   _Response Body_:
+    
+    ```json
+    {
+      "error": "true"
+      "message": "Forbidden"
+    }
+    ```
+    e) Status Code: 404 (Not Found)
 
-```json
-{
-  "error": "true"
-  "message": "Invalid business ID"
-}
-```
-- **Status Code**: 401 (Unauthorized)
-- **Response Body**:
-
-```json
-{
-  "error": "true"
-  "message": "Unauthorized"
-}
-```
-- **Status Code**: 403 (Forbidden)
-- **Response Body**:
-
-```json
-{
-  "error": "true"
-  "message": "Forbidden"
-}
-```
-- **Status Code**: 404 (Not Found)
-- **Response Body**:
-
-```json
-{
-  "error": "true"
-  "message": "Not Found"
-}
-```
+    When business not found.
+    
+    _Response Body_:
+    
+    ```json
+    {
+      "error": "true"
+      "message": "Not Found"
+    }
+    ```
 
 #### 6. POST /api/business/{business_id}/upload
 
