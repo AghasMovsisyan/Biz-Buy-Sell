@@ -22,7 +22,6 @@ var cardDisplayModule = (function () {
 
                         const html = `  
                         <div class="scrollable-section">    
-                            <div class="notification" id="notification" style="display: none;">
                             <div class="cardv-container">
                                 <div class="par">
                                     <h1 class="business-name">${data.name}</h1>
@@ -31,7 +30,7 @@ var cardDisplayModule = (function () {
                                 <div id="image-slider" class="carousel slide" data-bs-ride="carousel">
                                     <div class="carousel-inner">
                                         ${data.images.map((imageUrl, index) => `
-                                            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                            <div class="carousel-item ${index === 0 ? 'active' : ''}">  
                                                 <img class="slider-image" src="${imageUrl}" alt="">
                                             </div>
                                         `).join('')}
@@ -129,7 +128,7 @@ var cardDisplayModule = (function () {
                                         <div class="justify-text">${data.description}</div>    
                                     </div>
                                 </div>
-                            </div>
+                            </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
                         </div>
                         `;
 
@@ -152,6 +151,7 @@ var cardDisplayModule = (function () {
                                 if (saveButton) {
                                     saveButton.style.display = 'inline';
                                 }
+                                
                                 const resetButton = cardInfo.querySelector('.reset-button');
                                 if (resetButton) {
                                     resetButton.style.display = 'inline'; // Display the "Reset" button
@@ -448,21 +448,18 @@ var cardDisplayModule = (function () {
 
                         // Initially validate the property type input on page load
                         
-                        
                         telInput.addEventListener('input', validateTelInput);
                         yearBuiltInput.addEventListener('input', validateYearInput);
                         priceInput.addEventListener('input', validatePriceInput);
                         sizeInput.addEventListener('input', validateSizeInputs);
                         propertyTypeInput.addEventListener('input', validatePropertyTypeInput);
                         locationInput.addEventListener('input', validateLocationInput);
+                        
                         // Initially validate both year and price inputs on page load
-                        validateYearInput();
-                        validatePriceInput();
-                        validateSizeInputs();
-                        validateTelInput(); 
-                        validatePropertyTypeInput();
-                        validateLocationInput();
 
+                  
+
+                        
                         if (saveButton) {
                             saveButton.addEventListener('click', function () {
                                 // Get edited values from input fields
@@ -480,9 +477,7 @@ var cardDisplayModule = (function () {
                                 data.price = editedPrice;
                                 data.size = editedSize;
                                 data.tel_number = editedTel;
-                                
-                                
-                                    
+                           
                                 // Update card details on the server
                                 $.ajax({
                                     type: 'PUT',
@@ -498,6 +493,8 @@ var cardDisplayModule = (function () {
                                     success: function(response) {
                                         // Update user's tel_number
                                         updateUserTelNumber(data.user_id, editedTel, cardId);
+                                        
+                                        $.notify("Save successfuly","success");
                                     },
                                     error: function(error) {
                                         console.error('Error updating business:', error);
@@ -539,7 +536,6 @@ var cardDisplayModule = (function () {
             data: JSON.stringify({ tel_number: newTelNumber }),
             contentType: 'application/json',
             success: function(response) {
-                console.log('User tel_number updated successfully:', response);
     
                 // Update the displayed telephone number in the card details
                 const telSpan = document.getElementById(`edit-tel-${cardId}`);
