@@ -380,98 +380,110 @@
     }
     ```
 
-#### 6. POST /api/business/{business_id}/upload
+6. POST /api/business/{business_id}/upload
 
-Upload and Save Images for a Specific Business.
+    __API:_ `POST /api/business/{business_id}/upload`
+    
+    Upload and Save Images for a Specific Business.
+    
+    __Parameters__
+    - `business_id` (integer, path): The ID of the business to upload images for.
+    
+    __Request__
+    
+    - Request Headers: Content-Type: multipart/form-data
+    - Request Body: images (multiple files): The images to be uploaded.
+    
+    __Response__
+    
+    a) Status Code: 201 (Created)
 
-- **Request Method**: POST
-- **URL**: `/api/business/{business_id}/upload`
+    When images uploaded successfully.
 
-##### Parameters
+    _Response Body_:
+    
+    
+    ```json
+    {
+      "error": false,
+      "message": "Images uploaded successfully.",
+      "uploaded_images": [
+        "/static/business/{business_id}/image1.jpg",
+        "/static/business/{business_id}/image2.jpg",
+        "/static/business/{business_id}/image3.jpg"
+      ]
+    }
+    ```  
+    b) Status Code: 400 (Bad Request)
 
-- `business_id` (integer, path): The ID of the business to upload images for.
+    When validation fails.
 
-##### Request
+    _Response Body_:
+    
+    
+    ```json
+    {
+      "error": true,
+      "message": "No images provided."
+    }
+    ```
+    c) Status Code: 404 (Not Found)
 
-- Request Headers: Content-Type: multipart/form-data
-- Request Body: images (multiple files): The images to be uploaded.
+    When business not found.
 
-##### Response
+    _Response Body_:
+    
+    ```json
+    {
+      "error": true,
+      "message": "Business not found."
+    }
+    ```
 
-- **Status Code**: 201 (Created)
-- **Response Body**:
+7. DELETE /api/business/{business_id}/delete/{filename}
+    
+    Delete Image for a Specific Business
+    
+    __API:__  `DELETE /api/business/{business_id}/delete/{filename}`
+    
+    __Parameters__
+    - `business_id` (integer, path): The ID of the business.
+    - `filename` (string, path): The name of the image file to be deleted.
+    
+    __Response__
+    
+    a) Status Code: 200 (OK)
 
+    When image deleted successfuly.
+    
+    _Response Body_:
+    
+    ```json
+    {
+      "error": false,
+      "message": "Image deleted successfully."
+    }
+    
+    ```
+    
+    b) Status Code: 404 (Not Found)
 
-```json
-{
-  "error": false,
-  "message": "Images uploaded successfully.",
-  "uploaded_images": [
-    "/static/business/{business_id}/image1.jpg",
-    "/static/business/{business_id}/image2.jpg",
-    "/static/business/{business_id}/image3.jpg"
-  ]
-}
-```  
-- **Status Code**: 400 (Bad Request)
-- **Response Body**:
-
-
-```json
-{
-  "error": true,
-  "message": "No images provided."
-}
-```
-- **Status Code**: 404 (Not Found)
-- **Response Body**:
-
-```json
-{
-  "error": true,
-  "message": "Business not found."
-}
-```
-
-#### 7. DELETE /api/business/{business_id}/delete/{filename}
-
-Delete Image for a Specific Business
-
-- **Request Method**: DELETE
-- **URL**: `/api/business/{business_id}/delete/{filename}`
-
-##### Parameters
-- `business_id` (integer, path): The ID of the business.
-- `filename` (string, path): The name of the image file to be deleted.
-
-##### Response
-
-- **Status Code**: 200 (OK)
-- **Response Body**:
-
-```json
-{
-  "error": false,
-  "message": "Image deleted successfully."
-}
-
-```
-
-- **Status Code**: 404 (Not Found)
-- **Response Body**:
-
-```json
-{
-  "error": true,
-  "message": "Business not found."
-}
-
-```
-
-```json
-{
-  "error": true,
-  "message": "Image not found."
-}
-
-```
+    When business not found.
+    
+    _Response Body_:
+    
+    ```json
+    {
+      "error": true,
+      "message": "Business not found."
+    }
+    
+    ```
+    
+    ```json
+    {
+      "error": true,
+      "message": "Image not found."
+    }
+    
+    ```
