@@ -310,9 +310,9 @@
 
 5. DELETE /api/business/{business_id}
     
-    Delete a specific business by ID.
-    
     __API__: `DELETE /api/business/{business_id}`
+    
+    Delete a specific business by ID.
     
     __Parameters__
     
