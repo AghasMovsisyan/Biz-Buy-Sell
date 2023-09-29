@@ -205,95 +205,108 @@
     }
     ```
 
-#### 4. PUT /api/business/{business_id}
+4. PUT /api/business/{business_id}
+    
+    Update details of a specific business by ID.
+    
+    __API:__ `PUT /api/business/{business_id}`z  
+    
+    __Parameters__
+    
+    - `business_id` (integer, path): The ID of the business to update.
+    
+    __Request__
+    
+   _Requset Body_:
+    
+    
+    ```json
+    {
+      "error": false,
+      "data": {
+          "location": "Updated business location",
+          "property_type": "Updated type of property",
+          "price": "Updated business price",
+          "year_built": "Updated year the property was built",
+          "size": "Updated size of the property",
+          "name": "Updated business name",
+          "description": "Updated business description"
+      }
+    }
+    ```
+    
+    __Response__
+    
+    a) Status Code: 200 (OK)
+    
+   _Response Body_:
+    
+    ```json
+    {
+      "error": false,
+      "message": "Business updated successfully"
+    }
+    ```
+    
+   b) Status Code: 400 (Bad Request)
 
-Update details of a specific business by ID.
+    When validation fails.
 
-- **Request Method**: PUT
-- **URL**: `/api/business/{business_id}`z  
+    _Response Body_:
+      
+    ```json
+    {
+      "error": true,
+      "message": "Invalid business ID"
+    }
+    ```
+    or
+    
+    ```json
+    {
+      "error": true,
+      "message":  "Invalid data format or empty data"
+    }
+    ```
+    
+   c) _Status Code_: 401 (Unauthorized)
 
-##### Parameters
+    When user is not authenticated.
+    
+    _Response Body_:
+    
+    ```json
+    {
+      "error": true,
+      "message": "Unauthorized"
+    }
+    ```
+    
+   d) _Status Code_: 403 (Forbidden)
 
-- `business_id` (integer, path): The ID of the business to update.
+    When server understands the request but refuses to authorize it.
+    
+   _Response Body_:
+   
+    ```json
+    {
+      "error": true,
+      "message": "Forbidden"
+    }
+    ```
+    
+    e) _Status Code_: 404 (Not Found)
 
-##### Request
+    When business not found.
 
-- **Requset Body**:
-
-
-```json
-{
-  "error": false,
-  "data": {
-      "id": "Updated business id",
-      "location": "Updated business location",
-      "property_type": "Updated type of property",
-      "price": "Updated business price",
-      "year_built": "Updated year the property was built",
-      "size": "Updated size of the property",
-      "name": "Updated business name",
-      "description": "Updated business description"
-  }
-}
-```
-
-##### Response
-
-- **Status Code**: 200 (OK)
-- **Response Body**:
-
-```json
-{
-  "error": false,
-  "message": "Business updated successfully"
-}
-```
-
-- **Status Code**: 400 (Bad Request)
-- **Response Body**:
-
-```json
-{
-  "error": true,
-  "message": "Invalid business ID"
-}
-```
-or
-
-```json
-{
-  "error": true,
-  "message":  "Invalid data format or empty data"
-}
-```
-
-- **Status Code**: 401 (Unauthorized)
-- **Response Body**:
-
-```json
-{
-  "error": true,
-  "message": "Unauthorized"
-}
-```
-- **Status Code**: 403 (Forbidden)
-- **Response Body**:
-```json
-{
-  "error": true,
-  "message": "Forbidden"
-}
-```
-
-- **Status Code**: 404 (Not Found)
-- **Response Body**:
-```json
-{
-  "error": true,
-  "message": "Not Found"
-}
-
-```
+    _Response Body_:
+    ```json
+    {
+      "error": true,
+      "message": "Not Found"
+    }
+    
+    ```
 
 #### 5. DELETE /api/business/{business_id}
 
