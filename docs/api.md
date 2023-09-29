@@ -382,7 +382,7 @@
 
 6. POST /api/business/{business_id}/upload
 
-    __API:_ `POST /api/business/{business_id}/upload`
+    __API:__ `POST /api/business/{business_id}/upload`
     
     Upload and Save Images for a Specific Business.
     
@@ -442,9 +442,9 @@
 
 7. DELETE /api/business/{business_id}/delete/{filename}
     
-    Delete Image for a Specific Business
-    
     __API:__  `DELETE /api/business/{business_id}/delete/{filename}`
+    
+    Delete Image for a Specific Business
     
     __Parameters__
     - `business_id` (integer, path): The ID of the business.
