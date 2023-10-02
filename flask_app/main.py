@@ -56,7 +56,6 @@ def get_business():
     limit = request.args.get("limit", 10)
     page = request.args.get("page", 1)
 
-
     # Check if the 'page' parameter is provided and is a valid positive integer
     if str(page).isdigit() and int(page) >= 1:
         page = int(page)
@@ -80,7 +79,6 @@ def get_business():
             ),
             400,  # Status Code: 400 (Bad Request)
         )
-
 
     page = int(page)
     limit = int(limit)
@@ -160,7 +158,6 @@ def get_business():
     finally:
         # Close the session after the API call is completed
         session.close()
-
 
 
 @app.route("/api/business", methods=["POST"])
