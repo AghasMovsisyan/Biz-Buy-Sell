@@ -53,7 +53,7 @@ def serve_index_page():
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'."""
 
-    limit = request.args.get("limit", 6 )
+    limit = request.args.get("limit", 6)
     page = request.args.get("page", 1)
 
     # Check if the 'page' parameter is provided and is a valid positive integer
@@ -160,7 +160,6 @@ def get_business():
         session.close()
 
 
-
 @app.route("/api/business", methods=["POST"])
 def create_business():
     """Create a business"""
@@ -201,12 +200,12 @@ def create_business():
         description = data.get("description")
         property_type = data.get("property_type")
 
-        # Validate property_type against allowed values
         if property_type not in [e.value for e in PropertyType]:
             return (
                 jsonify(
                     error=True,
-                    message="'property_type' must be one of: " + ", ".join([e.value for e in PropertyType]),
+                    message="'property_type' must be one of: "
+                    + ", ".join([e.value for e in PropertyType]),
                 ),
                 400,
             )
@@ -219,7 +218,6 @@ def create_business():
                 ),
                 400,
             )
-
 
         if not isinstance(size, int) or size is None or size < 0:
             return (
@@ -269,18 +267,17 @@ def create_business():
         business = Business(
             user_id=data.get("user_id"),
             id=business_id,
-            location=location,  # Assign validated location
-            property_type=property_type,  # Assign validated property_type
+            location=location,
+            property_type=property_type,
             price=price,
-            year_built=year_built,  # Assign validated year_built
+            year_built=year_built,
             size=size,
-            name=name,  # Assign validated name
-            description=description,  # Assign validated description
+            name=name,
+            description=description,
         )
         session.add(business)
         session.commit()
 
-        # Prepare the successful response in the desired format
         response_data = {
             "location": business.location,
             "property_type": business.property_type.value,
@@ -303,16 +300,12 @@ def create_business():
         return jsonify(message=response_message), 400
 
 
-
-
-
-
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
     """Retrieve a specific business by ID"""
 
     if not isinstance(business_id, int) or business_id <= 0:
-        return jsonify(data=None, error=True, message="Invalid business ID"), 400
+        return jsonify(error=True, message="Invalid business ID"), 400
 
     with Session() as session:
         try:
