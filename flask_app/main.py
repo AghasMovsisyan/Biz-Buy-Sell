@@ -52,31 +52,38 @@ def serve_index_page():
 @app.route("/api/business", methods=["GET"])
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'."""
-    max_limit = 30
-    max_page = 30
 
-    try:
-        page = int(request.args.get("page", 1))
-        limit = int(request.args.get("limit", 6))
-    except ValueError:
+    limit = request.args.get("limit", 10)
+    page = request.args.get("page", 1)
+
+
+    # Check if the 'page' parameter is provided and is a valid positive integer
+    if str(page).isdigit() and int(page) >= 1:
+        page = int(page)
+    else:
         return (
             jsonify(
                 error=True,
-                message="Invalid page or limit value. Please provide valid integers.",
+                message="Invalid page value. Please provide a valid positive integer for 'page'.",
             ),
-            400,
+            400,  # Status Code: 400 (Bad Request)
         )
 
-    # Ensure limit is within valid range
-    if limit < 1 or limit > max_limit:
-        limit = 6
+        # Check if the 'limit' parameter is provided and is a valid positive integer
+    if str(limit).isdigit() and int(limit) >= 1:
+        limit = int(limit)
+    else:
+        return (
+            jsonify(
+                error=True,
+                message="Invalid limit value. Please provide a valid positive integer for 'limit'.",
+            ),
+            400,  # Status Code: 400 (Bad Request)
+        )
 
-    # Ensure page is within valid range
-    if page < 1 or page > max_page:
-        page = 1
 
-    # Limit the maximum 'limit' value to MAX_LIMITS
-    limit = min(limit, max_limit)
+    page = int(page)
+    limit = int(limit)
     offset = (page - 1) * limit
 
     # Open a new session for the API call
@@ -95,25 +102,32 @@ def get_business():
             .all()
         )
 
+        total = session.query(Business).count()
+
+        # Check if the provided 'limit' exceeds the total number of items
+        if limit > total:
+            return (
+                jsonify(
+                    error=True,
+                    message="The requested 'limit' exceeds the total number of items.",
+                ),
+                400,  # Status Code: 400 (Bad Request)
+            )
+
         if not businesses_items:
             return (
                 jsonify(
                     error=True,
-                    message="Invalid page or limit value. Please provide valid integers.",
+                    message="Page not found. The requested page does not exist.",
                 ),
-                404,
+                404,  # Status Code: 404 (Not Found)
             )
-
-        total = session.query(Business).count()
-        # Calculate total pages for pagination
-        additional_page_needed = 1 if total % limit != 0 else 0
-        items_per_page = (total // limit) + additional_page_needed
 
         # Construct the JSON response
         response_data = {
             "error": False,
             "data": [],
-            "items_per_page": items_per_page,
+            "items_per_page": limit,  # Set items_per_page equal to limit
             "total": total,
             "page": page,
         }
@@ -146,6 +160,7 @@ def get_business():
     finally:
         # Close the session after the API call is completed
         session.close()
+
 
 
 @app.route("/api/business", methods=["POST"])

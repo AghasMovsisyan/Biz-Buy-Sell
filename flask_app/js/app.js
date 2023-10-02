@@ -11,7 +11,16 @@ function fetchData(page, limitPerPage) {
     },
     success: function(data) {
       currentPage = data.page; // Update currentPage with the value from the API response
-      updatePagination(data.items_per_page); // Update the pagination links
+      const total = data.total
+      const items = data.items_per_page 
+
+      console.log("limitPerPage", limitPerPage)
+      console.log("total", total);
+      const additional_page_needed = total % items !== 0 ? 1 : 0;
+      const items_per_page = Math.floor(total / items) + additional_page_needed;
+      console.log("items_per_page",items_per_page);
+      
+      updatePagination(items_per_page); // Update the pagination links
       updateCardDisplay(data.data); // Update the card display
       updateCardDisplay(data.data);
     },
