@@ -132,7 +132,7 @@
     ```json
     {
       "error": true,
-      "message": "\"size\" should be integer"
+      "message": "\size\" should be integer"
     }
     ```
     
