@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, joinedload
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.utils import secure_filename
-from models import User, Business, Base, database_uri
+from models import User, Business, PropertyType, Base, database_uri
 
 
 app = Flask(__name__)
@@ -53,7 +53,7 @@ def serve_index_page():
 def get_business():
     """Retrieves paginated items from the 'Business' collection based on 'page' and 'limit'."""
 
-    limit = request.args.get("limit", 10)
+    limit = request.args.get("limit", 6 )
     page = request.args.get("page", 1)
 
     # Check if the 'page' parameter is provided and is a valid positive integer
@@ -63,7 +63,7 @@ def get_business():
         return (
             jsonify(
                 error=True,
-                message="Invalid page value. Please provide a valid positive integer for 'page'.",
+                message="Invalid page value. Please provide valid integers.",
             ),
             400,  # Status Code: 400 (Bad Request)
         )
@@ -160,6 +160,7 @@ def get_business():
         session.close()
 
 
+
 @app.route("/api/business", methods=["POST"])
 def create_business():
     """Create a business"""
@@ -168,23 +169,6 @@ def create_business():
         session = Session()
 
         business_id = data.get("id")
-        if not isinstance(business_id, int) or business_id < 0:
-            return (
-                jsonify(
-                    error=True,
-                    message="Invalid business ID",
-                ),
-                400,
-            )
-
-        if not business_id:
-            return (
-                jsonify(
-                    error=True,
-                    message="Missing business ID",
-                ),
-                400,
-            )
 
         existing_business = (
             session.query(Business).filter(Business.id == business_id).first()
@@ -209,26 +193,118 @@ def create_business():
                 401,
             )
 
+        price = data.get("price")
+        size = data.get("size")
+        location = data.get("location")
+        year_built = data.get("year_built")
+        name = data.get("name")
+        description = data.get("description")
+        property_type = data.get("property_type")
+
+        # Validate property_type against allowed values
+        if property_type not in [e.value for e in PropertyType]:
+            return (
+                jsonify(
+                    error=True,
+                    message="'property_type' must be one of: " + ", ".join([e.value for e in PropertyType]),
+                ),
+                400,
+            )
+
+        if not isinstance(price, int) or price is None or price < 0:
+            return (
+                jsonify(
+                    error=True,
+                    message="The 'price' must be a non-negative integer value.",
+                ),
+                400,
+            )
+
+
+        if not isinstance(size, int) or size is None or size < 0:
+            return (
+                jsonify(
+                    error=True,
+                    message="'The 'size' must be a non-negative integer value.",
+                ),
+                400,
+            )
+
+        if not isinstance(location, str) or location is None:
+            return (
+                jsonify(
+                    error=True,
+                    message="'location' must be non-null strings",
+                ),
+                400,
+            )
+
+        if not isinstance(year_built, str) or year_built is None:
+            return (
+                jsonify(
+                    error=True,
+                    message="'year_built' must be non-null strings",
+                ),
+                400,
+            )
+
+        if not isinstance(name, str) or name is None:
+            return (
+                jsonify(
+                    error=True,
+                    message="'name' must be non-null strings",
+                ),
+                400,
+            )
+
+        if not isinstance(description, str) or description is None:
+            return (
+                jsonify(
+                    error=True,
+                    message="'description' must be non-null strings",
+                ),
+                400,
+            )
+
         business = Business(
             user_id=data.get("user_id"),
             id=business_id,
-            location=data.get("location"),
-            property_type=data.get("property_type"),
-            price=data.get("price"),
-            year_built=data.get("year_built"),
-            size=data.get("size"),
-            name=data.get("name"),
-            description=data.get("description"),
+            location=location,  # Assign validated location
+            property_type=property_type,  # Assign validated property_type
+            price=price,
+            year_built=year_built,  # Assign validated year_built
+            size=size,
+            name=name,  # Assign validated name
+            description=description,  # Assign validated description
         )
         session.add(business)
         session.commit()
 
-        response_message = "Business created successfully"
-        return jsonify(message=response_message, business_id=business_id), 201
+        # Prepare the successful response in the desired format
+        response_data = {
+            "location": business.location,
+            "property_type": business.property_type.value,
+            "price": business.price,
+            "year_built": business.year_built,
+            "size": business.size,
+            "name": business.name,
+            "description": business.description,
+        }
+
+        response = {
+            "error": False,
+            "data": response_data,
+        }
+
+        return jsonify(response), 201
 
     except (ValueError, SQLAlchemyError) as error:
         response_message = str(error)
         return jsonify(message=response_message), 400
+
+
+
+
 
 
 @app.route("/api/business/<int:business_id>", methods=["GET"])
