@@ -275,9 +275,7 @@ def create_business():
 
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
-    """Retrieve a specific business by ID"""
-
-    if not isinstance(business_id, int) or business_id <= 0:
+    if business_id < 0:
         return jsonify(error=True, message="Invalid business ID"), 400
 
     with Session() as session:
@@ -292,10 +290,12 @@ def get_business_by_id(business_id):
                 # Use the json() method from the Business model to get all columns
                 business_data = business.json()
 
-                # Get image URLs for the business (same as in your previous code)
+                # Construct the business_images_folder path only if business exists
                 business_images_folder = os.path.join(
                     app.config["UPLOAD_FOLDER"], str(business_id)
                 )
+
+                # Check if the folder exists before accessing files
                 if os.path.exists(business_images_folder):
                     images = [
                         f"/static/business/{business_id}/{filename}"
@@ -312,6 +312,7 @@ def get_business_by_id(business_id):
             return jsonify(error=True, message="Business not found"), 404
         except SQLAlchemyError as error:
             return jsonify(error=True, message=str(error)), 400
+
 
 
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
