@@ -160,47 +160,45 @@ def get_business():
         session.close()
 
 
-
 def validate_business_data(data):
     """Validate the data for creating a business."""
-    
+
     # Define a list of string field names to validate
     string_fields = ["location", "year_built", "name", "description"]
-    
+
     error_response = None  # Initialize error_response to None
-    
+
     property_type = data.get("property_type")
     if property_type not in [e.value for e in PropertyType]:
         error_response = {
             "error": True,
-            "message": "The 'property_type' must be one of: " + ", ".join([e.value for e in PropertyType])
+            "message": "The 'property_type' must be one of: "
+            + ", ".join([e.value for e in PropertyType]),
         }
-    
+
     price = data.get("price")
     if not isinstance(price, int) or price is None or price < 0:
         error_response = {
             "error": True,
-            "message": "The 'price' must be a non-negative integer value."
+            "message": "The 'price' must be a non-negative integer value.",
         }
-    
+
     size = data.get("size")
     if not isinstance(size, int) or size is None or size < 0:
         error_response = {
             "error": True,
-            "message": "The 'size' must be a non-negative integer value."
+            "message": "The 'size' must be a non-negative integer value.",
         }
-    
+
     for field in string_fields:
         field_value = data.get(field)
         if not isinstance(field_value, str) or field_value is None:
             error_response = {
                 "error": True,
-                "message": f"'{field}' must be a non-null string."
+                "message": f"'{field}' must be a non-null string.",
             }
-    
-    return error_response  # Return the error_response dictionary if there's an error, otherwise return None
 
-
+    return error_response  # Return the error_response dictionary if there's an error
 
 
 @app.route("/api/business", methods=["POST"])
@@ -238,7 +236,6 @@ def create_business():
         validation_error = validate_business_data(data)
         if validation_error:
             return jsonify(validation_error), 400
-
 
         business = Business(
             user_id=data.get("user_id"),
