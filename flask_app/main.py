@@ -160,11 +160,54 @@ def get_business():
         session.close()
 
 
+
+def validate_business_data(data):
+    """Validate the data for creating a business."""
+    
+    # Define a list of string field names to validate
+    string_fields = ["location", "year_built", "name", "description"]
+    
+    error_response = None  # Initialize error_response to None
+    
+    property_type = data.get("property_type")
+    if property_type not in [e.value for e in PropertyType]:
+        error_response = {
+            "error": True,
+            "message": "The 'property_type' must be one of: " + ", ".join([e.value for e in PropertyType])
+        }
+    
+    price = data.get("price")
+    if not isinstance(price, int) or price is None or price < 0:
+        error_response = {
+            "error": True,
+            "message": "The 'price' must be a non-negative integer value."
+        }
+    
+    size = data.get("size")
+    if not isinstance(size, int) or size is None or size < 0:
+        error_response = {
+            "error": True,
+            "message": "The 'size' must be a non-negative integer value."
+        }
+    
+    for field in string_fields:
+        field_value = data.get(field)
+        if not isinstance(field_value, str) or field_value is None:
+            error_response = {
+                "error": True,
+                "message": f"'{field}' must be a non-null string."
+            }
+    
+    return error_response  # Return the error_response dictionary if there's an error, otherwise return None
+
+
+
+
 @app.route("/api/business", methods=["POST"])
 def create_business():
     """Create a business"""
     try:
-        data = request.json
+        data = request.json.get("data")
         session = Session()
 
         business_id = data.get("id")
@@ -192,88 +235,21 @@ def create_business():
                 401,
             )
 
-        price = data.get("price")
-        size = data.get("size")
-        location = data.get("location")
-        year_built = data.get("year_built")
-        name = data.get("name")
-        description = data.get("description")
-        property_type = data.get("property_type")
+        validation_error = validate_business_data(data)
+        if validation_error:
+            return jsonify(validation_error), 400
 
-        if property_type not in [e.value for e in PropertyType]:
-            return (
-                jsonify(
-                    error=True,
-                    message="'property_type' must be one of: "
-                    + ", ".join([e.value for e in PropertyType]),
-                ),
-                400,
-            )
-
-        if not isinstance(price, int) or price is None or price < 0:
-            return (
-                jsonify(
-                    error=True,
-                    message="The 'price' must be a non-negative integer value.",
-                ),
-                400,
-            )
-
-        if not isinstance(size, int) or size is None or size < 0:
-            return (
-                jsonify(
-                    error=True,
-                    message="'The 'size' must be a non-negative integer value.",
-                ),
-                400,
-            )
-
-        if not isinstance(location, str) or location is None:
-            return (
-                jsonify(
-                    error=True,
-                    message="'location' must be non-null strings",
-                ),
-                400,
-            )
-
-        if not isinstance(year_built, str) or year_built is None:
-            return (
-                jsonify(
-                    error=True,
-                    message="'year_built' must be non-null strings",
-                ),
-                400,
-            )
-
-        if not isinstance(name, str) or name is None:
-            return (
-                jsonify(
-                    error=True,
-                    message="'name' must be non-null strings",
-                ),
-                400,
-            )
-
-        if not isinstance(description, str) or description is None:
-            return (
-                jsonify(
-                    error=True,
-                    message="'description' must be non-null strings",
-                ),
-                400,
-            )
 
         business = Business(
             user_id=data.get("user_id"),
             id=business_id,
-            location=location,
-            property_type=property_type,
-            price=price,
-            year_built=year_built,
-            size=size,
-            name=name,
-            description=description,
+            location=data["location"],
+            property_type=data["property_type"],
+            price=data["price"],
+            year_built=data["year_built"],
+            size=data["size"],
+            name=data["name"],
+            description=data["description"],
         )
         session.add(business)
         session.commit()
