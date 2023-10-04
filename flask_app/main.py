@@ -276,7 +276,7 @@ def create_business():
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
     """Retrieve a specific business by ID"""
-    if business_id <=  0:
+    if business_id <= 0:
         return jsonify(error=True, message="Invalid business ID"), 400
 
     with Session() as session:
