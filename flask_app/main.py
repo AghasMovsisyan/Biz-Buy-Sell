@@ -125,7 +125,7 @@ def get_business():
         response_data = {
             "error": False,
             "data": [],
-            "items_per_page": limit,  # Set items_per_page equal to limit
+            "items_per_page": limit,
             "total": total,
             "page": page,
         }
@@ -275,6 +275,7 @@ def create_business():
 
 @app.route("/api/business/<int:business_id>", methods=["GET"])
 def get_business_by_id(business_id):
+    """Retrieve a specific business by ID"""
     if business_id < 0:
         return jsonify(error=True, message="Invalid business ID"), 400
 
@@ -312,7 +313,6 @@ def get_business_by_id(business_id):
             return jsonify(error=True, message="Business not found"), 404
         except SQLAlchemyError as error:
             return jsonify(error=True, message=str(error)), 400
-
 
 
 @app.route("/api/business/<int:business_id>", methods=["PUT"])
